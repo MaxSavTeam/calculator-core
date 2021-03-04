@@ -1,158 +1,88 @@
 package com.maxsavteam;
 
+import com.maxsavteam.exceptions.CalculatingException;
+import com.maxsavteam.resolvers.BinaryOperatorResolver;
+import com.maxsavteam.resolvers.BracketsResolver;
+import com.maxsavteam.tree.*;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
 
 public class Calculator {
 
-    private ArrayList<BasicPosition> mBasicPositions;
-    private final Map<Character, Integer> mBasicOperatorsPrioritiesMap = new HashMap<Character, Integer>(){{
-        put('+', 0);
-        put('-', 0);
-        put('*', 1);
-        put('/', 1);
-    }};
+    private final TreeBuilder builder;
     public final static int roundScale = 8;
+    private final BinaryOperatorResolver resolver;
+    private final BracketsResolver bracketsResolver;
 
-    private static class BasicPosition implements Comparable<BasicPosition>{
-        private final int level;
-        private final int priority;
-        private final int position;
+    public static final BinaryOperatorResolver defaultResolver = (operator, a, b) -> {
+        if(operator == '+')
+            return a.add(b);
+        if(operator == '-')
+            return a.subtract(b);
+        if(operator == '*')
+            return a.multiply(b);
+        if(operator == '/')
+            return deleteZeros(a.divide(b, roundScale, RoundingMode.HALF_EVEN));
+        throw new CalculatingException("Unknown binary operator '" + operator + "'");
+    };
 
-        public BasicPosition(int level, int priority, int position) {
-            this.level = level;
-            this.priority = priority;
-            this.position = position;
-        }
+    public static final BracketsResolver defaultBracketsResolver = (type, a) -> a;
 
-        @Override
-        public int compareTo(BasicPosition o) {
-            if (level != o.level)
-                return Integer.compare(level, o.level);
-            if (priority != o.priority)
-                return Integer.compare(priority, o.priority);
-            return Integer.compare(position, o.position);
-        }
+    public Calculator(){
+        this(TreeBuilder.defaultBrackets, TreeBuilder.defaultBinaryOperators, defaultResolver, defaultBracketsResolver);
     }
 
-    private String deleteSimpleBrackets(String ex, ObjectHolder<Integer> deletedCount){
-        String s = ex;
-        int minLevel = Integer.MAX_VALUE;
-        int level = 0;
-        for(int i = 0; i < s.length(); i++){
-            char c = s.charAt(i);
-            if(c == '(')
-                level++;
-            else if(c == ')')
-                level--;
-            else
-                minLevel = Math.min(minLevel, level);
-        }
-        int i = 0;
-        deletedCount.value = minLevel;
-        while(i++ < minLevel)
-            s = s.substring(1, s.length()-1);
-        return s;
+    public Calculator(ArrayList<BracketsType> brackets,
+                      ArrayList<BinaryOperator> binaryOperators,
+                      BinaryOperatorResolver resolver,
+                      BracketsResolver bracketsResolver){
+        builder = new TreeBuilder(brackets, binaryOperators);
+        this.resolver = resolver;
+        this.bracketsResolver = bracketsResolver;
     }
 
     public BigDecimal calculate(String expression){
-        mBasicPositions = new ArrayList<>();
+        ArrayList<TreeNode> nodes = builder.buildTree(expression);
+        return calc(1, nodes);
+    }
 
-        int bracketsLevel = 0;
-        for(int i = 0; i < expression.length(); i++){
-            char c = expression.charAt(i);
-            if(isOpenBracket(c))
-                bracketsLevel++;
-            else if(isCloseBracket(c))
-                bracketsLevel--;
-            else if(isBasicOperator(c)){
-                int priority = mBasicOperatorsPrioritiesMap.get(c);
-                mBasicPositions.add(new BasicPosition(bracketsLevel, priority, i));
+    private BigDecimal calc(int v, ArrayList<TreeNode> nodes){
+         TreeNode node = nodes.get(v);
+
+         if(node instanceof BracketsNode){
+             return bracketsResolver.resolve(((BracketsNode) node).getType(), calc(2 * v, nodes));
+         }else if(node instanceof NumberNode){
+             return ((NumberNode) node).getNumber();
+         }
+         char symbol = ((OperatorNode) node).getOperator();
+         if(TreeBuilder.isNodeEmpty(nodes, 2 * v))
+             throw new CalculatingException("Some binary operator does not have left operand");
+        if(TreeBuilder.isNodeEmpty(nodes, 2 * v + 1))
+            throw new CalculatingException("Some binary operator does not have right operand");
+        BigDecimal a = calc(2 * v, nodes);
+        BigDecimal b = calc(2 * v + 1, nodes);
+
+        return resolver.calculate(symbol, a, b);
+    }
+
+    private static BigDecimal deleteZeros(BigDecimal b){
+        String res = b.toPlainString();
+        int len = res.length();
+        if ( res.contains( "." ) && res.charAt( len - 1 ) == '0' ) {
+            while ( res.charAt( len - 1 ) == '0' ) {
+                len--;
+                res = res.substring( 0, len );
+            }
+            if ( res.charAt( len - 1 ) == '.' ) {
+                res = res.substring( 0, len - 1 );
             }
         }
-        //Collections.sort(mBasicPositions);
-
-        return calc(expression, 0, 0, mBasicPositions.isEmpty() ? -1 : 0);
-    }
-
-    private BigDecimal calc(String ex, int rootLevel, int exampleOffset, int listItemPosition){
-        ObjectHolder<Integer> deletedBracketsCount = new ObjectHolder<>(0);
-        String e = deleteSimpleBrackets(ex, deletedBracketsCount);
-        rootLevel += deletedBracketsCount.value;
-        exampleOffset += deletedBracketsCount.value;
-
-        int end = exampleOffset + e.length();
-        BasicPosition foundPos = null, lastPos = null;
-        boolean arePrioritiesEqual = true;
-        for(BasicPosition pos : mBasicPositions){
-            if(exampleOffset > pos.position)
-                continue;
-            if (pos.position >= end) {
-                break;
-            }
-            if(pos.level != rootLevel)
-                continue;
-
-            if (foundPos == null)
-                foundPos = pos;
-            else {
-                if(pos.priority != foundPos.priority)
-                    arePrioritiesEqual = false;
-                if(pos.level < foundPos.level || pos.priority < foundPos.priority){
-                    foundPos = pos;
-                }
-            }
-            lastPos = pos;
+        while ( res.charAt( 0 ) == '0' && res.length() > 1 && res.charAt( 1 ) != '.' ) {
+            res = res.substring( 1 );
         }
-        if(arePrioritiesEqual)
-            foundPos = lastPos;
-
-        if (foundPos != null) {
-            String firstPart = e.substring(0, foundPos.position - exampleOffset);
-            String secondPart = e.substring(foundPos.position - exampleOffset + 1);
-
-            BigDecimal firstResult = calc(firstPart, rootLevel, exampleOffset, -1);
-            int nextItemPosition;
-            if(mBasicPositions.size() - 1 == listItemPosition){
-                nextItemPosition = -1;
-            }else{
-                nextItemPosition = listItemPosition + 1;
-            }
-            BigDecimal secondResult = calc(secondPart, rootLevel, foundPos.position + 1, nextItemPosition);
-
-            return resolveBasicOperator(
-                    e.charAt(foundPos.position - exampleOffset),
-                    firstResult,
-                    secondResult
-            );
-        }
-
-        return new BigDecimal(e);
-    }
-
-    private BigDecimal resolveBasicOperator(char c, BigDecimal a, BigDecimal b){
-        if(c == '+')
-            return a.add(b);
-        if(c == '-')
-            return a.subtract(b);
-        if(c == '*')
-            return a.multiply(b);
-        if(c == '/')
-            return a.divide(b, roundScale, RoundingMode.HALF_EVEN);
-        throw new IllegalArgumentException("Operator '" + c + "' not a basic operator");
-    }
-
-    private boolean isOpenBracket(char c){
-        return c == '(';
-    }
-
-    private boolean isCloseBracket(char c){
-        return c == ')';
-    }
-
-    private boolean isBasicOperator(char c){
-        return c == '+' || c == '-' || c == '*' || c == '/';
+        return new BigDecimal(res);
     }
 
 }
