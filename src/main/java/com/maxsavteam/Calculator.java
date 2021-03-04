@@ -4,6 +4,10 @@ import com.maxsavteam.exceptions.CalculatingException;
 import com.maxsavteam.resolvers.BinaryOperatorResolver;
 import com.maxsavteam.resolvers.BracketsResolver;
 import com.maxsavteam.tree.*;
+import com.maxsavteam.tree.nodes.BracketsNode;
+import com.maxsavteam.tree.nodes.NumberNode;
+import com.maxsavteam.tree.nodes.OperatorNode;
+import com.maxsavteam.tree.nodes.TreeNode;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

@@ -1,4 +1,4 @@
-package com.maxsavteam.tree;
+package com.maxsavteam.tree.nodes;
 
 public class BracketsNode extends TreeNode {
 

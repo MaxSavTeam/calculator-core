@@ -1,11 +1,13 @@
 package com.maxsavteam.tree;
 
 import com.maxsavteam.exceptions.TreeBuildingException;
+import com.maxsavteam.tree.nodes.BracketsNode;
+import com.maxsavteam.tree.nodes.NumberNode;
+import com.maxsavteam.tree.nodes.OperatorNode;
+import com.maxsavteam.tree.nodes.TreeNode;
 
-import java.lang.management.OperatingSystemMXBean;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.Stack;
 
 public class TreeBuilder {
