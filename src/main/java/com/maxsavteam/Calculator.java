@@ -7,7 +7,7 @@ import java.util.*;
 public class Calculator {
 
     private ArrayList<BasicPosition> mBasicPositions;
-    private final Map<Character, Integer> mBasicOperatorsPrioritiesMap = new HashMap<>(){{
+    private final Map<Character, Integer> mBasicOperatorsPrioritiesMap = new HashMap<Character, Integer>(){{
         put('+', 0);
         put('-', 0);
         put('*', 1);
