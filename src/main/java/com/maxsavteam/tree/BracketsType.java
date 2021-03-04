@@ -1,7 +1,5 @@
 package com.maxsavteam.tree;
 
-import java.util.Random;
-
 public class BracketsType {
 
     public final char openBracket;

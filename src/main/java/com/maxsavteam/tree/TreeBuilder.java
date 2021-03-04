@@ -62,19 +62,19 @@ public class TreeBuilder {
     private void build(int v, String expression, int rootLevel, int exampleOffset) {
         if(expression.length() == 0)
             return;
-        String ex = expression;
-        int minLevel = getBracketsMinLevel(ex);
+        int minLevel = getBracketsMinLevel(expression);
         expandTreeToPosition(v);
 
         if(minLevel >= 1){
-            int startBracketType = getBracketType(ex.charAt(0));
+            int startBracketType = getBracketType(expression.charAt(0));
             treeNodes.set(v, new BracketsNode(startBracketType));
-            build(2 * v, ex.substring(1, ex.length()-1), rootLevel + 1, exampleOffset + 1);
+            build(2 * v, expression.substring(1, expression.length()-1), rootLevel + 1, exampleOffset + 1);
             return;
         }
 
-        int end = exampleOffset + ex.length();
-        OperatorPosition foundPos = null, lastPos = null;
+        int end = exampleOffset + expression.length();
+        OperatorPosition foundPos = null;
+        OperatorPosition lastPos = null;
         boolean arePrioritiesEqual = true;
         for(OperatorPosition pos : mOperatorPositions){
             if(exampleOffset > pos.position)
@@ -100,16 +100,16 @@ public class TreeBuilder {
             foundPos = lastPos;
 
         if(foundPos != null){
-            String firstPart = ex.substring(0, foundPos.position - exampleOffset);
-            String secondPart = ex.substring(foundPos.position - exampleOffset + 1);
+            String firstPart = expression.substring(0, foundPos.position - exampleOffset);
+            String secondPart = expression.substring(foundPos.position - exampleOffset + 1);
 
-            OperatorNode node = new OperatorNode(ex.charAt(foundPos.position - exampleOffset));
+            OperatorNode node = new OperatorNode(expression.charAt(foundPos.position - exampleOffset));
             treeNodes.set(v, node);
 
             build(2 * v, firstPart, rootLevel, exampleOffset);
             build(2 * v + 1, secondPart, rootLevel, foundPos.position + 1);
         }else{
-            NumberNode node = new NumberNode(new BigDecimal(ex));
+            NumberNode node = new NumberNode(new BigDecimal(expression));
             treeNodes.set(v, node);
         }
     }

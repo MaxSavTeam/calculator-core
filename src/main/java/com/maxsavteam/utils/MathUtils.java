@@ -61,9 +61,10 @@ public class MathUtils {
 		return BigDecimalMath.cos( CalculatorUtils.toRadians( x ), new MathContext( 6 ) );
 	}
 
-	public static BigDecimal fact(BigDecimal x, int step) {
-		if(x.signum() == 0)
+	public static BigDecimal fact(BigDecimal a, int step) {
+		if(a.signum() == 0)
 			return BigDecimal.ONE;
+		BigDecimal x = a;
 		BigDecimal ans = BigDecimal.ONE;
 		BigDecimal bStep = BigDecimal.valueOf( step );
 		for(; 0 <= x.compareTo( BigDecimal.ONE ); x = x.subtract( bStep )){
