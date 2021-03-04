@@ -20,21 +20,21 @@ public class TreeBuilder {
         add(new BinaryOperator('-', 0));
         add(new BinaryOperator('*', 1));
         add(new BinaryOperator('/', 1));
+        add(new BinaryOperator('^', 2));
     }};
     public static final TreeNode emptyNode = new TreeNode();
 
     private ArrayList<TreeNode> treeNodes;
-    private ArrayList<BracketsType> brackets;
-    private ArrayList<BinaryOperator> operators;
+    private ArrayList<BracketsType> brackets = defaultBrackets;
+    private ArrayList<BinaryOperator> operators = defaultBinaryOperators;
     private ArrayList<OperatorPosition> mOperatorPositions;
 
-    public TreeBuilder() {
-        this(defaultBrackets, defaultBinaryOperators);
+    public void setBracketsTypes(ArrayList<BracketsType> brackets) {
+        this.brackets = brackets;
     }
 
-    public TreeBuilder(ArrayList<BracketsType> brackets, ArrayList<BinaryOperator> binaryOperators) {
-        this.brackets = brackets;
-        this.operators = binaryOperators;
+    public void setBinaryOperators(ArrayList<BinaryOperator> operators) {
+        this.operators = operators;
     }
 
     public ArrayList<TreeNode> buildTree(String expression) {

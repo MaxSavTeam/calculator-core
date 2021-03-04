@@ -8,6 +8,7 @@ import com.maxsavteam.tree.nodes.BracketsNode;
 import com.maxsavteam.tree.nodes.NumberNode;
 import com.maxsavteam.tree.nodes.OperatorNode;
 import com.maxsavteam.tree.nodes.TreeNode;
+import com.maxsavteam.utils.CalculatorUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -17,8 +18,8 @@ public class Calculator {
 
     private final TreeBuilder builder;
     public final static int roundScale = 8;
-    private final BinaryOperatorResolver resolver;
-    private final BracketsResolver bracketsResolver;
+    private BinaryOperatorResolver resolver = defaultResolver;
+    private BracketsResolver bracketsResolver = defaultBracketsResolver;
 
     public static final BinaryOperatorResolver defaultResolver = (operator, a, b) -> {
         if(operator == '+')
@@ -28,22 +29,31 @@ public class Calculator {
         if(operator == '*')
             return a.multiply(b);
         if(operator == '/')
-            return deleteZeros(a.divide(b, roundScale, RoundingMode.HALF_EVEN));
+            return CalculatorUtils.deleteZeros(a.divide(b, roundScale, RoundingMode.HALF_EVEN));
+        if(operator == '^')
+            return CalculatorUtils.deleteZeros(CalculatorUtils.pow(a, b));
         throw new CalculatingException("Unknown binary operator '" + operator + "'");
     };
 
     public static final BracketsResolver defaultBracketsResolver = (type, a) -> a;
 
     public Calculator(){
-        this(TreeBuilder.defaultBrackets, TreeBuilder.defaultBinaryOperators, defaultResolver, defaultBracketsResolver);
+        builder = new TreeBuilder();
     }
 
-    public Calculator(ArrayList<BracketsType> brackets,
-                      ArrayList<BinaryOperator> binaryOperators,
-                      BinaryOperatorResolver resolver,
-                      BracketsResolver bracketsResolver){
-        builder = new TreeBuilder(brackets, binaryOperators);
+    public void setBracketsTypes(ArrayList<BracketsType> brackets){
+        builder.setBracketsTypes(brackets);
+    }
+
+    public void setBinaryOperators(ArrayList<BinaryOperator> operators){
+        builder.setBinaryOperators(operators);
+    }
+
+    public void setBinaryOperatorResolver(BinaryOperatorResolver resolver) {
         this.resolver = resolver;
+    }
+
+    public void setBracketsResolver(BracketsResolver bracketsResolver) {
         this.bracketsResolver = bracketsResolver;
     }
 
@@ -69,24 +79,6 @@ public class Calculator {
         BigDecimal b = calc(2 * v + 1, nodes);
 
         return resolver.calculate(symbol, a, b);
-    }
-
-    private static BigDecimal deleteZeros(BigDecimal b){
-        String res = b.toPlainString();
-        int len = res.length();
-        if ( res.contains( "." ) && res.charAt( len - 1 ) == '0' ) {
-            while ( res.charAt( len - 1 ) == '0' ) {
-                len--;
-                res = res.substring( 0, len );
-            }
-            if ( res.charAt( len - 1 ) == '.' ) {
-                res = res.substring( 0, len - 1 );
-            }
-        }
-        while ( res.charAt( 0 ) == '0' && res.length() > 1 && res.charAt( 1 ) != '.' ) {
-            res = res.substring( 1 );
-        }
-        return new BigDecimal(res);
     }
 
 }
