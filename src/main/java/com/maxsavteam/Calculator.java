@@ -88,7 +88,17 @@ public class Calculator {
         }
     };
 
-    public static final BracketsResolver defaultBracketsResolver = (type, a) -> a;
+    public static final BracketsResolver defaultBracketsResolver = (type, a) -> {
+        if(type == 1)
+            return a;
+        else if(type == 2)
+            return MathUtils.round(a);
+        else if(type == 3)
+            return MathUtils.floor(a);
+        else if(type == 4)
+            return MathUtils.ceil(a);
+        throw new CalculatingException("Unknown bracket type");
+    };
 
     public static final SuffixOperatorResolver defaultSuffixResolver = (operator, count, operand) -> {
         if(operator == '!')

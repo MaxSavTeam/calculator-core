@@ -11,6 +11,9 @@ public class TreeBuilder {
 
     public static final ArrayList<BracketsType> defaultBrackets = new ArrayList<BracketsType>() {{
         add(new BracketsType('(', ')', 1));
+        add(new BracketsType('[', ']', 2)); // round
+        add(new BracketsType('\u23A3', '\u23A6', 3)); // round floor
+        add(new BracketsType('\u23A1', '\u23A4', 4)); // round ceil
     }};
     public static final ArrayList<BinaryOperator> defaultBinaryOperators = new ArrayList<BinaryOperator>() {{
         add(new BinaryOperator('+', 0));
