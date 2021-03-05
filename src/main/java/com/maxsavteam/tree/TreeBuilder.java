@@ -19,11 +19,15 @@ public class TreeBuilder {
         add(new BinaryOperator('/', 1));
         add(new BinaryOperator('^', 2));
     }};
+    public static final ArrayList<SuffixOperator> defaultSuffixOperators = new ArrayList<SuffixOperator>(){{
+        add(new SuffixOperator('!'));
+    }};
     public static final TreeNode emptyNode = new TreeNode();
 
     private ArrayList<TreeNode> treeNodes;
     private ArrayList<BracketsType> brackets = defaultBrackets;
     private ArrayList<BinaryOperator> operators = defaultBinaryOperators;
+    private ArrayList<SuffixOperator> suffixOperators = defaultSuffixOperators;
     private ArrayList<OperatorPosition> mOperatorPositions;
 
     public void setBracketsTypes(ArrayList<BracketsType> brackets) {
@@ -32,6 +36,10 @@ public class TreeBuilder {
 
     public void setBinaryOperators(ArrayList<BinaryOperator> operators) {
         this.operators = operators;
+    }
+
+    public void setSuffixOperators(ArrayList<SuffixOperator> suffixOperators) {
+        this.suffixOperators = suffixOperators;
     }
 
     public ArrayList<TreeNode> buildTree(String expression) {
@@ -80,13 +88,28 @@ public class TreeBuilder {
             build(2 * v, firstPart, rootLevel, exampleOffset);
             build(2 * v + 1, secondPart, rootLevel, foundPos.position + 1);
         }else{
-            if(isLetter(expression.charAt(0))){
+            if(isLetter(expression.charAt(0))) {
                 parseFunc(v, expression, exampleOffset, rootLevel);
+            }else if(isSuffixOperator(expression.charAt(expression.length() - 1))){
+                parseSuffixOperator(v, expression, exampleOffset, rootLevel);
             }else {
                 NumberNode node = new NumberNode(new BigDecimal(expression));
                 treeNodes.set(v, node);
             }
         }
+    }
+
+    protected void parseSuffixOperator(int v, String ex, int offset, int rootLevel){
+        char operator = ex.charAt(ex.length() - 1);
+        int i = ex.length() - 1;
+        int count = 1;
+        while(i >= 1 && ex.charAt(i-1) == operator) {
+            count++;
+            i--;
+        }
+        SuffixOperatorNode node = new SuffixOperatorNode(operator, count);
+        treeNodes.set(v, node);
+        build(2 * v, ex.substring(i), offset, rootLevel);
     }
 
     protected void parseFunc(int v, String ex, int offset, int rootLevel){
@@ -193,6 +216,14 @@ public class TreeBuilder {
 
     private boolean isDigit(char c){
         return c >= '0' && c <= '9';
+    }
+
+    private boolean isSuffixOperator(char c){
+        for(SuffixOperator operator : suffixOperators){
+            if(operator.symbol == c)
+                return true;
+        }
+        return false;
     }
 
     private int getBracketType(char c){
