@@ -62,6 +62,7 @@ public class Calculator {
         if(suffix == null && operand == null){
             throw new CalculatingException("Functions suffix and operand are both null");
         }
+        BigDecimal notNullNum = suffix == null ? operand : suffix;
         switch (funcName) {
             case "log":
                 if (suffix != null) {
@@ -73,16 +74,18 @@ public class Calculator {
                     return MathUtils.log(operand);
                 }
             case "cos":
-                return MathUtils.cos(suffix == null ? operand : suffix);
+                return MathUtils.cos(notNullNum);
             case "sin":
-                return MathUtils.sin(suffix == null ? operand : suffix);
+                return MathUtils.sin(notNullNum);
             case "tan":
-                return MathUtils.tan(suffix == null ? operand : suffix);
+                return MathUtils.tan(notNullNum);
             case "ln":
-                return MathUtils.ln(suffix == null ? operand : suffix);
+                return MathUtils.ln(notNullNum);
             case "R":
             case "sqrt":
-                return MathUtils.rootWithBase(suffix == null ? operand : suffix, BigDecimal.valueOf(2));
+                return MathUtils.rootWithBase(notNullNum, BigDecimal.valueOf(2));
+            case "abs":
+                return MathUtils.abs(notNullNum);
             default:
                 throw new CalculatingException("Unknown function " + funcName);
         }
