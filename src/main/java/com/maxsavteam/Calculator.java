@@ -108,14 +108,14 @@ public class Calculator {
         }else if(node instanceof FunctionNode){
             FunctionNode functionNode = (FunctionNode) node;
             BigDecimal operand = null;
-            if(!TreeBuilder.isNodeEmpty(nodes, 2 * v))
+            if(!TreeBuilder.isNodeEmpty(2 * v, nodes))
                 operand = calc(2 * v, nodes);
             return functionsResolver.resolve(functionNode.funcName, functionNode.suffix, operand);
         }
         char symbol = ((OperatorNode) node).getOperator();
-        if (TreeBuilder.isNodeEmpty(nodes, 2 * v))
+        if (TreeBuilder.isNodeEmpty(2 * v, nodes))
             throw new CalculatingException("Some binary operator does not have left operand");
-        if (TreeBuilder.isNodeEmpty(nodes, 2 * v + 1))
+        if (TreeBuilder.isNodeEmpty(2 * v + 1, nodes))
             throw new CalculatingException("Some binary operator does not have right operand");
         BigDecimal a = calc(2 * v, nodes);
         BigDecimal b = calc(2 * v + 1, nodes);

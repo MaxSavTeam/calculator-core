@@ -218,8 +218,8 @@ public class TreeBuilder {
         return Integer.MAX_VALUE;
     }
 
-    public static boolean isNodeEmpty(ArrayList<TreeNode> nodes, int pos){
-        return nodes.size() <= pos || nodes.get(pos) == emptyNode;
+    public static boolean isNodeEmpty(int v, ArrayList<TreeNode> nodes){
+        return nodes.size() <= v || nodes.get(v) == emptyNode;
     }
 
 }
