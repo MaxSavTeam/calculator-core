@@ -33,7 +33,7 @@ public class Calculator {
         if (operator == '/')
             return CalculatorUtils.deleteZeros(a.divide(b, roundScale, RoundingMode.HALF_EVEN));
         if (operator == '^')
-            return CalculatorUtils.deleteZeros(CalculatorUtils.pow(a, b));
+            return CalculatorUtils.deleteZeros(MathUtils.pow(a, b));
         throw new CalculatingException("Unknown binary operator '" + operator + "'");
     };
 
@@ -61,7 +61,7 @@ public class Calculator {
                 return MathUtils.ln(suffix == null ? operand : suffix);
             case "R":
             case "sqrt":
-                return CalculatorUtils.rootWithBase(suffix == null ? operand : suffix, BigDecimal.valueOf(2));
+                return MathUtils.rootWithBase(suffix == null ? operand : suffix, BigDecimal.valueOf(2));
             default:
                 throw new CalculatingException("Unknown function " + funcName);
         }

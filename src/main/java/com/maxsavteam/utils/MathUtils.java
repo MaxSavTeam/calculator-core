@@ -21,12 +21,6 @@ public class MathUtils {
 		return BigDecimalMath.exp( x, new MathContext( mRoundScale ) );
 	}
 
-	public static BigDecimal pow(BigDecimal a, BigDecimal n) {
-		BigDecimal ln = ln( a );
-		BigDecimal multiplying = n.multiply( ln );
-		return exp( multiplying );
-	}
-
 	public static BigDecimal ln(BigDecimal x) {
 		return BigDecimalMath.log( x, new MathContext( mRoundScale + 2 ) );
 	}
@@ -50,15 +44,15 @@ public class MathUtils {
 	}
 
 	public static BigDecimal tan(BigDecimal x) {
-		return BigDecimalMath.tan( CalculatorUtils.toRadians( x ), new MathContext( 6 ) );
+		return BigDecimalMath.tan( toRadians( x ), new MathContext( 6 ) );
 	}
 
 	public static BigDecimal sin(BigDecimal x) {
-		return BigDecimalMath.sin( CalculatorUtils.toRadians( x ), new MathContext( 6 ) );
+		return BigDecimalMath.sin( toRadians( x ), new MathContext( 6 ) );
 	}
 
 	public static BigDecimal cos(BigDecimal x) {
-		return BigDecimalMath.cos( CalculatorUtils.toRadians( x ), new MathContext( 6 ) );
+		return BigDecimalMath.cos( toRadians( x ), new MathContext( 6 ) );
 	}
 
 	public static BigDecimal fact(BigDecimal a, int step) {
@@ -119,5 +113,51 @@ public class MathUtils {
 				return b;
 			}
 		}
+	}
+
+	public static BigDecimal rootWithBase(BigDecimal a, BigDecimal n) {
+		BigDecimal log = ln( a );
+		BigDecimal dLog = log.divide( n, 10, RoundingMode.HALF_EVEN );
+		return exp( dLog );
+	}
+
+	public static BigDecimal powWithExp(BigDecimal a, BigDecimal n) {
+		BigDecimal ln = ln( a );
+		BigDecimal multiplying = n.multiply( ln );
+		return exp( multiplying );
+	}
+
+	public static BigDecimal pow(BigDecimal a, BigDecimal n) {
+		if ( Fraction.isFraction( n ) ) {
+			Fraction fraction = new Fraction( n.toPlainString() );
+			return MathUtils.rootWithBase( sysPow( a, fraction.getNumerator() ), fraction.getDenominator() );
+		}
+		if ( n.compareTo( BigDecimal.ZERO ) < 0 ) {
+			BigDecimal result = sysPow( a, n.multiply( BigDecimal.valueOf( -1 ) ) );
+			String strRes = BigDecimal.ONE.divide( result, 8, RoundingMode.HALF_EVEN ).toPlainString();
+			return new BigDecimal( CalculatorUtils.deleteZeros( strRes ) );
+		} else {
+			return sysPow( a, n );
+		}
+	}
+
+	private static BigDecimal sysPow(BigDecimal a, BigDecimal n) {
+		if ( n.compareTo( BigDecimal.ZERO ) == 0 ) {
+			return BigDecimal.ONE;
+		}
+		if ( getRemainder( n, BigDecimal.valueOf( 2 ) ).compareTo( BigDecimal.ONE ) == 0 ) {
+			return sysPow( a, n.subtract( BigDecimal.ONE ) ).multiply( a );
+		} else {
+			BigDecimal b = sysPow( a, n.divide( BigDecimal.valueOf( 2 ), 0, RoundingMode.HALF_EVEN ) );
+			return b.multiply( b );
+		}
+	}
+
+	public static BigDecimal getRemainder(BigDecimal a, BigDecimal b) {
+		return a.remainder( b );
+	}
+
+	public static BigDecimal toRadians(BigDecimal decimal) {
+		return decimal.multiply(PI).divide( BigDecimal.valueOf( 180 ), 8, RoundingMode.HALF_EVEN );
 	}
 }
