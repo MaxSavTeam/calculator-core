@@ -12,6 +12,7 @@ import com.maxsavteam.tree.TreeBuilder;
 import com.maxsavteam.tree.nodes.*;
 import com.maxsavteam.utils.CalculatorUtils;
 import com.maxsavteam.utils.MathUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -26,18 +27,35 @@ public class Calculator {
     private FunctionsResolver functionsResolver = defaultFunctionsResolver;
     private SuffixOperatorResolver suffixResolver = defaultSuffixResolver;
 
-    public static final BinaryOperatorResolver defaultResolver = (operator, a, b) -> {
-        if (operator == '+')
-            return a.add(b);
-        if (operator == '-')
-            return a.subtract(b);
-        if (operator == '*')
-            return a.multiply(b);
-        if (operator == '/')
-            return CalculatorUtils.deleteZeros(a.divide(b, roundScale, RoundingMode.HALF_EVEN));
-        if (operator == '^')
-            return CalculatorUtils.deleteZeros(MathUtils.pow(a, b));
-        throw new CalculatingException("Unknown binary operator '" + operator + "'");
+    public static final BinaryOperatorResolver defaultResolver = new BinaryOperatorResolver() {
+        @Override
+        public @NotNull BigDecimal calculate(char operator, BigDecimal a, BigDecimal b) {
+            if (operator == '+')
+                return a.add(b);
+            if (operator == '-')
+                return a.subtract(b);
+            if (operator == '*')
+                return a.multiply(b);
+            if (operator == '/')
+                return CalculatorUtils.deleteZeros(a.divide(b, roundScale, RoundingMode.HALF_EVEN));
+            if (operator == '^')
+                return CalculatorUtils.deleteZeros(MathUtils.pow(a, b));
+            throw new CalculatingException("Unknown binary operator '" + operator + "'");
+        }
+
+        @Override
+        public @NotNull BigDecimal processPercent(char binaryOperator, BigDecimal a, BigDecimal percent) {
+            BigDecimal percentOfNum = a.multiply(percent); // percent already divided by zero
+            if(binaryOperator == '+')
+                return a.add(percentOfNum);
+            else if(binaryOperator == '-')
+                return a.subtract(percentOfNum);
+            else if(binaryOperator == '*')
+                return percentOfNum;
+            else if(binaryOperator == '/')
+                return a.divide(percent, roundScale, RoundingMode.HALF_EVEN);
+            throw new CalculatingException("Invalid operator for percent");
+        }
     };
 
     public static final FunctionsResolver defaultFunctionsResolver = (funcName, suffix, operand) -> {
@@ -75,6 +93,8 @@ public class Calculator {
     public static final SuffixOperatorResolver defaultSuffixResolver = (operator, count, operand) -> {
         if(operator == '!')
             return MathUtils.fact(operand, count);
+        else if(operator == '%')
+            return operand.divide(BigDecimal.valueOf(100), roundScale, RoundingMode.HALF_EVEN);
         throw new CalculatingException("Unknown suffix operator");
     };
 
@@ -112,7 +132,7 @@ public class Calculator {
 
     public BigDecimal calculate(String expression) {
         ArrayList<TreeNode> nodes = builder.buildTree(expression);
-        return calc(1, nodes);
+        return CalculatorUtils.deleteZeros(calc(1, nodes));
     }
 
     private BigDecimal calc(int v, ArrayList<TreeNode> nodes) {
@@ -134,18 +154,29 @@ public class Calculator {
                 throw new CalculatingException("No operand for suffix operator");
             return suffixResolver.resolve(suffixNode.operator, suffixNode.count, calc(2 * v, nodes));
         }else if(node instanceof OperatorNode) {
-            char symbol = ((OperatorNode) node).getOperator();
-            if (TreeBuilder.isNodeEmpty(2 * v, nodes))
-                throw new CalculatingException("Some binary operator does not have left operand");
-            if (TreeBuilder.isNodeEmpty(2 * v + 1, nodes))
-                throw new CalculatingException("Some binary operator does not have right operand");
-            BigDecimal a = calc(2 * v, nodes);
-            BigDecimal b = calc(2 * v + 1, nodes);
-
-            return resolver.calculate(symbol, a, b);
+            return processOperatorNode(v, nodes);
         }else{
             throw new CalculatingException("Requested empty node");
         }
+    }
+
+    protected BigDecimal processOperatorNode(int v, ArrayList<TreeNode> nodes){
+        char symbol = ((OperatorNode) nodes.get(v)).getOperator();
+        if (TreeBuilder.isNodeEmpty(2 * v, nodes))
+            throw new CalculatingException("Some binary operator does not have left operand");
+        if (TreeBuilder.isNodeEmpty(2 * v + 1, nodes))
+            throw new CalculatingException("Some binary operator does not have right operand");
+
+        BigDecimal a = calc(2 * v, nodes);
+        BigDecimal b = calc(2 * v + 1, nodes);
+        TreeNode rightNode = nodes.get(2 * v + 1);
+        if(rightNode instanceof SuffixOperatorNode){
+            SuffixOperatorNode suffix = (SuffixOperatorNode) rightNode;
+            if(suffix.operator == '%')
+                return resolver.processPercent(symbol, a, b);
+        }
+
+        return resolver.calculate(symbol, a, b);
     }
 
 }

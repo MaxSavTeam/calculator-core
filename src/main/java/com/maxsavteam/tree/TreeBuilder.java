@@ -21,6 +21,7 @@ public class TreeBuilder {
     }};
     public static final ArrayList<SuffixOperator> defaultSuffixOperators = new ArrayList<SuffixOperator>(){{
         add(new SuffixOperator('!'));
+        add(new SuffixOperator('%'));
     }};
     public static final TreeNode emptyNode = new TreeNode();
 

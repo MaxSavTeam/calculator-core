@@ -7,4 +7,7 @@ import java.math.BigDecimal;
 public interface BinaryOperatorResolver {
     @NotNull
     BigDecimal calculate(char operator, BigDecimal a, BigDecimal b);
+
+    @NotNull
+    BigDecimal processPercent(char binaryOperator, BigDecimal a, BigDecimal percent);
 }
