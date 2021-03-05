@@ -175,10 +175,14 @@ public class Calculator {
 
     protected BigDecimal processOperatorNode(int v, ArrayList<TreeNode> nodes){
         char symbol = ((OperatorNode) nodes.get(v)).getOperator();
-        if (TreeBuilder.isNodeEmpty(2 * v, nodes))
-            throw new CalculatingException("Some binary operator does not have left operand");
         if (TreeBuilder.isNodeEmpty(2 * v + 1, nodes))
             throw new CalculatingException("Some binary operator does not have right operand");
+
+        if (TreeBuilder.isNodeEmpty(2 * v, nodes))
+            if(symbol != '-')
+                throw new CalculatingException("Some binary operator does not have left operand");
+            else
+                return calc(2 * v + 1, nodes).multiply(BigDecimal.valueOf(-1));
 
         BigDecimal a = calc(2 * v, nodes);
         BigDecimal b = calc(2 * v + 1, nodes);
