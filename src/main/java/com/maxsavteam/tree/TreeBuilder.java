@@ -56,7 +56,7 @@ public class TreeBuilder {
         return treeNodes;
     }
 
-    private void build(int v, String expression, int rootLevel, int exampleOffset) {
+    protected void build(int v, String expression, int rootLevel, int exampleOffset) {
         if(expression.length() == 0)
             return;
         int minLevel = getBracketsMinLevel(expression);
@@ -89,7 +89,7 @@ public class TreeBuilder {
         }
     }
 
-    private void parseFunc(int v, String ex, int offset, int rootLevel){
+    protected void parseFunc(int v, String ex, int offset, int rootLevel){
         StringBuilder funcName = new StringBuilder();
         int i = 0;
         while(i < ex.length() && isLetter(ex.charAt(i))){
@@ -116,7 +116,7 @@ public class TreeBuilder {
         }
     }
 
-    private OperatorPosition findPosition(String ex, int offset, int rootLevel){
+    protected OperatorPosition findPosition(String ex, int offset, int rootLevel){
         int end = offset + ex.length();
         OperatorPosition foundPos = null;
         OperatorPosition lastPos = null;
@@ -146,13 +146,13 @@ public class TreeBuilder {
         return foundPos;
     }
 
-    private void expandTreeToPosition(int pos){
+    protected void expandTreeToPosition(int pos){
         while(treeNodes.size() <= pos){
             treeNodes.add(emptyNode);
         }
     }
 
-    private int getBracketsMinLevel(String ex) {
+    protected int getBracketsMinLevel(String ex) {
         Stack<Integer> typesStack = new Stack<>();
         int minLevel = Integer.MAX_VALUE;
 
