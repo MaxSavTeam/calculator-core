@@ -4,8 +4,10 @@ import com.maxsavteam.exceptions.CalculatingException;
 import com.maxsavteam.resolvers.BinaryOperatorResolver;
 import com.maxsavteam.resolvers.BracketsResolver;
 import com.maxsavteam.resolvers.FunctionsResolver;
+import com.maxsavteam.resolvers.SuffixOperatorResolver;
 import com.maxsavteam.tree.BinaryOperator;
 import com.maxsavteam.tree.BracketsType;
+import com.maxsavteam.tree.SuffixOperator;
 import com.maxsavteam.tree.TreeBuilder;
 import com.maxsavteam.tree.nodes.*;
 import com.maxsavteam.utils.CalculatorUtils;
@@ -22,6 +24,7 @@ public class Calculator {
     private BinaryOperatorResolver resolver = defaultResolver;
     private BracketsResolver bracketsResolver = defaultBracketsResolver;
     private FunctionsResolver functionsResolver = defaultFunctionsResolver;
+    private SuffixOperatorResolver suffixResolver = defaultSuffixResolver;
 
     public static final BinaryOperatorResolver defaultResolver = (operator, a, b) -> {
         if (operator == '+')
@@ -69,6 +72,12 @@ public class Calculator {
 
     public static final BracketsResolver defaultBracketsResolver = (type, a) -> a;
 
+    public static final SuffixOperatorResolver defaultSuffixResolver = (operator, count, operand) -> {
+        if(operator == '!')
+            return MathUtils.fact(operand, count);
+        throw new CalculatingException("Unknown suffix operator");
+    };
+
     public Calculator() {
         builder = new TreeBuilder();
     }
@@ -81,6 +90,10 @@ public class Calculator {
         builder.setBinaryOperators(operators);
     }
 
+    public void setSuffixOperators(ArrayList<SuffixOperator> operators){
+        builder.setSuffixOperators(operators);
+    }
+
     public void setBinaryOperatorResolver(BinaryOperatorResolver resolver) {
         this.resolver = resolver;
     }
@@ -91,6 +104,10 @@ public class Calculator {
 
     public void setFunctionsResolver(FunctionsResolver functionsResolver) {
         this.functionsResolver = functionsResolver;
+    }
+
+    public void setSuffixResolver(SuffixOperatorResolver suffixResolver) {
+        this.suffixResolver = suffixResolver;
     }
 
     public BigDecimal calculate(String expression) {
@@ -111,16 +128,24 @@ public class Calculator {
             if(!TreeBuilder.isNodeEmpty(2 * v, nodes))
                 operand = calc(2 * v, nodes);
             return functionsResolver.resolve(functionNode.funcName, functionNode.suffix, operand);
-        }
-        char symbol = ((OperatorNode) node).getOperator();
-        if (TreeBuilder.isNodeEmpty(2 * v, nodes))
-            throw new CalculatingException("Some binary operator does not have left operand");
-        if (TreeBuilder.isNodeEmpty(2 * v + 1, nodes))
-            throw new CalculatingException("Some binary operator does not have right operand");
-        BigDecimal a = calc(2 * v, nodes);
-        BigDecimal b = calc(2 * v + 1, nodes);
+        }else if(node instanceof SuffixOperatorNode){
+            SuffixOperatorNode suffixNode = (SuffixOperatorNode) node;
+            if(TreeBuilder.isNodeEmpty(2 * v, nodes))
+                throw new CalculatingException("No operand for suffix operator");
+            return suffixResolver.resolve(suffixNode.operator, suffixNode.count, calc(2 * v, nodes));
+        }else if(node instanceof OperatorNode) {
+            char symbol = ((OperatorNode) node).getOperator();
+            if (TreeBuilder.isNodeEmpty(2 * v, nodes))
+                throw new CalculatingException("Some binary operator does not have left operand");
+            if (TreeBuilder.isNodeEmpty(2 * v + 1, nodes))
+                throw new CalculatingException("Some binary operator does not have right operand");
+            BigDecimal a = calc(2 * v, nodes);
+            BigDecimal b = calc(2 * v + 1, nodes);
 
-        return resolver.calculate(symbol, a, b);
+            return resolver.calculate(symbol, a, b);
+        }else{
+            throw new CalculatingException("Requested empty node");
+        }
     }
 
 }
