@@ -1,10 +1,7 @@
 package com.maxsavteam.tree;
 
 import com.maxsavteam.exceptions.TreeBuildingException;
-import com.maxsavteam.tree.nodes.BracketsNode;
-import com.maxsavteam.tree.nodes.NumberNode;
-import com.maxsavteam.tree.nodes.OperatorNode;
-import com.maxsavteam.tree.nodes.TreeNode;
+import com.maxsavteam.tree.nodes.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -72,12 +69,60 @@ public class TreeBuilder {
             return;
         }
 
-        int end = exampleOffset + expression.length();
+        OperatorPosition foundPos = findPosition(expression, exampleOffset, rootLevel);
+        if(foundPos != null){
+            String firstPart = expression.substring(0, foundPos.position - exampleOffset);
+            String secondPart = expression.substring(foundPos.position - exampleOffset + 1);
+
+            OperatorNode node = new OperatorNode(expression.charAt(foundPos.position - exampleOffset));
+            treeNodes.set(v, node);
+
+            build(2 * v, firstPart, rootLevel, exampleOffset);
+            build(2 * v + 1, secondPart, rootLevel, foundPos.position + 1);
+        }else{
+            if(isLetter(expression.charAt(0))){
+                parseFunc(v, expression, exampleOffset, rootLevel);
+            }else {
+                NumberNode node = new NumberNode(new BigDecimal(expression));
+                treeNodes.set(v, node);
+            }
+        }
+    }
+
+    private void parseFunc(int v, String ex, int offset, int rootLevel){
+        StringBuilder funcName = new StringBuilder();
+        int i = 0;
+        while(i < ex.length() && isLetter(ex.charAt(i))){
+            funcName.append(ex.charAt(i));
+            i++;
+        }
+        if(i == ex.length()){
+            FunctionNode node = new FunctionNode(funcName.toString(), null);
+            treeNodes.set(v, node);
+        }else if(!isDigit(ex.charAt(i))){
+            build(2 * v, ex.substring(i), rootLevel, offset + i);
+        }else{
+            StringBuilder suffix = new StringBuilder();
+            while(i < ex.length() && isDigit(ex.charAt(i))){
+                suffix.append(ex.charAt(i));
+                i++;
+            }
+            BigDecimal a = new BigDecimal(suffix.toString());
+            FunctionNode node = new FunctionNode(funcName.toString(), a);
+            treeNodes.set(v, node);
+            if(i < ex.length()){
+                build(2 * v, ex.substring(i), rootLevel, offset + i);
+            }
+        }
+    }
+
+    private OperatorPosition findPosition(String ex, int offset, int rootLevel){
+        int end = offset + ex.length();
         OperatorPosition foundPos = null;
         OperatorPosition lastPos = null;
         boolean arePrioritiesEqual = true;
         for(OperatorPosition pos : mOperatorPositions){
-            if(exampleOffset > pos.position)
+            if(offset > pos.position)
                 continue;
             if (pos.position >= end) {
                 break;
@@ -98,20 +143,7 @@ public class TreeBuilder {
         }
         if(arePrioritiesEqual)
             foundPos = lastPos;
-
-        if(foundPos != null){
-            String firstPart = expression.substring(0, foundPos.position - exampleOffset);
-            String secondPart = expression.substring(foundPos.position - exampleOffset + 1);
-
-            OperatorNode node = new OperatorNode(expression.charAt(foundPos.position - exampleOffset));
-            treeNodes.set(v, node);
-
-            build(2 * v, firstPart, rootLevel, exampleOffset);
-            build(2 * v + 1, secondPart, rootLevel, foundPos.position + 1);
-        }else{
-            NumberNode node = new NumberNode(new BigDecimal(expression));
-            treeNodes.set(v, node);
-        }
+        return foundPos;
     }
 
     private void expandTreeToPosition(int pos){
@@ -153,6 +185,14 @@ public class TreeBuilder {
                 return true;
         }
         return false;
+    }
+
+    private boolean isLetter(char c){
+        return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z';
+    }
+
+    private boolean isDigit(char c){
+        return c >= '0' && c <= '9';
     }
 
     private int getBracketType(char c){
