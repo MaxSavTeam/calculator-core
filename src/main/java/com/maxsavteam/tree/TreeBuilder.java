@@ -96,11 +96,11 @@ public class TreeBuilder {
             funcName.append(ex.charAt(i));
             i++;
         }
-        if(i == ex.length()){
+        if(i == ex.length() || !isDigit(ex.charAt(i))){
             FunctionNode node = new FunctionNode(funcName.toString(), null);
             treeNodes.set(v, node);
-        }else if(!isDigit(ex.charAt(i))){
-            build(2 * v, ex.substring(i), rootLevel, offset + i);
+            if(!isDigit(ex.charAt(i)))
+                build(2 * v, ex.substring(i), rootLevel, offset + i);
         }else{
             StringBuilder suffix = new StringBuilder();
             while(i < ex.length() && isDigit(ex.charAt(i))){
