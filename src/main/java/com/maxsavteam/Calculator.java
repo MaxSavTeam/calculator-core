@@ -14,7 +14,6 @@ import com.maxsavteam.utils.CalculatorUtils;
 import com.maxsavteam.utils.MathUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.management.OperatingSystemMXBean;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class Calculator {
         }
 
         @Override
-        public @NotNull BigDecimal processPercent(char binaryOperator, BigDecimal a, BigDecimal percent) {
+        public @NotNull BigDecimal calculatePercent(char binaryOperator, BigDecimal a, BigDecimal percent) {
             BigDecimal percentOfNum = a.multiply(percent); // percent already divided by zero
             if(binaryOperator == '+')
                 return a.add(percentOfNum);
@@ -186,7 +185,7 @@ public class Calculator {
         if(rightNode instanceof SuffixOperatorNode){
             SuffixOperatorNode suffix = (SuffixOperatorNode) rightNode;
             if(suffix.operator == '%')
-                return resolver.processPercent(symbol, a, b);
+                return resolver.calculatePercent(symbol, a, b);
         }
 
         return resolver.calculate(symbol, a, b);

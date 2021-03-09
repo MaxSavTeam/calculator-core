@@ -9,5 +9,5 @@ public interface BinaryOperatorResolver {
     BigDecimal calculate(char operator, BigDecimal a, BigDecimal b);
 
     @NotNull
-    BigDecimal processPercent(char binaryOperator, BigDecimal a, BigDecimal percent);
+    BigDecimal calculatePercent(char binaryOperator, BigDecimal a, BigDecimal percent);
 }
