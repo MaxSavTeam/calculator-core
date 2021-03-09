@@ -1,6 +1,7 @@
 package com.maxsavteam.utils;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
+import com.maxsavteam.exceptions.CalculatingException;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -22,16 +23,20 @@ public class MathUtils {
 	}
 
 	public static BigDecimal ln(BigDecimal x) {
-		return BigDecimalMath.log( x, new MathContext( mRoundScale + 2 ) );
+		if(x.signum() < 0)
+			throw new CalculatingException(CalculatingException.NEGATIVE_PARAMETER_OF_LOG);
+		return BigDecimalMath.log( x, new MathContext( mRoundScale ) );
 	}
 
 	public static BigDecimal log(BigDecimal x) {
+		if(x.signum() < 0)
+			throw new CalculatingException(CalculatingException.NEGATIVE_PARAMETER_OF_LOG);
 		return BigDecimalMath.log10( x, new MathContext( mRoundScale ) );
 	}
 
 	public static BigDecimal logWithBase(BigDecimal x, BigDecimal base){
-		BigDecimal logX = BigDecimalMath.log10( x, new MathContext( mRoundScale ) ),
-				logB = BigDecimalMath.log10( base, new MathContext( mRoundScale ) );
+		BigDecimal logX = log( x ),
+				logB = log( base );
 		return logX.divide( logB, mRoundScale, RoundingMode.HALF_EVEN );
 	}
 
@@ -44,6 +49,8 @@ public class MathUtils {
 	}
 
 	public static BigDecimal tan(BigDecimal x) {
+		if(x.compareTo(BigDecimal.valueOf(90)) == 0)
+			throw new CalculatingException(CalculatingException.TAN_OF_90);
 		return BigDecimalMath.tan( toRadians( x ), new MathContext( 6 ) );
 	}
 
@@ -116,6 +123,8 @@ public class MathUtils {
 	}
 
 	public static BigDecimal rootWithBase(BigDecimal a, BigDecimal n) {
+		if(n.remainder(BigDecimal.valueOf(2)).signum() == 0 && a.signum() < 0)
+			throw new CalculatingException(CalculatingException.ROOT_OF_EVEN_DEGREE_OF_NEGATIVE_NUMBER);
 		BigDecimal log = ln( a );
 		BigDecimal dLog = log.divide( n, 10, RoundingMode.HALF_EVEN );
 		return exp( dLog );
@@ -128,6 +137,14 @@ public class MathUtils {
 	}
 
 	public static BigDecimal pow(BigDecimal a, BigDecimal n) {
+		if(a.signum() == 0){
+			if(n.signum() < 0)
+				throw new CalculatingException(CalculatingException.NAN);
+			else if(n.signum() == 0)
+				throw new CalculatingException(CalculatingException.UNDEFINED);
+			else
+				return BigDecimal.ZERO;
+		}
 		if ( n.signum() < 0 ) {
 			BigDecimal result = pow( a, n.multiply( BigDecimal.valueOf( -1 ) ) );
 			String strRes = BigDecimal.ONE.divide( result, 8, RoundingMode.HALF_EVEN ).toPlainString();
@@ -145,16 +162,12 @@ public class MathUtils {
 		if ( n.compareTo( BigDecimal.ZERO ) == 0 ) {
 			return BigDecimal.ONE;
 		}
-		if ( getRemainder( n, BigDecimal.valueOf( 2 ) ).compareTo( BigDecimal.ONE ) == 0 ) {
+		if ( n.remainder( BigDecimal.valueOf( 2 ) ).compareTo( BigDecimal.ONE ) == 0 ) {
 			return sysPow( a, n.subtract( BigDecimal.ONE ) ).multiply( a );
 		} else {
 			BigDecimal b = sysPow( a, n.divide( BigDecimal.valueOf( 2 ), 0, RoundingMode.HALF_EVEN ) );
 			return b.multiply( b );
 		}
-	}
-
-	public static BigDecimal getRemainder(BigDecimal a, BigDecimal b) {
-		return a.remainder( b );
 	}
 
 	public static BigDecimal toRadians(BigDecimal decimal) {
