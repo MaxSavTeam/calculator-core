@@ -1,4 +1,4 @@
-package com.maxsavteam.utils;
+package com.maxsavteam.calculator.utils;
 
 import java.math.BigDecimal;
 

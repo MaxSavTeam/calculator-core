@@ -1,4 +1,4 @@
-package com.maxsavteam.tree.nodes;
+package com.maxsavteam.calculator.tree.nodes;
 
 public class SuffixOperatorNode extends TreeNode {
 

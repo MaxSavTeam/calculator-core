@@ -1,7 +1,7 @@
-package com.maxsavteam.utils;
+package com.maxsavteam.calculator.utils;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
-import com.maxsavteam.exceptions.CalculatingException;
+import com.maxsavteam.calculator.exceptions.CalculatingException;
 
 import java.math.BigDecimal;
 import java.math.MathContext;

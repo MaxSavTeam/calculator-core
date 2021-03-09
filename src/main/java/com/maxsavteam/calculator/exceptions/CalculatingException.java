@@ -1,4 +1,4 @@
-package com.maxsavteam.exceptions;
+package com.maxsavteam.calculator.exceptions;
 
 public class CalculatingException extends RuntimeException {
 

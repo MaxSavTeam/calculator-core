@@ -1,4 +1,4 @@
-package com.maxsavteam.resolvers;
+package com.maxsavteam.calculator.resolvers;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

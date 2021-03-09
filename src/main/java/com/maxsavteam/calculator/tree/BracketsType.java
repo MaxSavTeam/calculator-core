@@ -1,4 +1,4 @@
-package com.maxsavteam.tree;
+package com.maxsavteam.calculator.tree;
 
 public class BracketsType {
 

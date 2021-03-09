@@ -1,17 +1,17 @@
-package com.maxsavteam;
+package com.maxsavteam.calculator;
 
-import com.maxsavteam.exceptions.CalculatingException;
-import com.maxsavteam.resolvers.BinaryOperatorResolver;
-import com.maxsavteam.resolvers.BracketsResolver;
-import com.maxsavteam.resolvers.FunctionsResolver;
-import com.maxsavteam.resolvers.SuffixOperatorResolver;
-import com.maxsavteam.tree.BinaryOperator;
-import com.maxsavteam.tree.BracketsType;
-import com.maxsavteam.tree.SuffixOperator;
-import com.maxsavteam.tree.TreeBuilder;
-import com.maxsavteam.tree.nodes.*;
-import com.maxsavteam.utils.CalculatorUtils;
-import com.maxsavteam.utils.MathUtils;
+import com.maxsavteam.calculator.exceptions.CalculatingException;
+import com.maxsavteam.calculator.resolvers.BinaryOperatorResolver;
+import com.maxsavteam.calculator.resolvers.BracketsResolver;
+import com.maxsavteam.calculator.resolvers.FunctionsResolver;
+import com.maxsavteam.calculator.resolvers.SuffixOperatorResolver;
+import com.maxsavteam.calculator.tree.BinaryOperator;
+import com.maxsavteam.calculator.tree.BracketsType;
+import com.maxsavteam.calculator.tree.SuffixOperator;
+import com.maxsavteam.calculator.tree.TreeBuilder;
+import com.maxsavteam.calculator.tree.nodes.*;
+import com.maxsavteam.calculator.utils.CalculatorUtils;
+import com.maxsavteam.calculator.utils.MathUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;

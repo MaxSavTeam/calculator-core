@@ -1,4 +1,4 @@
-package com.maxsavteam.tree;
+package com.maxsavteam.calculator.tree;
 
 public class OperatorPosition implements Comparable<OperatorPosition> {
     public final int level;

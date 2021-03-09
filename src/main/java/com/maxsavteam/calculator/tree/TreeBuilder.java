@@ -1,7 +1,7 @@
-package com.maxsavteam.tree;
+package com.maxsavteam.calculator.tree;
 
-import com.maxsavteam.exceptions.TreeBuildingException;
-import com.maxsavteam.tree.nodes.*;
+import com.maxsavteam.calculator.exceptions.TreeBuildingException;
+import com.maxsavteam.calculator.tree.nodes.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
