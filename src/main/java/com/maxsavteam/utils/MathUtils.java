@@ -128,17 +128,17 @@ public class MathUtils {
 	}
 
 	public static BigDecimal pow(BigDecimal a, BigDecimal n) {
-		if ( Fraction.isFraction( n ) ) {
-			Fraction fraction = new Fraction( n.toPlainString() );
-			return MathUtils.rootWithBase( sysPow( a, fraction.getNumerator() ), fraction.getDenominator() );
-		}
-		if ( n.compareTo( BigDecimal.ZERO ) < 0 ) {
-			BigDecimal result = sysPow( a, n.multiply( BigDecimal.valueOf( -1 ) ) );
+		if ( n.signum() < 0 ) {
+			BigDecimal result = pow( a, n.multiply( BigDecimal.valueOf( -1 ) ) );
 			String strRes = BigDecimal.ONE.divide( result, 8, RoundingMode.HALF_EVEN ).toPlainString();
 			return new BigDecimal( CalculatorUtils.deleteZeros( strRes ) );
-		} else {
-			return sysPow( a, n );
 		}
+		if ( Fraction.isFraction( n ) ) {
+			BigDecimal scaledN = n.setScale(3, RoundingMode.HALF_DOWN);
+			Fraction fraction = new Fraction( scaledN.toPlainString() );
+			return MathUtils.rootWithBase( sysPow( a, fraction.getNumerator() ), fraction.getDenominator() );
+		}
+		return sysPow( a, n );
 	}
 
 	private static BigDecimal sysPow(BigDecimal a, BigDecimal n) {
