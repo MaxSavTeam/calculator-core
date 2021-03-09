@@ -14,6 +14,7 @@ import com.maxsavteam.utils.CalculatorUtils;
 import com.maxsavteam.utils.MathUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.management.OperatingSystemMXBean;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -155,12 +156,10 @@ public class Calculator {
             return bracketsResolver.resolve(((BracketsNode) node).getType(), calc(2 * v, nodes));
         } else if (node instanceof NumberNode) {
             return ((NumberNode) node).getNumber();
+        }else if(node instanceof NegativeNumberNode){
+            return calc(2 * v, nodes).multiply(BigDecimal.valueOf(-1));
         }else if(node instanceof FunctionNode){
-            FunctionNode functionNode = (FunctionNode) node;
-            BigDecimal operand = null;
-            if(!TreeBuilder.isNodeEmpty(2 * v, nodes))
-                operand = calc(2 * v, nodes);
-            return functionsResolver.resolve(functionNode.funcName, functionNode.suffix, operand);
+            return processFunction(v, nodes);
         }else if(node instanceof SuffixOperatorNode){
             SuffixOperatorNode suffixNode = (SuffixOperatorNode) node;
             if(TreeBuilder.isNodeEmpty(2 * v, nodes))
@@ -179,10 +178,7 @@ public class Calculator {
             throw new CalculatingException("Some binary operator does not have right operand");
 
         if (TreeBuilder.isNodeEmpty(2 * v, nodes))
-            if(symbol != '-')
-                throw new CalculatingException("Some binary operator does not have left operand");
-            else
-                return calc(2 * v + 1, nodes).multiply(BigDecimal.valueOf(-1));
+            throw new CalculatingException("Some binary operator does not have left operand");
 
         BigDecimal a = calc(2 * v, nodes);
         BigDecimal b = calc(2 * v + 1, nodes);
@@ -194,6 +190,47 @@ public class Calculator {
         }
 
         return resolver.calculate(symbol, a, b);
+    }
+
+    protected BigDecimal processFunction(int v, ArrayList<TreeNode> nodes){
+        FunctionNode functionNode = (FunctionNode) nodes.get(v);
+        if(functionNode.funcName.equals("A"))
+            return processAverage(v, nodes);
+        BigDecimal operand = null;
+        if(!TreeBuilder.isNodeEmpty(2 * v, nodes))
+            operand = calc(2 * v, nodes);
+        return functionsResolver.resolve(functionNode.funcName, functionNode.suffix, operand);
+    }
+
+    protected BigDecimal processAverage(int v, ArrayList<TreeNode> nodes){
+        BigDecimal sum = calc(2 * v, nodes);
+        int count = 1;
+        v *= 4;
+        while(true){
+            count++;
+            if(TreeBuilder.isNodeEmpty(2 * v, nodes) || TreeBuilder.isNodeEmpty(2 * v + 1, nodes))
+                break;
+            TreeNode left = nodes.get(2 * v);
+            TreeNode right = nodes.get(2 * v + 1);
+            if(!(left instanceof OperatorNode) && !(right instanceof OperatorNode) )
+                break;
+            int next = -1;
+            if(left instanceof OperatorNode){
+                OperatorNode node = (OperatorNode) left;
+                if(node.getOperator() == '-' || node.getOperator() == '+')
+                    next = 2 * v;
+            }
+            if(right instanceof OperatorNode){
+                OperatorNode node = (OperatorNode) right;
+                if(node.getOperator() == '-' || node.getOperator() == '+')
+                    next = 2 * v + 1;
+            }
+            if(next == -1)
+                break;
+            else
+                v = next;
+        }
+        return sum.divide(BigDecimal.valueOf(count), roundScale, RoundingMode.HALF_EVEN);
     }
 
 }

@@ -89,8 +89,17 @@ public class TreeBuilder {
             OperatorNode node = new OperatorNode(expression.charAt(foundPos.position - exampleOffset));
             treeNodes.set(v, node);
 
-            build(2 * v, firstPart, rootLevel, exampleOffset);
-            build(2 * v + 1, secondPart, rootLevel, foundPos.position + 1);
+            if(firstPart.isEmpty() && !secondPart.isEmpty()){
+                if(node.getOperator() == '+')
+                    build(v, secondPart, rootLevel, foundPos.position + 1);
+                else if(node.getOperator() == '-'){
+                    treeNodes.set(v, new NegativeNumberNode());
+                    build(2 * v, secondPart, rootLevel, foundPos.position + 1);
+                }
+            }else {
+                build(2 * v, firstPart, rootLevel, exampleOffset);
+                build(2 * v + 1, secondPart, rootLevel, foundPos.position + 1);
+            }
         }else{
             if(isLetter(expression.charAt(0))) {
                 parseFunc(v, expression, exampleOffset, rootLevel);
@@ -255,6 +264,13 @@ public class TreeBuilder {
 
     public static boolean isNodeEmpty(int v, ArrayList<TreeNode> nodes){
         return nodes.size() <= v || nodes.get(v) == emptyNode;
+    }
+
+    public static boolean isNegativeNumberNode(int v, ArrayList<TreeNode> nodes){
+        TreeNode node = nodes.get(v);
+        if(!(node instanceof OperatorNode))
+            return false;
+        return isNodeEmpty(2 * v, nodes) && !isNodeEmpty(2 * v + 1, nodes) && ((OperatorNode) node).getOperator() == '-';
     }
 
 }
