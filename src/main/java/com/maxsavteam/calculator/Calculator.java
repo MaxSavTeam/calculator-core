@@ -150,7 +150,8 @@ public class Calculator {
     }
 
     public BigDecimal calculate(String expression) {
-        ArrayList<TreeNode> nodes = builder.buildTree(expression);
+        String closedExpression = ExpressionBracketsChecker.tryToCloseExpressionBrackets(expression, builder.getBrackets());
+        ArrayList<TreeNode> nodes = builder.buildTree(closedExpression);
         return CalculatorUtils.deleteZeros(calc(1, nodes));
     }
 

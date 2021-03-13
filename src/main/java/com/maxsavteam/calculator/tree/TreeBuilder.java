@@ -46,6 +46,18 @@ public class TreeBuilder {
         this.suffixOperators = suffixOperators;
     }
 
+    public ArrayList<BracketsType> getBrackets() {
+        return brackets;
+    }
+
+    public ArrayList<BinaryOperator> getOperators() {
+        return operators;
+    }
+
+    public ArrayList<SuffixOperator> getSuffixOperators() {
+        return suffixOperators;
+    }
+
     public ArrayList<TreeNode> buildTree(String expression) {
         treeNodes = new ArrayList<>();
         mOperatorPositions = new ArrayList<>();
