@@ -131,9 +131,12 @@ public class Calculator {
 
     public Calculator() {
         builder = new TreeBuilder();
+
         mBracketsChecker = new CalculatorExpressionBracketsChecker();
         mBracketsChecker.setBracketsTypes(TreeBuilder.defaultBrackets);
-        mExpressionTokenizer = new CalculatorExpressionTokenizer(defaultReplacementMap);
+
+        mExpressionTokenizer = new CalculatorExpressionTokenizer();
+        mExpressionTokenizer.setReplacementMap(defaultReplacementMap);
     }
 
     public void setBracketsTypes(ArrayList<BracketsType> brackets) {
@@ -163,6 +166,10 @@ public class Calculator {
 
     public void setSuffixResolver(SuffixOperatorResolver suffixResolver) {
         this.suffixResolver = suffixResolver;
+    }
+
+    public void setAliases(Map<String, String> map){
+        mExpressionTokenizer.setReplacementMap(map);
     }
 
     public BigDecimal calculate(String expression) {

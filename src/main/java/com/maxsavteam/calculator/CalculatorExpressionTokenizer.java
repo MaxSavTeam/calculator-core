@@ -4,9 +4,9 @@ import java.util.Map;
 
 public class CalculatorExpressionTokenizer {
 
-    private final Map<String, String> mReplacementMap;
+    private Map<String, String> mReplacementMap;
 
-    public CalculatorExpressionTokenizer(Map<String, String> replacementMap) {
+    public void setReplacementMap(Map<String, String> replacementMap) {
         mReplacementMap = replacementMap;
     }
 
