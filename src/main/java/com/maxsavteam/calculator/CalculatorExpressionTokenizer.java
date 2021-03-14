@@ -13,7 +13,7 @@ public class CalculatorExpressionTokenizer {
     public String tokenizeExpression(String expression) {
         String expr = expression;
         for(Map.Entry<String, String> entry : mReplacementMap.entrySet()){
-            expr = expr.replaceAll(entry.getValue(), entry.getKey());
+            expr = expr.replaceAll(entry.getKey(), entry.getValue());
         }
         return expr;
     }

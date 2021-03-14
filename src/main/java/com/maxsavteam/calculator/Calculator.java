@@ -24,7 +24,7 @@ public class Calculator {
 
     public static final String PI_SIGN = "\u03C0";
     public static final String FI_SIGN = "\u03C6";
-    public static final String E_SIGN = "Ɛ";
+    public static final String E_SIGN = "\u0190";
 
     private final TreeBuilder builder;
     private final CalculatorExpressionTokenizer mExpressionTokenizer;
@@ -36,10 +36,10 @@ public class Calculator {
     private SuffixOperatorResolver suffixResolver = defaultSuffixResolver;
 
     public static final Map<String, String> defaultReplacementMap = new HashMap<String, String>(){{
-        put("(" + MathUtils.PI.toPlainString() + ")", PI_SIGN);
-        put("(" + MathUtils.FI.toPlainString() + ")", FI_SIGN);
-        put("(" + MathUtils.E.toPlainString() + ")", E_SIGN);
-        put("(" + MathUtils.E.toPlainString() + ")", "e");
+        put(PI_SIGN, "(" + MathUtils.PI.toPlainString() + ")");
+        put(FI_SIGN, "(" + MathUtils.FI.toPlainString() + ")");
+        put(E_SIGN, "(" + MathUtils.E.toPlainString() + ")");
+        put("e", "(" + MathUtils.E.toPlainString() + ")");
     }};
 
     public static final BinaryOperatorResolver defaultResolver = new BinaryOperatorResolver() {
