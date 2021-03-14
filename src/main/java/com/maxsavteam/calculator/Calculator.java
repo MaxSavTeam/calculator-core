@@ -162,7 +162,7 @@ public class Calculator {
     }
 
     public BigDecimal calculate(String expression) {
-        String expr = mExpressionTokenizer.formatExpression(expression);
+        String expr = mExpressionTokenizer.tokenizeExpression(expression);
         String closedExpression = ExpressionBracketsChecker.tryToCloseExpressionBrackets(expr, builder.getBrackets());
         ArrayList<TreeNode> nodes = builder.buildTree(closedExpression);
         return CalculatorUtils.deleteZeros(calc(1, nodes));

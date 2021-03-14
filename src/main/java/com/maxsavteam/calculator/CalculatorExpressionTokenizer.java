@@ -10,7 +10,7 @@ public class CalculatorExpressionTokenizer {
         mReplacementMap = replacementMap;
     }
 
-    public String formatExpression(String expression) {
+    public String tokenizeExpression(String expression) {
         String expr = expression;
         for(Map.Entry<String, String> entry : mReplacementMap.entrySet()){
             expr = expr.replaceAll(entry.getValue(), entry.getKey());
