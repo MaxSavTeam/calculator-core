@@ -24,7 +24,7 @@ public class Calculator {
 
     public static final String PI_SIGN = "\u03C0";
     public static final String FI_SIGN = "\u03C6";
-    public static final String E_SIGN = "e";
+    public static final String E_SIGN = "Ɛ";
 
     private final TreeBuilder builder;
     private final CalculatorExpressionTokenizer mExpressionTokenizer;
@@ -39,6 +39,7 @@ public class Calculator {
         put("(" + MathUtils.PI.toPlainString() + ")", PI_SIGN);
         put("(" + MathUtils.FI.toPlainString() + ")", FI_SIGN);
         put("(" + MathUtils.E.toPlainString() + ")", E_SIGN);
+        put("(" + MathUtils.E.toPlainString() + ")", "e");
     }};
 
     public static final BinaryOperatorResolver defaultResolver = new BinaryOperatorResolver() {

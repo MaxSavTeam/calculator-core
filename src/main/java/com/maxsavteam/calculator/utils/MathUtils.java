@@ -11,6 +11,7 @@ public class MathUtils {
 	public static final BigDecimal E = new BigDecimal( "2.7182818284590452354" );
 	public static final BigDecimal PI = new BigDecimal( "3.14159265358979323846" );
 	public static final BigDecimal FI = new BigDecimal( "1.618" );
+	private static BigDecimal factorialLimit = new BigDecimal("100000");
 
 	private static int mRoundScale = 8;
 
@@ -63,8 +64,12 @@ public class MathUtils {
 	}
 
 	public static BigDecimal fact(BigDecimal a, int step) {
+		if(a.compareTo(factorialLimit) > 0)
+			throw new CalculatingException(CalculatingException.FACTORIAL_LIMIT_EXCEEDED);
 		if(a.signum() == 0)
 			return BigDecimal.ONE;
+		if(step == 1 && a.compareTo(BigDecimal.valueOf(Long.MAX_VALUE)) <= 0)
+			return factTree(1L, a.longValue());
 		BigDecimal x = a;
 		BigDecimal ans = BigDecimal.ONE;
 		BigDecimal bStep = BigDecimal.valueOf( step );
@@ -72,6 +77,17 @@ public class MathUtils {
 			ans = ans.multiply( x );
 		}
 		return ans;
+	}
+
+	private static BigDecimal factTree(long l, long r){
+		if(l > r)
+			return BigDecimal.ONE;
+		if(l == r)
+			return BigDecimal.valueOf(l);
+		if(r - l == 1)
+			return BigDecimal.valueOf(l * r);
+		long m = l + (r - l) / 2;
+		return factTree(l, m).multiply(factTree(m + 1, r));
 	}
 
 	public static BigDecimal floor(BigDecimal x){
