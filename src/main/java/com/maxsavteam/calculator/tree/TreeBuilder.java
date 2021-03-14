@@ -2,6 +2,7 @@ package com.maxsavteam.calculator.tree;
 
 import com.maxsavteam.calculator.exceptions.TreeBuildingException;
 import com.maxsavteam.calculator.tree.nodes.*;
+import com.maxsavteam.calculator.utils.CalculatorUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -113,7 +114,7 @@ public class TreeBuilder {
                 build(2 * v + 1, secondPart, rootLevel, foundPos.position + 1);
             }
         }else{
-            if(isLetter(expression.charAt(0))) {
+            if(CalculatorUtils.isLetter(expression.charAt(0))) {
                 parseFunc(v, expression, exampleOffset, rootLevel);
             }else if(isSuffixOperator(expression.charAt(expression.length() - 1))){
                 parseSuffixOperator(v, expression, exampleOffset, rootLevel);
@@ -140,18 +141,18 @@ public class TreeBuilder {
     protected void parseFunc(int v, String ex, int offset, int rootLevel){
         StringBuilder funcName = new StringBuilder();
         int i = 0;
-        while(i < ex.length() && isLetter(ex.charAt(i))){
+        while(i < ex.length() && CalculatorUtils.isLetter(ex.charAt(i))){
             funcName.append(ex.charAt(i));
             i++;
         }
-        if(i == ex.length() || !isDigit(ex.charAt(i))){
+        if(i == ex.length() || !CalculatorUtils.isDigit(ex.charAt(i))){
             FunctionNode node = new FunctionNode(funcName.toString(), null);
             treeNodes.set(v, node);
-            if(!isDigit(ex.charAt(i)))
+            if(!CalculatorUtils.isDigit(ex.charAt(i)))
                 build(2 * v, ex.substring(i), rootLevel, offset + i);
         }else{
             StringBuilder suffix = new StringBuilder();
-            while(i < ex.length() && isDigit(ex.charAt(i))){
+            while(i < ex.length() && CalculatorUtils.isDigit(ex.charAt(i))){
                 suffix.append(ex.charAt(i));
                 i++;
             }
@@ -233,14 +234,6 @@ public class TreeBuilder {
                 return true;
         }
         return false;
-    }
-
-    private boolean isLetter(char c){
-        return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z';
-    }
-
-    private boolean isDigit(char c){
-        return c >= '0' && c <= '9';
     }
 
     private boolean isSuffixOperator(char c){

@@ -17,15 +17,26 @@ import org.jetbrains.annotations.NotNull;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Calculator {
 
+    public static final String PI_SIGN = "\u03C0";
+    public static final String FI_SIGN = "\u03C6";
+
     private final TreeBuilder builder;
+    private final CalculatorExpressionTokenizer mExpressionTokenizer;
     public final static int roundScale = 8;
     private BinaryOperatorResolver resolver = defaultResolver;
     private BracketsResolver bracketsResolver = defaultBracketsResolver;
     private FunctionsResolver functionsResolver = defaultFunctionsResolver;
     private SuffixOperatorResolver suffixResolver = defaultSuffixResolver;
+
+    public static final Map<String, String> defaultReplacementMap = new HashMap<String, String>(){{
+        put("(" + MathUtils.PI.toPlainString() + ")", PI_SIGN);
+        put("(" + MathUtils.FI.toPlainString() + ")", FI_SIGN);
+    }};
 
     public static final BinaryOperatorResolver defaultResolver = new BinaryOperatorResolver() {
         @Override
@@ -119,6 +130,7 @@ public class Calculator {
 
     public Calculator() {
         builder = new TreeBuilder();
+        mExpressionTokenizer = new CalculatorExpressionTokenizer(defaultReplacementMap);
     }
 
     public void setBracketsTypes(ArrayList<BracketsType> brackets) {
@@ -150,7 +162,8 @@ public class Calculator {
     }
 
     public BigDecimal calculate(String expression) {
-        String closedExpression = ExpressionBracketsChecker.tryToCloseExpressionBrackets(expression, builder.getBrackets());
+        String expr = mExpressionTokenizer.formatExpression(expression);
+        String closedExpression = ExpressionBracketsChecker.tryToCloseExpressionBrackets(expr, builder.getBrackets());
         ArrayList<TreeNode> nodes = builder.buildTree(closedExpression);
         return CalculatorUtils.deleteZeros(calc(1, nodes));
     }
