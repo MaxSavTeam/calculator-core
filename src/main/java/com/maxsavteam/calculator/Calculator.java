@@ -27,6 +27,7 @@ public class Calculator {
 
     private final TreeBuilder builder;
     private final CalculatorExpressionTokenizer mExpressionTokenizer;
+    private final CalculatorExpressionBracketsChecker mBracketsChecker;
     public final static int roundScale = 8;
     private BinaryOperatorResolver resolver = defaultResolver;
     private BracketsResolver bracketsResolver = defaultBracketsResolver;
@@ -130,11 +131,14 @@ public class Calculator {
 
     public Calculator() {
         builder = new TreeBuilder();
+        mBracketsChecker = new CalculatorExpressionBracketsChecker();
+        mBracketsChecker.setBracketsTypes(TreeBuilder.defaultBrackets);
         mExpressionTokenizer = new CalculatorExpressionTokenizer(defaultReplacementMap);
     }
 
     public void setBracketsTypes(ArrayList<BracketsType> brackets) {
         builder.setBracketsTypes(brackets);
+        mBracketsChecker.setBracketsTypes(brackets);
     }
 
     public void setBinaryOperators(ArrayList<BinaryOperator> operators) {
@@ -163,7 +167,7 @@ public class Calculator {
 
     public BigDecimal calculate(String expression) {
         String expr = mExpressionTokenizer.tokenizeExpression(expression);
-        String closedExpression = ExpressionBracketsChecker.tryToCloseExpressionBrackets(expr, builder.getBrackets());
+        String closedExpression = mBracketsChecker.tryToCloseExpressionBrackets(expr);
         ArrayList<TreeNode> nodes = builder.buildTree(closedExpression);
         return CalculatorUtils.deleteZeros(calc(1, nodes));
     }
