@@ -30,7 +30,7 @@ public class Fraction {
 	}
 
 	public Fraction(String fraction){
-		String s = CalculatorUtils.deleteZeros(fraction);
+		String s = CalculatorUtils.removeZeros(fraction);
 		if(s.contains(".")){
 			int pos = s.indexOf(".");
 			int n = s.length() - pos - 1;

@@ -54,9 +54,9 @@ public class Calculator {
                 if (b.signum() == 0)
                     throw new CalculatingException(CalculatingException.DIVISION_BY_ZERO);
                 else
-                    return CalculatorUtils.deleteZeros(a.divide(b, roundScale, RoundingMode.HALF_EVEN));
+                    return CalculatorUtils.removeZeros(a.divide(b, roundScale, RoundingMode.HALF_EVEN));
             if (operator == '^')
-                return CalculatorUtils.deleteZeros(MathUtils.pow(a, b));
+                return CalculatorUtils.removeZeros(MathUtils.pow(a, b));
             throw new CalculatingException(CalculatingException.INVALID_BINARY_OPERATOR);
         }
 
@@ -175,11 +175,12 @@ public class Calculator {
     }
 
     public BigDecimal calculate(String expression) {
-        String expr = mExpressionTokenizer.tokenizeExpression(expression);
+        String expr = CalculatorUtils.removeSpaces(expression);
+        expr = mExpressionTokenizer.tokenizeExpression(expr);
         expr = mBracketsChecker.tryToCloseExpressionBrackets(expr);
         expr = mBracketsChecker.formatNearBrackets(expr);
         ArrayList<TreeNode> nodes = builder.buildTree(expr);
-        return CalculatorUtils.deleteZeros(calc(1, nodes));
+        return CalculatorUtils.removeZeros(calc(1, nodes));
     }
 
     private BigDecimal calc(int v, ArrayList<TreeNode> nodes) {

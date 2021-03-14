@@ -91,7 +91,7 @@ public class MathUtils {
 			return x;
 		}else {
 			String afterDot = s.substring( pos + 1 );
-			if(CalculatorUtils.deleteZeros( afterDot ).equals( "0" ))
+			if(CalculatorUtils.removeZeros( afterDot ).equals( "0" ))
 				return new BigDecimal( s.substring( 0, pos ) ); // delete part after dot
 
 			BigDecimal b = abs( new BigDecimal( s.substring( 0, pos ) ) );
@@ -148,7 +148,7 @@ public class MathUtils {
 		if ( n.signum() < 0 ) {
 			BigDecimal result = pow( a, n.multiply( BigDecimal.valueOf( -1 ) ) );
 			String strRes = BigDecimal.ONE.divide( result, 8, RoundingMode.HALF_EVEN ).toPlainString();
-			return new BigDecimal( CalculatorUtils.deleteZeros( strRes ) );
+			return new BigDecimal( CalculatorUtils.removeZeros( strRes ) );
 		}
 		if ( Fraction.isFraction( n ) ) {
 			BigDecimal scaledN = n.setScale(3, RoundingMode.HALF_DOWN);

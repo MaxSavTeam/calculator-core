@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class CalculatorUtils {
 
-    public static String deleteZeros(String s){
+    public static String removeZeros(String s){
         String res = s;
         int len = res.length();
         if ( res.contains( "." ) && res.charAt( len - 1 ) == '0' ) {
@@ -22,8 +22,17 @@ public class CalculatorUtils {
         return res;
     }
 
-    public static BigDecimal deleteZeros(BigDecimal b){
-        return new BigDecimal(deleteZeros(b.toPlainString()));
+    public static BigDecimal removeZeros(BigDecimal b){
+        return new BigDecimal(removeZeros(b.toPlainString()));
+    }
+
+    public static String removeSpaces(String ex){
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < ex.length(); i++){
+            if(ex.charAt(i) != ' ')
+                sb.append(ex.charAt(i));
+        }
+        return sb.toString();
     }
 
     public static boolean isLetter(char c){
