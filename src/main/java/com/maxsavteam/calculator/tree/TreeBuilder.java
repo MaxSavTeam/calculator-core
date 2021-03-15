@@ -148,7 +148,7 @@ public class TreeBuilder {
         if(i == ex.length() || !CalculatorUtils.isDigit(ex.charAt(i))){
             FunctionNode node = new FunctionNode(funcName.toString(), null);
             treeNodes.set(v, node);
-            if(!CalculatorUtils.isDigit(ex.charAt(i)))
+            if(i != ex.length() && !CalculatorUtils.isDigit(ex.charAt(i)))
                 build(2 * v, ex.substring(i), rootLevel, offset + i);
         }else{
             StringBuilder suffix = new StringBuilder();

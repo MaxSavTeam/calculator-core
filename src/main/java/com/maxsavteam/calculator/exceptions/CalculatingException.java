@@ -11,7 +11,7 @@ public class CalculatingException extends RuntimeException {
             "Undefined",
             "Division by zero",
             "Invalid operator for percent",
-            "Functions suffix and operand are both null",
+            "Function suffix and operand are both null",
             "Unknown function",
             "Unknown bracket type",
             "Unknown suffix operator",
