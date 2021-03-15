@@ -50,10 +50,15 @@ public class CalculatorExpressionBracketsChecker {
 
     public String formatNearBrackets(String expression) {
         StringBuilder sb = new StringBuilder();
+        boolean isFunctionStarted = false;
         for (int i = 0; i < expression.length(); i++) {
             char c = expression.charAt(i);
             sb.append(c);
-            if (i != expression.length() - 1 &&
+            if(CalculatorUtils.isLetter(c))
+                isFunctionStarted = true;
+            else if(!CalculatorUtils.isDigit(c) && c != '.')
+                isFunctionStarted = false;
+            if (!isFunctionStarted && i != expression.length() - 1 &&
                     (CalculatorUtils.isDigit(c) && findOpenBracket(expression.charAt(i + 1)) != -1 ||
                             findCloseBracket(c) != -1 && CalculatorUtils.isDigit(expression.charAt(i + 1)))) {
                 sb.append('*');

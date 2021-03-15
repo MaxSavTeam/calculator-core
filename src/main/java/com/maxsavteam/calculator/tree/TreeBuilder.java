@@ -152,7 +152,7 @@ public class TreeBuilder {
                 build(2 * v, ex.substring(i), rootLevel, offset + i);
         }else{
             StringBuilder suffix = new StringBuilder();
-            while(i < ex.length() && CalculatorUtils.isDigit(ex.charAt(i))){
+            while(i < ex.length() && (CalculatorUtils.isDigit(ex.charAt(i)) || ex.charAt(i) == '.')){
                 suffix.append(ex.charAt(i));
                 i++;
             }
