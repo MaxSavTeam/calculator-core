@@ -142,39 +142,66 @@ public class Calculator {
         mExpressionTokenizer.setReplacementMap(defaultReplacementMap);
     }
 
+    /**
+     * Sets brackets for TreeBuilder
+     **/
     public void setBracketsTypes(ArrayList<BracketsType> brackets) {
         builder.setBracketsTypes(brackets);
         mBracketsChecker.setBracketsTypes(brackets);
     }
 
+    /**
+     * Sets binary operators for TreeBuilder
+     **/
     public void setBinaryOperators(ArrayList<BinaryOperator> operators) {
         builder.setBinaryOperators(operators);
     }
 
+    /**
+     * Sets suffix operators for TreeBuilder
+     **/
     public void setSuffixOperators(ArrayList<SuffixOperator> operators) {
         builder.setSuffixOperators(operators);
     }
 
+    /**
+     * Sets custom binary operators resolver
+     * */
     public void setBinaryOperatorResolver(BinaryOperatorResolver resolver) {
         this.resolver = resolver;
     }
 
+    /**
+     * Sets custom brackets resolver
+     * */
     public void setBracketsResolver(BracketsResolver bracketsResolver) {
         this.bracketsResolver = bracketsResolver;
     }
 
+    /**
+     * Sets custom functions resolver
+     * */
     public void setFunctionsResolver(FunctionsResolver functionsResolver) {
         this.functionsResolver = functionsResolver;
     }
 
+    /**
+     * Sets custom suffix operators resolver
+     * */
     public void setSuffixResolver(SuffixOperatorResolver suffixResolver) {
         this.suffixResolver = suffixResolver;
     }
 
+    /**
+     * Sets custom aliases for tokenizer
+     * */
     public void setAliases(Map<String, String> map){
         mExpressionTokenizer.setReplacementMap(map);
     }
 
+    /**
+     * Calculates answer of expression
+     * */
     public BigDecimal calculate(String expression) {
         String expr = CalculatorUtils.removeSpaces(expression);
         expr = mExpressionTokenizer.tokenizeExpression(expr);
