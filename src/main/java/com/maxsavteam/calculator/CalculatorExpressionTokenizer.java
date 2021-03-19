@@ -20,4 +20,12 @@ public class CalculatorExpressionTokenizer {
         }
         return expr;
     }
+
+    public String localizeExpression(String expression){
+        String expr = expression;
+        for(Map.Entry<String, String> entry : mReplacementMap.entrySet()){
+            expr = expr.replaceAll(entry.getValue(), entry.getKey());
+        }
+        return expr;
+    }
 }
