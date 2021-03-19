@@ -115,6 +115,7 @@ public class TreeBuilder {
      * */
     public ArrayList<TreeNode> buildTree(String expression) {
         treeNodes = new ArrayList<>();
+        currentIndex = 0;
         mOperatorPositions = new ArrayList<>();
 
         int bracketsLevel = 0;
