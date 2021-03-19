@@ -2,6 +2,9 @@ package com.maxsavteam.calculator;
 
 import java.util.Map;
 
+/**
+ * Replaces some special symbols with simple symbols, and then this expression sends to TreeBuilder
+ * */
 public class CalculatorExpressionTokenizer {
 
     private Map<String, String> mReplacementMap;
