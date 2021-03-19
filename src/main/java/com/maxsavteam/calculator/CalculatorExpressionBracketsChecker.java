@@ -2,6 +2,7 @@ package com.maxsavteam.calculator;
 
 import com.maxsavteam.calculator.exceptions.CalculatingException;
 import com.maxsavteam.calculator.tree.BracketsType;
+import com.maxsavteam.calculator.tree.SuffixOperator;
 import com.maxsavteam.calculator.utils.CalculatorUtils;
 
 import java.util.ArrayList;
@@ -10,9 +11,14 @@ import java.util.Stack;
 public class CalculatorExpressionBracketsChecker {
 
     private ArrayList<BracketsType> bracketsTypes = new ArrayList<>();
+    private ArrayList<SuffixOperator> mSuffixOperators = new ArrayList<>();
 
     public void setBracketsTypes(ArrayList<BracketsType> bracketsTypes) {
         this.bracketsTypes = bracketsTypes;
+    }
+
+    public void setSuffixOperators(ArrayList<SuffixOperator> suffixOperators) {
+        mSuffixOperators = suffixOperators;
     }
 
     public String tryToCloseExpressionBrackets(String expression) {
@@ -54,14 +60,26 @@ public class CalculatorExpressionBracketsChecker {
         for (int i = 0; i < expression.length(); i++) {
             char c = expression.charAt(i);
             sb.append(c);
-            if(CalculatorUtils.isLetter(c))
+            if (CalculatorUtils.isLetter(c))
                 isFunctionStarted = true;
-            else if(!CalculatorUtils.isDigit(c) && c != '.')
+            else if (!CalculatorUtils.isDigit(c) && c != '.')
                 isFunctionStarted = false;
-            if (!isFunctionStarted && i != expression.length() - 1 &&
-                    (CalculatorUtils.isDigit(c) && findOpenBracket(expression.charAt(i + 1)) != -1 ||
-                            findCloseBracket(c) != -1 && CalculatorUtils.isDigit(expression.charAt(i + 1)))) {
-                sb.append('*');
+            if (!isFunctionStarted && i != expression.length() - 1) {
+                char next = expression.charAt(i + 1);
+                boolean isDigitBeforeOpenBracket = CalculatorUtils.isDigit(c) && findOpenBracket(next) != -1;
+                boolean isDigitAfterCloseBracket = findCloseBracket(c) != -1 && CalculatorUtils.isDigit(next);
+                boolean isSuffixOperatorBeforeDigit = isSuffixOperator(c) && CalculatorUtils.isDigit(next);
+                boolean isSuffixOperatorBeforeOpenBracket = isSuffixOperator(c) && findOpenBracket(next) != -1;
+                boolean isSuffixOperatorBeforeFunction = isSuffixOperator(c) && CalculatorUtils.isLetter(next);
+                if (
+                        isDigitBeforeOpenBracket ||
+                                isDigitAfterCloseBracket ||
+                                isSuffixOperatorBeforeDigit ||
+                                isSuffixOperatorBeforeOpenBracket ||
+                                isSuffixOperatorBeforeFunction
+                ) {
+                    sb.append('*');
+                }
             }
         }
         return sb.toString();
@@ -81,6 +99,13 @@ public class CalculatorExpressionBracketsChecker {
                 return type.type;
         }
         return -1;
+    }
+
+    private boolean isSuffixOperator(char c) {
+        for (SuffixOperator operator : mSuffixOperators)
+            if (operator.symbol == c)
+                return true;
+        return false;
     }
 
 }

@@ -139,6 +139,7 @@ public class Calculator {
 
         mBracketsChecker = new CalculatorExpressionBracketsChecker();
         mBracketsChecker.setBracketsTypes(TreeBuilder.defaultBrackets);
+        mBracketsChecker.setSuffixOperators(TreeBuilder.defaultSuffixOperators);
 
         mExpressionTokenizer = new CalculatorExpressionTokenizer();
         mExpressionTokenizer.setReplacementMap(defaultReplacementMap);
@@ -164,6 +165,7 @@ public class Calculator {
      **/
     public void setSuffixOperators(ArrayList<SuffixOperator> operators) {
         builder.setSuffixOperators(operators);
+        mBracketsChecker.setSuffixOperators(operators);
     }
 
     /**
