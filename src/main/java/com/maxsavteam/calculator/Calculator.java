@@ -26,7 +26,7 @@ public class Calculator {
     public static final String FI_SIGN = "\u03C6";
     public static final String E_SIGN = "\u0190";
 
-    public static final String VERSION = "1.0-rc2";
+    public static final String VERSION = "1.0-rc3";
 
     private final TreeBuilder builder;
     private final CalculatorExpressionTokenizer mExpressionTokenizer;
@@ -37,7 +37,7 @@ public class Calculator {
     private FunctionsResolver functionsResolver = defaultFunctionsResolver;
     private SuffixOperatorResolver suffixResolver = defaultSuffixResolver;
 
-    public static final Map<String, String> defaultReplacementMap = new HashMap<String, String>(){{
+    public static final Map<String, String> defaultReplacementMap = new HashMap<String, String>() {{
         put(PI_SIGN, "(" + MathUtils.PI.toPlainString() + ")");
         put(FI_SIGN, "(" + MathUtils.FI.toPlainString() + ")");
         put(E_SIGN, "(" + MathUtils.E.toPlainString() + ")");
@@ -168,67 +168,67 @@ public class Calculator {
 
     /**
      * Sets custom binary operators resolver
-     * */
+     */
     public void setBinaryOperatorResolver(BinaryOperatorResolver resolver) {
         this.resolver = resolver;
     }
 
     /**
      * Sets custom brackets resolver
-     * */
+     */
     public void setBracketsResolver(BracketsResolver bracketsResolver) {
         this.bracketsResolver = bracketsResolver;
     }
 
     /**
      * Sets custom functions resolver
-     * */
+     */
     public void setFunctionsResolver(FunctionsResolver functionsResolver) {
         this.functionsResolver = functionsResolver;
     }
 
     /**
      * Sets custom suffix operators resolver
-     * */
+     */
     public void setSuffixResolver(SuffixOperatorResolver suffixResolver) {
         this.suffixResolver = suffixResolver;
     }
 
     /**
      * Sets custom aliases for tokenizer
-     * */
-    public void setAliases(Map<String, String> map){
+     */
+    public void setAliases(Map<String, String> map) {
         mExpressionTokenizer.setReplacementMap(map);
     }
 
     /**
      * Calculates answer of expression
-     * */
+     */
     public BigDecimal calculate(String expression) {
         String expr = CalculatorUtils.removeSpaces(expression);
         expr = mExpressionTokenizer.tokenizeExpression(expr);
         expr = mBracketsChecker.tryToCloseExpressionBrackets(expr);
         expr = mBracketsChecker.formatNearBrackets(expr);
         ArrayList<TreeNode> nodes = builder.buildTree(expr);
-        return CalculatorUtils.removeZeros(calc(1, nodes));
+        return CalculatorUtils.removeZeros(calc(0, nodes));
     }
 
     private BigDecimal calc(int v, ArrayList<TreeNode> nodes) {
         TreeNode node = nodes.get(v);
 
         if (node instanceof BracketsNode) {
-            return bracketsResolver.resolve(((BracketsNode) node).getType(), calc(2 * v, nodes));
+            return bracketsResolver.resolve(((BracketsNode) node).getType(), calc(node.getLeftSonIndex(), nodes));
         } else if (node instanceof NumberNode) {
             return ((NumberNode) node).getNumber();
         } else if (node instanceof NegativeNumberNode) {
-            return calc(2 * v, nodes).multiply(BigDecimal.valueOf(-1));
+            return calc(node.getLeftSonIndex(), nodes).multiply(BigDecimal.valueOf(-1));
         } else if (node instanceof FunctionNode) {
             return processFunction(v, nodes);
         } else if (node instanceof SuffixOperatorNode) {
             SuffixOperatorNode suffixNode = (SuffixOperatorNode) node;
-            if (TreeBuilder.isNodeEmpty(2 * v, nodes))
+            if (TreeBuilder.isNodeEmpty(node.getLeftSonIndex(), nodes))
                 throw new CalculatingException(CalculatingException.NO_OPERAND_FOR_SUFFIX_OPERATOR);
-            return suffixResolver.resolve(suffixNode.operator, suffixNode.count, calc(2 * v, nodes));
+            return suffixResolver.resolve(suffixNode.operator, suffixNode.count, calc(node.getLeftSonIndex(), nodes));
         } else if (node instanceof OperatorNode) {
             return processOperatorNode(v, nodes);
         } else {
@@ -237,13 +237,14 @@ public class Calculator {
     }
 
     protected BigDecimal processOperatorNode(int v, ArrayList<TreeNode> nodes) {
-        char symbol = ((OperatorNode) nodes.get(v)).getOperator();
-        if (TreeBuilder.isNodeEmpty(2 * v + 1, nodes) || TreeBuilder.isNodeEmpty(2 * v, nodes))
+        TreeNode node = nodes.get(v);
+        char symbol = ((OperatorNode) node).getOperator();
+        if (TreeBuilder.isNodeEmpty(node.getLeftSonIndex(), nodes) || TreeBuilder.isNodeEmpty(node.getRightSonIndex(), nodes))
             throw new CalculatingException(CalculatingException.INVALID_BINARY_OPERATOR);
 
-        BigDecimal a = calc(2 * v, nodes);
-        BigDecimal b = calc(2 * v + 1, nodes);
-        TreeNode rightNode = nodes.get(2 * v + 1);
+        BigDecimal a = calc(node.getLeftSonIndex(), nodes);
+        BigDecimal b = calc(node.getRightSonIndex(), nodes);
+        TreeNode rightNode = nodes.get(node.getRightSonIndex());
         if (rightNode instanceof SuffixOperatorNode) {
             SuffixOperatorNode suffix = (SuffixOperatorNode) rightNode;
             if (suffix.operator == '%')
@@ -258,33 +259,35 @@ public class Calculator {
         if (functionNode.funcName.equals("A"))
             return processAverage(v, nodes);
         BigDecimal operand = null;
-        if (!TreeBuilder.isNodeEmpty(2 * v, nodes))
-            operand = calc(2 * v, nodes);
+        if (!TreeBuilder.isNodeEmpty(functionNode.getLeftSonIndex(), nodes))
+            operand = calc(functionNode.getLeftSonIndex(), nodes);
         return functionsResolver.resolve(functionNode.funcName, functionNode.suffix, operand);
     }
 
     protected BigDecimal processAverage(int v, ArrayList<TreeNode> nodes) {
-        BigDecimal sum = calc(2 * v, nodes);
+        BigDecimal sum = calc(nodes.get(v).getLeftSonIndex(), nodes);
         int count = 1;
-        v *= 4;
+        v = nodes.get(nodes.get(v).getLeftSonIndex()).getLeftSonIndex();
         while (true) {
             count++;
-            if (TreeBuilder.isNodeEmpty(2 * v, nodes) || TreeBuilder.isNodeEmpty(2 * v + 1, nodes))
+            int leftSon = nodes.get(v).getLeftSonIndex();
+            int rightSon = nodes.get(v).getRightSonIndex();
+            if (TreeBuilder.isNodeEmpty(leftSon, nodes) || TreeBuilder.isNodeEmpty(rightSon, nodes))
                 break;
-            TreeNode left = nodes.get(2 * v);
-            TreeNode right = nodes.get(2 * v + 1);
+            TreeNode left = nodes.get(leftSon);
+            TreeNode right = nodes.get(rightSon);
             if (!(left instanceof OperatorNode) && !(right instanceof OperatorNode))
                 break;
             int next = -1;
             if (left instanceof OperatorNode) {
                 OperatorNode node = (OperatorNode) left;
                 if (node.getOperator() == '-' || node.getOperator() == '+')
-                    next = 2 * v;
+                    next = leftSon;
             }
             if (right instanceof OperatorNode) {
                 OperatorNode node = (OperatorNode) right;
                 if (node.getOperator() == '-' || node.getOperator() == '+')
-                    next = 2 * v + 1;
+                    next = rightSon;
             }
             if (next == -1)
                 break;

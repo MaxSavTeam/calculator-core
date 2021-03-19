@@ -12,9 +12,9 @@ import java.util.Stack;
  * Builds tree from expression.<br>
  *
  * A tree is an array, where each node has its own index in this array<br>
- * First node has 1 index.<br>
- * If node is not a {@code NumberNode}, it will have at least one son.<br>
- * Left son has index 2 * v and right 2 * v + 1 (where v is index of parent node).<br>
+ * First node has index 0.<br>
+ * If node is not a {@link NumberNode}, it will have at least one son.<br>
+ * You can get left and right son index in tree array of node with {@link TreeNode#getLeftSonIndex()} and {@link TreeNode#getRightSonIndex()} respectively.<br>
  *
  * Parser based on numbers, operators and functions. Operator can be binary (+, -, *, /, ^ (power)),<br>
  * bracket or suffix (this operators follow after number (e.g. % (percent), ! (factorial)).<br>
@@ -22,24 +22,24 @@ import java.util.Stack;
  *
  * <h3>Binary operators</h3>
  * All binary operators have two sons - left operand and right operand.<br>
- * But if - operator has only left son, then {@code OperatorNode} will be replaced with {@code NegativeNumberNode}.
+ * But if - operator has only left son, then {@link OperatorNode} will be replaced with {@link NegativeNumberNode}.
  * Also if + operator has only right son, then this node will be skipped.
  *
  * <h3>Brackets operators</h3>
- * {@code BracketsNode} contain type of bracket and has only one son with index 2 * v<br>
+ * {@link BracketsNode} contain type of bracket and has only one son with index 2 * v<br>
  *
  * <h3>Suffix operators</h3>
- * {@code SuffixOperatorNode} contain symbol of operator and count and will be applied to result of 2 * v node<br>
+ * {@link SuffixOperatorNode} contain symbol of operator and count and will be applied to result of 2 * v node<br>
  *
  * <h3>Numbers</h3>
- * {@code NumberNode} is a leaf of tree and does not have any son.<br>
+ * {@link NumberNode} is a leaf of tree and does not have any son.<br>
  *
  * <h3>Functions</h3>
- * {@code FunctionNode} contain name of function. All letters will be parsed as functions.
+ * {@link FunctionNode} contain name of function. All letters will be parsed as functions.
  * Function also has suffix. It is number straight after name of function
  * (e.g. "sin45", sin will be there as function name and 45 as suffix)<br>
- * If function name of suffix followed by some type of bracket, then {@code FunctionNode} will have
- * one brackets son with all rules of {@code BracketsNode} described above.
+ * If function name of suffix followed by some type of bracket, then {@link FunctionNode} will have
+ * one brackets son with all rules of {@link BracketsNode} described above.
  * */
 public class TreeBuilder {
 
@@ -67,6 +67,13 @@ public class TreeBuilder {
     private ArrayList<BinaryOperator> operators = defaultBinaryOperators;
     private ArrayList<SuffixOperator> suffixOperators = defaultSuffixOperators;
     private ArrayList<OperatorPosition> mOperatorPositions;
+
+    private int currentIndex = 0;
+
+    private int nextIndex(){
+        treeNodes.add(emptyNode);
+        return currentIndex++;
+    }
 
     /**
      * Sets custom brackets
@@ -123,7 +130,7 @@ public class TreeBuilder {
             }
         }
 
-        build(1, expression, 0, 0);
+        build(nextIndex(), expression, 0, 0);
 
         return treeNodes;
     }
@@ -146,8 +153,10 @@ public class TreeBuilder {
 
         if(minLevel >= 1){
             int startBracketType = getBracketType(expression.charAt(0));
-            treeNodes.set(v, new BracketsNode(startBracketType));
-            build(2 * v, expression.substring(1, expression.length()-1), rootLevel + 1, exampleOffset + 1);
+            BracketsNode node = new BracketsNode(startBracketType);
+            node.setLeftSonIndex(nextIndex());
+            treeNodes.set(v, node);
+            build(node.getLeftSonIndex(), expression.substring(1, expression.length()-1), rootLevel + 1, exampleOffset + 1);
             return;
         }
 
@@ -160,15 +169,19 @@ public class TreeBuilder {
             treeNodes.set(v, node);
 
             if(firstPart.isEmpty() && !secondPart.isEmpty()){
-                if(node.getOperator() == '+')
+                if(node.getOperator() == '+') {
                     build(v, secondPart, rootLevel, foundPos.position + 1);
-                else if(node.getOperator() == '-'){
-                    treeNodes.set(v, new NegativeNumberNode());
-                    build(2 * v, secondPart, rootLevel, foundPos.position + 1);
+                }else if(node.getOperator() == '-'){
+                    NegativeNumberNode negativeNumberNode = new NegativeNumberNode();
+                    treeNodes.set(v, negativeNumberNode);
+                    negativeNumberNode.setLeftSonIndex(nextIndex());
+                    build(negativeNumberNode.getLeftSonIndex(), secondPart, rootLevel, foundPos.position + 1);
                 }
             }else {
-                build(2 * v, firstPart, rootLevel, exampleOffset);
-                build(2 * v + 1, secondPart, rootLevel, foundPos.position + 1);
+                node.setLeftSonIndex(nextIndex());
+                node.setRightSonIndex(nextIndex());
+                build(node.getLeftSonIndex(), firstPart, rootLevel, exampleOffset);
+                build(node.getRightSonIndex(), secondPart, rootLevel, foundPos.position + 1);
             }
         }else{
             if(CalculatorUtils.isLetter(expression.charAt(0))) {
@@ -191,8 +204,9 @@ public class TreeBuilder {
             i--;
         }
         SuffixOperatorNode node = new SuffixOperatorNode(operator, count);
+        node.setLeftSonIndex(nextIndex());
         treeNodes.set(v, node);
-        build(2 * v, ex.substring(0, i), offset, rootLevel);
+        build(node.getLeftSonIndex(), ex.substring(0, i), offset, rootLevel);
     }
 
     protected void parseFunc(int v, String ex, int offset, int rootLevel){
@@ -205,8 +219,10 @@ public class TreeBuilder {
         if(i == ex.length() || !CalculatorUtils.isDigit(ex.charAt(i))){
             FunctionNode node = new FunctionNode(funcName.toString(), null);
             treeNodes.set(v, node);
-            if(i != ex.length() && !CalculatorUtils.isDigit(ex.charAt(i)))
-                build(2 * v, ex.substring(i), rootLevel, offset + i);
+            if(i != ex.length() && !CalculatorUtils.isDigit(ex.charAt(i))) {
+                node.setLeftSonIndex(nextIndex());
+                build(node.getLeftSonIndex(), ex.substring(i), rootLevel, offset + i);
+            }
         }else{
             StringBuilder suffix = new StringBuilder();
             while(i < ex.length() && (CalculatorUtils.isDigit(ex.charAt(i)) || ex.charAt(i) == '.')){
@@ -217,7 +233,8 @@ public class TreeBuilder {
             FunctionNode node = new FunctionNode(funcName.toString(), a);
             treeNodes.set(v, node);
             if(i < ex.length()){
-                build(2 * v, ex.substring(i), rootLevel, offset + i);
+                node.setLeftSonIndex(nextIndex());
+                build(node.getLeftSonIndex(), ex.substring(i), rootLevel, offset + i);
             }
         }
     }
@@ -325,14 +342,7 @@ public class TreeBuilder {
     }
 
     public static boolean isNodeEmpty(int v, ArrayList<TreeNode> nodes){
-        return nodes.size() <= v || nodes.get(v) == emptyNode;
-    }
-
-    public static boolean isNegativeNumberNode(int v, ArrayList<TreeNode> nodes){
-        TreeNode node = nodes.get(v);
-        if(!(node instanceof OperatorNode))
-            return false;
-        return isNodeEmpty(2 * v, nodes) && !isNodeEmpty(2 * v + 1, nodes) && ((OperatorNode) node).getOperator() == '-';
+        return v == -1 || nodes.size() <= v || nodes.get(v) == emptyNode;
     }
 
 }
