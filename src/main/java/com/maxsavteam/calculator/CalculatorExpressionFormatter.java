@@ -8,7 +8,7 @@ import com.maxsavteam.calculator.utils.CalculatorUtils;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class CalculatorExpressionBracketsChecker {
+public class CalculatorExpressionFormatter {
 
     private ArrayList<BracketsType> bracketsTypes = new ArrayList<>();
     private ArrayList<SuffixOperator> mSuffixOperators = new ArrayList<>();
