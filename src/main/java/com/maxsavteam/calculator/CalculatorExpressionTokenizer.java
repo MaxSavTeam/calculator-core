@@ -16,7 +16,7 @@ public class CalculatorExpressionTokenizer {
     public String tokenizeExpression(String expression) {
         String expr = expression;
         for(Map.Entry<String, String> entry : mReplacementMap.entrySet()){
-            expr = expr.replaceAll(entry.getKey(), entry.getValue());
+            expr = expr.replace(entry.getKey(), entry.getValue());
         }
         return expr;
     }
@@ -24,7 +24,7 @@ public class CalculatorExpressionTokenizer {
     public String localizeExpression(String expression){
         String expr = expression;
         for(Map.Entry<String, String> entry : mReplacementMap.entrySet()){
-            expr = expr.replaceAll(entry.getValue(), entry.getKey());
+            expr = expr.replace(entry.getValue(), entry.getKey());
         }
         return expr;
     }
