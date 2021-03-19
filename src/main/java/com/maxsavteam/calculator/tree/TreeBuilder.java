@@ -8,6 +8,39 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Stack;
 
+/**
+ * Builds tree from expression.<br>
+ *
+ * A tree is an array, where each node has its own index in this array<br>
+ * First node has 1 index.<br>
+ * If node is not a {@code NumberNode}, it will have at least one son.<br>
+ * Left son has index 2 * v and right 2 * v + 1 (where v is index of parent node).<br>
+ *
+ * Parser based on numbers, operators and functions. Operator can be binary (+, -, *, /, ^ (power)),<br>
+ * bracket or suffix (this operators follow after number (e.g. % (percent), ! (factorial)).<br>
+ * All of this operators you can specify.
+ *
+ * <h3>Binary operators</h3>
+ * All binary operators have two sons - left operand and right operand.<br>
+ * But if - operator has only left son, then {@code OperatorNode} will be replaced with {@code NegativeNumberNode}.
+ * Also if + operator has only right son, then this node will be skipped.
+ *
+ * <h3>Brackets operators</h3>
+ * {@code BracketsNode} contain type of bracket and has only one son with index 2 * v<br>
+ *
+ * <h3>Suffix operators</h3>
+ * {@code SuffixOperatorNode} contain symbol of operator and count and will be applied to result of 2 * v node<br>
+ *
+ * <h3>Numbers</h3>
+ * {@code NumberNode} is a leaf of tree and does not have any son.<br>
+ *
+ * <h3>Functions</h3>
+ * {@code FunctionNode} contain name of function. All letters will be parsed as functions.
+ * Function also has suffix. It is number straight after name of function
+ * (e.g. "sin45", sin will be there as function name and 45 as suffix)<br>
+ * If function name of suffix followed by some type of bracket, then {@code FunctionNode} will have
+ * one brackets son with all rules of {@code BracketsNode} described above.
+ * */
 public class TreeBuilder {
 
     public static final ArrayList<BracketsType> defaultBrackets = new ArrayList<BracketsType>() {{
@@ -35,14 +68,23 @@ public class TreeBuilder {
     private ArrayList<SuffixOperator> suffixOperators = defaultSuffixOperators;
     private ArrayList<OperatorPosition> mOperatorPositions;
 
+    /**
+     * Sets custom brackets
+     * */
     public void setBracketsTypes(ArrayList<BracketsType> brackets) {
         this.brackets = brackets;
     }
 
+    /**
+     * Sets custom binary operators
+     * */
     public void setBinaryOperators(ArrayList<BinaryOperator> operators) {
         this.operators = operators;
     }
 
+    /**
+     * Sets custom suffix operators
+     * */
     public void setSuffixOperators(ArrayList<SuffixOperator> suffixOperators) {
         this.suffixOperators = suffixOperators;
     }
@@ -59,6 +101,11 @@ public class TreeBuilder {
         return suffixOperators;
     }
 
+    /**
+     * Builds tree from expression.<br>
+     *
+     * Parses this expression and resolves binary operators
+     * */
     public ArrayList<TreeNode> buildTree(String expression) {
         treeNodes = new ArrayList<>();
         mOperatorPositions = new ArrayList<>();
@@ -81,6 +128,16 @@ public class TreeBuilder {
         return treeNodes;
     }
 
+    /**
+     * @param v Current node index
+     * @param expression Current part of original expression
+     * @param rootLevel Current level of brackets.
+     *                  Necessary, because expression is cut, but in operatorPositions
+     *                  old positions of this operators
+     * @param exampleOffset Index of this expression in original expression.
+     *                      Necessary, because expression is cut, but in operatorPositions
+     *                      old positions of this operators
+     * */
     protected void build(int v, String expression, int rootLevel, int exampleOffset) {
         if(expression.length() == 0)
             return;
