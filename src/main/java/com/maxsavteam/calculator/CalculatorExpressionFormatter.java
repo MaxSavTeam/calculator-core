@@ -79,30 +79,37 @@ public class CalculatorExpressionFormatter {
             if (i != expression.length() - 1) {
                 char next = expression.charAt(i + 1);
 
+                boolean isNowDigit = CalculatorUtils.isDigit(c);
+                boolean isNextDigit = CalculatorUtils.isDigit(next);
+                boolean isNextOpenBracket = findOpenBracket(next) != -1;
+                boolean isNowCloseBracket = findCloseBracket(c) != -1;
+                boolean isNowSuffixOperator = isSuffixOperator(c);
+                boolean isNextLetter = CalculatorUtils.isLetter(next);
+
                 boolean isDigitBeforeOpenBracket = mParameters.isInsertMultiplySignBetweenNumberAndOpenBracket() &&
-                        CalculatorUtils.isDigit(c) && findOpenBracket(next) != -1;
+                        isNowDigit && isNextOpenBracket;
 
                 boolean isDigitAfterCloseBracket = mParameters.isInsertMultiplySignBetweenNumberAndCloseBracket() &&
-                        findCloseBracket(c) != -1 && CalculatorUtils.isDigit(next);
+                        isNowCloseBracket && isNextDigit;
 
                 boolean isSuffixOperatorBeforeDigit = mParameters.isInsertMultiplySignBetweenSuffixOperatorAndDigit() &&
-                        isSuffixOperator(c) && CalculatorUtils.isDigit(next);
+                        isNowSuffixOperator && isNextDigit;
 
                 boolean isSuffixOperatorBeforeOpenBracket = mParameters.isInsertMultiplySignBetweenSuffixOperatorAndOpenBracket() &&
-                        isSuffixOperator(c) && findOpenBracket(next) != -1;
+                        isNowSuffixOperator && isNextOpenBracket;
 
                 boolean isSuffixOperatorBeforeFunction = mParameters.isInsertMultiplySignBetweenSuffixOperatorAndFunction() &&
-                        isSuffixOperator(c) && CalculatorUtils.isLetter(next);
+                        isNowSuffixOperator && isNextLetter;
 
                 boolean isFunctionSuffixBeforeOpenBracket = mParameters.isInsertMultiplySignBetweenFunctionSuffixAndOpenBracket() &&
-                        CalculatorUtils.isDigit(c) && findOpenBracket(next) != -1 &&
+                        isNowDigit && isNextOpenBracket &&
                         isFunctionStarted;
 
                 boolean isDigitBeforeFunction = mParameters.isInsertMultiplySignBetweenNumberAndFunction() &&
-                        CalculatorUtils.isDigit(c) && CalculatorUtils.isLetter(next);
+                        isNowDigit && isNextLetter;
 
                 boolean isCloseBracketBeforeOpen = mParameters.isInsertMultiplySignBetweenCloseAndOpenBrackets() &&
-                        findCloseBracket(c) != -1 && findOpenBracket(next) != -1;
+                        isNowCloseBracket && isNextOpenBracket;
 
                 if (
                         isDigitBeforeFunction ||
