@@ -3,6 +3,7 @@ package com.maxsavteam.calculator;
 import com.maxsavteam.calculator.exceptions.CalculatingException;
 import com.maxsavteam.calculator.tree.BracketsType;
 import com.maxsavteam.calculator.tree.SuffixOperator;
+import com.maxsavteam.calculator.tree.TreeBuilder;
 import com.maxsavteam.calculator.utils.CalculatorUtils;
 
 import java.util.ArrayList;
@@ -12,8 +13,8 @@ public class CalculatorExpressionFormatter {
 
     public static final Parameters defaultParameters = new Parameters.Builder().build();
 
-    private ArrayList<BracketsType> bracketsTypes = new ArrayList<>();
-    private ArrayList<SuffixOperator> mSuffixOperators = new ArrayList<>();
+    private ArrayList<BracketsType> bracketsTypes = TreeBuilder.defaultBrackets;
+    private ArrayList<SuffixOperator> mSuffixOperators = TreeBuilder.defaultSuffixOperators;
     private final Parameters mParameters;
 
     public CalculatorExpressionFormatter() {
