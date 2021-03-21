@@ -10,8 +10,19 @@ import java.util.Stack;
 
 public class CalculatorExpressionFormatter {
 
+    public static final Parameters defaultParameters = new Parameters.Builder().build();
+
     private ArrayList<BracketsType> bracketsTypes = new ArrayList<>();
     private ArrayList<SuffixOperator> mSuffixOperators = new ArrayList<>();
+    private final Parameters mParameters;
+
+    public CalculatorExpressionFormatter() {
+        this(defaultParameters);
+    }
+
+    public CalculatorExpressionFormatter(Parameters parameters) {
+        mParameters = parameters;
+    }
 
     public void setBracketsTypes(ArrayList<BracketsType> bracketsTypes) {
         this.bracketsTypes = bracketsTypes;
@@ -64,19 +75,41 @@ public class CalculatorExpressionFormatter {
                 isFunctionStarted = true;
             else if (!CalculatorUtils.isDigit(c) && c != '.')
                 isFunctionStarted = false;
-            if (!isFunctionStarted && i != expression.length() - 1) {
+            if (i != expression.length() - 1) {
                 char next = expression.charAt(i + 1);
-                boolean isDigitBeforeOpenBracket = CalculatorUtils.isDigit(c) && findOpenBracket(next) != -1;
-                boolean isDigitAfterCloseBracket = findCloseBracket(c) != -1 && CalculatorUtils.isDigit(next);
-                boolean isSuffixOperatorBeforeDigit = isSuffixOperator(c) && CalculatorUtils.isDigit(next);
-                boolean isSuffixOperatorBeforeOpenBracket = isSuffixOperator(c) && findOpenBracket(next) != -1;
-                boolean isSuffixOperatorBeforeFunction = isSuffixOperator(c) && CalculatorUtils.isLetter(next);
+
+                boolean isDigitBeforeOpenBracket = mParameters.isInsertMultiplySignBetweenNumberAndOpenBracket() &&
+                        CalculatorUtils.isDigit(c) && findOpenBracket(next) != -1;
+
+                boolean isDigitAfterCloseBracket = mParameters.isInsertMultiplySignBetweenNumberAndCloseBracket() &&
+                        findCloseBracket(c) != -1 && CalculatorUtils.isDigit(next);
+
+                boolean isSuffixOperatorBeforeDigit = mParameters.isInsertMultiplySignBetweenSuffixOperatorAndDigit() &&
+                        isSuffixOperator(c) && CalculatorUtils.isDigit(next);
+
+                boolean isSuffixOperatorBeforeOpenBracket = mParameters.isInsertMultiplySignBetweenSuffixOperatorAndOpenBracket() &&
+                        isSuffixOperator(c) && findOpenBracket(next) != -1;
+
+                boolean isSuffixOperatorBeforeFunction = mParameters.isInsertMultiplySignBetweenSuffixOperatorAndFunction() &&
+                        isSuffixOperator(c) && CalculatorUtils.isLetter(next);
+
+                boolean isFunctionSuffixBeforeOpenBracket = mParameters.isInsertMultiplySignBetweenFunctionSuffixAndOpenBracket() &&
+                        CalculatorUtils.isDigit(c) && findOpenBracket(next) != -1 &&
+                        isFunctionStarted;
+
+                boolean isDigitBeforeFunction = mParameters.isInsertMultiplySignBetweenNumberAndFunction() &&
+                        CalculatorUtils.isDigit(c) && CalculatorUtils.isLetter(next);
+
                 if (
-                        isDigitBeforeOpenBracket ||
-                                isDigitAfterCloseBracket ||
-                                isSuffixOperatorBeforeDigit ||
-                                isSuffixOperatorBeforeOpenBracket ||
-                                isSuffixOperatorBeforeFunction
+                        isDigitBeforeFunction ||
+                                isFunctionSuffixBeforeOpenBracket ||
+                                !isFunctionStarted && (
+                                        isDigitBeforeOpenBracket ||
+                                                isDigitAfterCloseBracket ||
+                                                isSuffixOperatorBeforeDigit ||
+                                                isSuffixOperatorBeforeOpenBracket ||
+                                                isSuffixOperatorBeforeFunction
+                                )
                 ) {
                     sb.append('*');
                 }
@@ -106,6 +139,119 @@ public class CalculatorExpressionFormatter {
             if (operator.symbol == c)
                 return true;
         return false;
+    }
+
+    public static class Parameters {
+        private final boolean insertMultiplySignBetweenNumberAndFunction;
+        private final boolean insertMultiplySignBetweenNumberAndOpenBracket;
+        private final boolean insertMultiplySignBetweenNumberAndCloseBracket;
+        private final boolean insertMultiplySignBetweenSuffixOperatorAndDigit;
+        private final boolean insertMultiplySignBetweenSuffixOperatorAndFunction;
+        private final boolean insertMultiplySignBetweenSuffixOperatorAndOpenBracket;
+        private final boolean insertMultiplySignBetweenFunctionSuffixAndOpenBracket;
+
+        public Parameters(boolean insertMultiplySignBetweenNumberAndFunction,
+                          boolean insertMultiplySignBetweenNumberAndOpenBracket,
+                          boolean insertMultiplySignBetweenNumberAndCloseBracket,
+                          boolean insertMultiplySignBetweenSuffixOperatorAndDigit,
+                          boolean insertMultiplySignBetweenSuffixOperatorAndFunction,
+                          boolean insertMultiplySignBetweenSuffixOperatorAndOpenBracket,
+                          boolean insertMultiplySignBetweenFunctionSuffixAndOpenBracket) {
+            this.insertMultiplySignBetweenNumberAndFunction = insertMultiplySignBetweenNumberAndFunction;
+            this.insertMultiplySignBetweenNumberAndOpenBracket = insertMultiplySignBetweenNumberAndOpenBracket;
+            this.insertMultiplySignBetweenNumberAndCloseBracket = insertMultiplySignBetweenNumberAndCloseBracket;
+            this.insertMultiplySignBetweenSuffixOperatorAndDigit = insertMultiplySignBetweenSuffixOperatorAndDigit;
+            this.insertMultiplySignBetweenSuffixOperatorAndFunction = insertMultiplySignBetweenSuffixOperatorAndFunction;
+            this.insertMultiplySignBetweenSuffixOperatorAndOpenBracket = insertMultiplySignBetweenSuffixOperatorAndOpenBracket;
+            this.insertMultiplySignBetweenFunctionSuffixAndOpenBracket = insertMultiplySignBetweenFunctionSuffixAndOpenBracket;
+        }
+
+        public boolean isInsertMultiplySignBetweenNumberAndFunction() {
+            return insertMultiplySignBetweenNumberAndFunction;
+        }
+
+        public boolean isInsertMultiplySignBetweenNumberAndOpenBracket() {
+            return insertMultiplySignBetweenNumberAndOpenBracket;
+        }
+
+        public boolean isInsertMultiplySignBetweenNumberAndCloseBracket() {
+            return insertMultiplySignBetweenNumberAndCloseBracket;
+        }
+
+        public boolean isInsertMultiplySignBetweenSuffixOperatorAndDigit() {
+            return insertMultiplySignBetweenSuffixOperatorAndDigit;
+        }
+
+        public boolean isInsertMultiplySignBetweenSuffixOperatorAndFunction() {
+            return insertMultiplySignBetweenSuffixOperatorAndFunction;
+        }
+
+        public boolean isInsertMultiplySignBetweenSuffixOperatorAndOpenBracket() {
+            return insertMultiplySignBetweenSuffixOperatorAndOpenBracket;
+        }
+
+        public boolean isInsertMultiplySignBetweenFunctionSuffixAndOpenBracket() {
+            return insertMultiplySignBetweenFunctionSuffixAndOpenBracket;
+        }
+
+        public static class Builder {
+            private boolean insertMultiplySignBetweenNumberAndFunction = true;
+            private boolean insertMultiplySignBetweenNumberAndOpenBracket = true;
+            private boolean insertMultiplySignBetweenNumberAndCloseBracket = true;
+            private boolean insertMultiplySignBetweenSuffixOperatorAndDigit = true;
+            private boolean insertMultiplySignBetweenSuffixOperatorAndFunction = true;
+            private boolean insertMultiplySignBetweenSuffixOperatorAndOpenBracket = true;
+            private boolean insertMultiplySignBetweenFunctionSuffixAndOpenBracket = false;
+
+            public Builder setInsertMultiplySignBetweenNumberAndFunction(boolean insertMultiplySignBetweenNumberAndFunction) {
+                this.insertMultiplySignBetweenNumberAndFunction = insertMultiplySignBetweenNumberAndFunction;
+                return this;
+            }
+
+            public Builder setInsertMultiplySignBetweenNumberAndOpenBracket(boolean insertMultiplySignBetweenNumberAndOpenBracket) {
+                this.insertMultiplySignBetweenNumberAndOpenBracket = insertMultiplySignBetweenNumberAndOpenBracket;
+                return this;
+            }
+
+            public Builder setInsertMultiplySignBetweenNumberAndCloseBracket(boolean insertMultiplySignBetweenNumberAndCloseBracket) {
+                this.insertMultiplySignBetweenNumberAndCloseBracket = insertMultiplySignBetweenNumberAndCloseBracket;
+                return this;
+            }
+
+            public Builder setInsertMultiplySignBetweenSuffixOperatorAndDigit(boolean insertMultiplySignBetweenSuffixOperatorAndDigit) {
+                this.insertMultiplySignBetweenSuffixOperatorAndDigit = insertMultiplySignBetweenSuffixOperatorAndDigit;
+                return this;
+            }
+
+            public Builder setInsertMultiplySignBetweenSuffixOperatorAndFunction(boolean insertMultiplySignBetweenSuffixOperatorAndFunction) {
+                this.insertMultiplySignBetweenSuffixOperatorAndFunction = insertMultiplySignBetweenSuffixOperatorAndFunction;
+                return this;
+            }
+
+            public Builder setInsertMultiplySignBetweenSuffixOperatorAndOpenBracket(boolean insertMultiplySignBetweenSuffixOperatorAndOpenBracket) {
+                this.insertMultiplySignBetweenSuffixOperatorAndOpenBracket = insertMultiplySignBetweenSuffixOperatorAndOpenBracket;
+                return this;
+            }
+
+            public Builder setInsertMultiplySignBetweenFunctionSuffixAndOpenBracket(boolean insertMultiplySignBetweenFunctionSuffixAndOpenBracket) {
+                this.insertMultiplySignBetweenFunctionSuffixAndOpenBracket = insertMultiplySignBetweenFunctionSuffixAndOpenBracket;
+                return this;
+            }
+
+            public Parameters build() {
+                return new Parameters(
+                        insertMultiplySignBetweenNumberAndFunction,
+                        insertMultiplySignBetweenNumberAndOpenBracket,
+                        insertMultiplySignBetweenNumberAndCloseBracket,
+                        insertMultiplySignBetweenSuffixOperatorAndDigit,
+                        insertMultiplySignBetweenSuffixOperatorAndFunction,
+                        insertMultiplySignBetweenSuffixOperatorAndOpenBracket,
+                        insertMultiplySignBetweenFunctionSuffixAndOpenBracket
+                );
+            }
+
+        }
+
     }
 
 }
