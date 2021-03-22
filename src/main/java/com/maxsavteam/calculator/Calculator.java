@@ -285,36 +285,44 @@ public class Calculator {
         }
         if(!TreeBuilder.isNodeEmpty(functionNode.getLeftSonIndex(), nodes)) {
             sum = sum.add(calc(functionNode.getLeftSonIndex(), nodes));
-            count++;
-            int v = nodes.get(functionNode.getLeftSonIndex()).getLeftSonIndex();
-            while (true) {
-                int leftSon = nodes.get(v).getLeftSonIndex();
-                int rightSon = nodes.get(v).getRightSonIndex();
-                if (TreeBuilder.isNodeEmpty(leftSon, nodes) || TreeBuilder.isNodeEmpty(rightSon, nodes))
-                    break;
-                count++;
-                TreeNode left = nodes.get(leftSon);
-                TreeNode right = nodes.get(rightSon);
-                if (!(left instanceof OperatorNode) && !(right instanceof OperatorNode))
-                    break;
-                int next = -1;
-                if (left instanceof OperatorNode) {
-                    OperatorNode node = (OperatorNode) left;
-                    if (node.getOperator() == '-' || node.getOperator() == '+')
-                        next = leftSon;
-                }
-                if (right instanceof OperatorNode) {
-                    OperatorNode node = (OperatorNode) right;
-                    if (node.getOperator() == '-' || node.getOperator() == '+')
-                        next = rightSon;
-                }
-                if (next == -1)
-                    break;
-                else
-                    v = next;
-            }
+            count += 1 + getAverageCount(vertex, nodes);
         }
         return sum.divide(BigDecimal.valueOf(count), roundScale, RoundingMode.HALF_EVEN);
+    }
+
+    private int getAverageCount(int vertex, ArrayList<TreeNode> nodes){
+        int count = 1;
+        int v = nodes.get(nodes.get(vertex).getLeftSonIndex()).getLeftSonIndex();
+        int leftSon = nodes.get(v).getLeftSonIndex();
+        int rightSon = nodes.get(v).getRightSonIndex();
+        TreeNode left;
+        TreeNode right;
+        while (!TreeBuilder.isNodeEmpty(leftSon, nodes) &&
+                !TreeBuilder.isNodeEmpty(rightSon, nodes)
+        ) {
+            left = nodes.get(leftSon);
+            right = nodes.get(rightSon);
+            int next = -1;
+            if (left instanceof OperatorNode) {
+                OperatorNode node = (OperatorNode) left;
+                if (node.getOperator() == '-' || node.getOperator() == '+')
+                    next = leftSon;
+            } else if(right instanceof OperatorNode) {
+                OperatorNode node = (OperatorNode) right;
+                if (node.getOperator() == '-' || node.getOperator() == '+')
+                    next = rightSon;
+            }else{
+                break;
+            }
+            count++;
+            if (next == -1)
+                break;
+            else
+                v = next;
+            leftSon = nodes.get(v).getLeftSonIndex();
+            rightSon = nodes.get(v).getRightSonIndex();
+        }
+        return count;
     }
 
 }
