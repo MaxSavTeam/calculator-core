@@ -26,7 +26,7 @@ public class Calculator {
     public static final String FI_SIGN = "\u03C6";
     public static final String E_SIGN = "\u0190";
 
-    public static final String VERSION = "1.1";
+    public static final String VERSION = "1.2";
 
     private final TreeBuilder builder;
     private final CalculatorExpressionTokenizer mExpressionTokenizer;
@@ -130,7 +130,7 @@ public class Calculator {
         if (operator == '!')
             return MathUtils.fact(operand, count);
         else if (operator == '%')
-            return operand.divide(BigDecimal.valueOf(100), roundScale, RoundingMode.HALF_EVEN);
+            return operand.divide(MathUtils.pow(BigDecimal.valueOf(100), BigDecimal.valueOf(count)), roundScale, RoundingMode.HALF_EVEN);
         throw new CalculatingException(CalculatingException.UNKNOWN_SUFFIX_OPERATOR);
     };
 
