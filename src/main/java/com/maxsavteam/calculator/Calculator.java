@@ -9,7 +9,13 @@ import com.maxsavteam.calculator.tree.BinaryOperator;
 import com.maxsavteam.calculator.tree.BracketsType;
 import com.maxsavteam.calculator.tree.SuffixOperator;
 import com.maxsavteam.calculator.tree.TreeBuilder;
-import com.maxsavteam.calculator.tree.nodes.*;
+import com.maxsavteam.calculator.tree.nodes.BracketsNode;
+import com.maxsavteam.calculator.tree.nodes.FunctionNode;
+import com.maxsavteam.calculator.tree.nodes.NegativeNumberNode;
+import com.maxsavteam.calculator.tree.nodes.NumberNode;
+import com.maxsavteam.calculator.tree.nodes.OperatorNode;
+import com.maxsavteam.calculator.tree.nodes.SuffixOperatorNode;
+import com.maxsavteam.calculator.tree.nodes.TreeNode;
 import com.maxsavteam.calculator.utils.CalculatorUtils;
 import com.maxsavteam.calculator.utils.MathUtils;
 import org.jetbrains.annotations.NotNull;
@@ -266,8 +272,8 @@ public class Calculator {
         return functionsResolver.resolve(functionNode.funcName, functionNode.suffix, operand);
     }
 
-    protected BigDecimal processAverage(int v, ArrayList<TreeNode> nodes) {
-        FunctionNode functionNode = (FunctionNode) nodes.get(v);
+    protected BigDecimal processAverage(int vertex, ArrayList<TreeNode> nodes) {
+        FunctionNode functionNode = (FunctionNode) nodes.get(vertex);
         if(functionNode.suffix == null && TreeBuilder.isNodeEmpty(functionNode.getLeftSonIndex(), nodes))
             throw new CalculatingException(CalculatingException.AVERAGE_FUNCTION_HAS_NO_ARGUMENTS);
 
@@ -280,7 +286,7 @@ public class Calculator {
         if(!TreeBuilder.isNodeEmpty(functionNode.getLeftSonIndex(), nodes)) {
             sum = sum.add(calc(functionNode.getLeftSonIndex(), nodes));
             count++;
-            v = nodes.get(functionNode.getLeftSonIndex()).getLeftSonIndex();
+            int v = nodes.get(functionNode.getLeftSonIndex()).getLeftSonIndex();
             while (true) {
                 int leftSon = nodes.get(v).getLeftSonIndex();
                 int rightSon = nodes.get(v).getRightSonIndex();

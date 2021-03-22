@@ -2,7 +2,13 @@ package com.maxsavteam.calculator.tree;
 
 import com.maxsavteam.calculator.exceptions.CalculatingException;
 import com.maxsavteam.calculator.exceptions.TreeBuildingException;
-import com.maxsavteam.calculator.tree.nodes.*;
+import com.maxsavteam.calculator.tree.nodes.BracketsNode;
+import com.maxsavteam.calculator.tree.nodes.FunctionNode;
+import com.maxsavteam.calculator.tree.nodes.NegativeNumberNode;
+import com.maxsavteam.calculator.tree.nodes.NumberNode;
+import com.maxsavteam.calculator.tree.nodes.OperatorNode;
+import com.maxsavteam.calculator.tree.nodes.SuffixOperatorNode;
+import com.maxsavteam.calculator.tree.nodes.TreeNode;
 import com.maxsavteam.calculator.utils.CalculatorUtils;
 
 import java.math.BigDecimal;
