@@ -181,7 +181,7 @@ public class CalculatorExpressionFormatter {
 		private final boolean insertZeroBetweenCloseBracketAndDot;
 		private final boolean insertZeroBetweenNonDigitAndDot;
 
-		public Parameters(boolean insertMultiplySignBetweenNumberAndFunction,
+		private Parameters(boolean insertMultiplySignBetweenNumberAndFunction,
 		                  boolean insertMultiplySignBetweenNumberAndOpenBracket,
 		                  boolean insertMultiplySignBetweenNumberAndCloseBracket,
 		                  boolean insertMultiplySignBetweenSuffixOperatorAndDigit,
