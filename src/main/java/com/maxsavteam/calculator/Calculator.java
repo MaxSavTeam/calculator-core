@@ -26,7 +26,7 @@ public class Calculator {
     public static final String FI_SIGN = "\u03C6";
     public static final String E_SIGN = "\u0190";
 
-    public static final String VERSION = "1.0";
+    public static final String VERSION = "1.1";
 
     private final TreeBuilder builder;
     private final CalculatorExpressionTokenizer mExpressionTokenizer;
