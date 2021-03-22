@@ -26,7 +26,7 @@ public class Calculator {
     public static final String FI_SIGN = "\u03C6";
     public static final String E_SIGN = "\u0190";
 
-    public static final String VERSION = "1.3";
+    public static final String VERSION = "1.4";
 
     private final TreeBuilder builder;
     private final CalculatorExpressionTokenizer mExpressionTokenizer;
@@ -267,34 +267,46 @@ public class Calculator {
     }
 
     protected BigDecimal processAverage(int v, ArrayList<TreeNode> nodes) {
-        BigDecimal sum = calc(nodes.get(v).getLeftSonIndex(), nodes);
-        int count = 1;
-        v = nodes.get(nodes.get(v).getLeftSonIndex()).getLeftSonIndex();
-        while (true) {
+        FunctionNode functionNode = (FunctionNode) nodes.get(v);
+        if(functionNode.suffix == null && TreeBuilder.isNodeEmpty(functionNode.getLeftSonIndex(), nodes))
+            throw new CalculatingException(CalculatingException.AVERAGE_FUNCTION_HAS_NO_ARGUMENTS);
+
+        BigDecimal sum = BigDecimal.ZERO;
+        int count = 0;
+        if(functionNode.suffix != null){
+            sum = sum.add(functionNode.suffix);
             count++;
-            int leftSon = nodes.get(v).getLeftSonIndex();
-            int rightSon = nodes.get(v).getRightSonIndex();
-            if (TreeBuilder.isNodeEmpty(leftSon, nodes) || TreeBuilder.isNodeEmpty(rightSon, nodes))
-                break;
-            TreeNode left = nodes.get(leftSon);
-            TreeNode right = nodes.get(rightSon);
-            if (!(left instanceof OperatorNode) && !(right instanceof OperatorNode))
-                break;
-            int next = -1;
-            if (left instanceof OperatorNode) {
-                OperatorNode node = (OperatorNode) left;
-                if (node.getOperator() == '-' || node.getOperator() == '+')
-                    next = leftSon;
+        }
+        if(!TreeBuilder.isNodeEmpty(functionNode.getLeftSonIndex(), nodes)) {
+            sum = sum.add(calc(functionNode.getLeftSonIndex(), nodes));
+            count++;
+            v = nodes.get(functionNode.getLeftSonIndex()).getLeftSonIndex();
+            while (true) {
+                int leftSon = nodes.get(v).getLeftSonIndex();
+                int rightSon = nodes.get(v).getRightSonIndex();
+                if (TreeBuilder.isNodeEmpty(leftSon, nodes) || TreeBuilder.isNodeEmpty(rightSon, nodes))
+                    break;
+                count++;
+                TreeNode left = nodes.get(leftSon);
+                TreeNode right = nodes.get(rightSon);
+                if (!(left instanceof OperatorNode) && !(right instanceof OperatorNode))
+                    break;
+                int next = -1;
+                if (left instanceof OperatorNode) {
+                    OperatorNode node = (OperatorNode) left;
+                    if (node.getOperator() == '-' || node.getOperator() == '+')
+                        next = leftSon;
+                }
+                if (right instanceof OperatorNode) {
+                    OperatorNode node = (OperatorNode) right;
+                    if (node.getOperator() == '-' || node.getOperator() == '+')
+                        next = rightSon;
+                }
+                if (next == -1)
+                    break;
+                else
+                    v = next;
             }
-            if (right instanceof OperatorNode) {
-                OperatorNode node = (OperatorNode) right;
-                if (node.getOperator() == '-' || node.getOperator() == '+')
-                    next = rightSon;
-            }
-            if (next == -1)
-                break;
-            else
-                v = next;
         }
         return sum.divide(BigDecimal.valueOf(count), roundScale, RoundingMode.HALF_EVEN);
     }

@@ -19,6 +19,7 @@ public class CalculatingException extends RuntimeException {
             "Requested empty node",
             "Invalid brackets sequence",
             "Factorial limit exceeded",
+            "Average function has no arguments",
     };
     public static final int INVALID_BINARY_OPERATOR = 0;
     public static final int NEGATIVE_PARAMETER_OF_LOG = 1;
@@ -36,6 +37,7 @@ public class CalculatingException extends RuntimeException {
     public static final int REQUESTED_EMPTY_NODE = 13;
     public static final int INVALID_BRACKETS_SEQUENCE = 14;
     public static final int FACTORIAL_LIMIT_EXCEEDED = 15;
+    public static final int AVERAGE_FUNCTION_HAS_NO_ARGUMENTS = 16;
 
     private final int errorCode;
 
