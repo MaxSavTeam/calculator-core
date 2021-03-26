@@ -4,8 +4,8 @@ Library for solving mathematical expressions and examples.
 Supports Java and Android projects
 
 ## Dependency
-### Gradle
-#### Add JitPack to your project
+### Add JitPack to your project
+#### Gradle  
 Add it in your root build.gradle at the end of repositories:
 ```groovy
 allprojects {
@@ -14,16 +14,8 @@ allprojects {
   }
 }
 ```
-#### Add library dependency
-```groovy
-dependencies {
-        implementation 'com.github.MaxSavTeam:calculator-core:1.6.1'
-}
-```
-
-### Maven
-#### Add JitPack to your project
-Add it in your root build.gradle at the end of repositories:
+#### Maven
+Add the JitPack repository to your build file:
 ```xml
 <repositories>
   <repository>
@@ -32,7 +24,14 @@ Add it in your root build.gradle at the end of repositories:
   </repository>
 </repositories>
 ```
-#### Add library dependency
+### Add library dependency
+#### Gradle
+```groovy
+dependencies {
+        implementation 'com.github.MaxSavTeam:calculator-core:1.6.1'
+}
+```
+#### Maven
 ```xml
 <dependency>
     <groupId>com.github.MaxSavTeam</groupId>
