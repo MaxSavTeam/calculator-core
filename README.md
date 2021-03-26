@@ -1,4 +1,7 @@
 # calculator-core
+Library for solving mathematical expressions and examples.
+
+Supports Java and Android projects
 
 ## Dependency
 ### Gradle
