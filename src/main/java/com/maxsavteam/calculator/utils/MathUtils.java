@@ -164,6 +164,8 @@ public class MathUtils {
     }
 
     public static BigDecimal rootWithBase(BigDecimal a, BigDecimal n) {
+        if(a.signum() == 0)
+            return BigDecimal.ZERO;
         if (n.remainder(BigDecimal.valueOf(2)).signum() == 0 && a.signum() < 0)
             throw new CalculatingException(CalculatingException.ROOT_OF_EVEN_DEGREE_OF_NEGATIVE_NUMBER);
         BigDecimal log = ln(a);
