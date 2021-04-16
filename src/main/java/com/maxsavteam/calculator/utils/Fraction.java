@@ -32,23 +32,23 @@ public class Fraction {
 		return denominator;
 	}
 
-	private BigDecimal gcd(BigDecimal f, BigDecimal s){
-		BigDecimal a = new BigDecimal( f.toPlainString() );
-		BigDecimal b = new BigDecimal( s.toPlainString() );
-		while(!a.equals( BigDecimal.ZERO ) && !b.equals( BigDecimal.ZERO )){
-			if(a.compareTo(b) > 0){
-				a = a.remainder( b );
-			}else{
-				b = b.remainder( a );
+	private BigDecimal gcd(BigDecimal f, BigDecimal s) {
+		BigDecimal a = new BigDecimal(f.toPlainString());
+		BigDecimal b = new BigDecimal(s.toPlainString());
+		while (!a.equals(BigDecimal.ZERO) && !b.equals(BigDecimal.ZERO)) {
+			if (a.compareTo(b) > 0) {
+				a = a.remainder(b);
+			} else {
+				b = b.remainder(a);
 			}
 		}
 
 		return a.add(b);
 	}
 
-	public Fraction(BigDecimal b){
+	public Fraction(BigDecimal b) {
 		String s = b.toPlainString();
-		if(s.contains(".")){
+		if (isFraction(b)) {
 			int pos = s.indexOf(".");
 			int n = s.length() - pos - 1;
 			this.denominator = BigDecimal.valueOf(10).pow(n);
@@ -56,20 +56,31 @@ public class Fraction {
 			sb.deleteCharAt(pos);
 			this.numerator = new BigDecimal(sb.toString());
 
-			BigDecimal g = gcd( denominator, numerator );
-			while(!g.equals( BigDecimal.ONE )){
+			BigDecimal g = gcd(denominator, numerator);
+			while (!g.equals(BigDecimal.ONE)) {
 				denominator = denominator.divide(g, RoundingMode.HALF_EVEN);
 				numerator = numerator.divide(g, RoundingMode.HALF_EVEN);
 
-				g = gcd( denominator, numerator );
+				g = gcd(denominator, numerator);
 			}
-		}else{
+		} else {
 			this.numerator = new BigDecimal(s);
 			this.denominator = BigDecimal.ONE;
 		}
 	}
 
-	public static boolean isFraction(BigDecimal a){
-		return a.toPlainString().contains( "." );
+	public static boolean isFraction(BigDecimal a) {
+		String s = a.toPlainString();
+		int pos = s.indexOf('.');
+		if (pos == -1)
+			return false;
+		boolean containsNonZero = false;
+		for (int i = pos + 1; i < s.length(); i++) {
+			if (s.charAt(i) != '0') {
+				containsNonZero = true;
+				break;
+			}
+		}
+		return containsNonZero;
 	}
 }
