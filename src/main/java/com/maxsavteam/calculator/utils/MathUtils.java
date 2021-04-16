@@ -28,41 +28,37 @@ public class MathUtils {
     public static final BigDecimal E = new BigDecimal("2.7182818284590452354");
     public static final BigDecimal PI = new BigDecimal("3.14159265358979323846");
     public static final BigDecimal FI = new BigDecimal("1.618");
-    private static BigDecimal factorialLimit = new BigDecimal("100000");
+    private static final BigDecimal factorialLimit = new BigDecimal("100000");
 
-    private static int mRoundScale = 8;
-
-    public static void setRoundScale(int mRoundScale) {
-        MathUtils.mRoundScale = mRoundScale;
-    }
+    public static final int roundScale = 8;
+    private static final int mHighRoundScale = 20;
 
     public static BigDecimal exp(BigDecimal x) {
-        return BigDecimalMath.exp(x, new MathContext(mRoundScale));
+        return BigDecimalMath.exp(x, new MathContext(mHighRoundScale));
     }
 
     public static BigDecimal ln(BigDecimal x) {
         if (x.signum() < 0)
             throw new CalculatingException(CalculatingException.NEGATIVE_PARAMETER_OF_LOG);
-        return BigDecimalMath.log(x, new MathContext(mRoundScale));
+        return BigDecimalMath.log(x, new MathContext(mHighRoundScale));
     }
 
     public static BigDecimal log(BigDecimal x) {
         if (x.signum() < 0)
             throw new CalculatingException(CalculatingException.NEGATIVE_PARAMETER_OF_LOG);
-        return BigDecimalMath.log10(x, new MathContext(mRoundScale));
+        return BigDecimalMath.log10(x, new MathContext(mHighRoundScale));
     }
 
     public static BigDecimal logWithBase(BigDecimal x, BigDecimal base) {
         if (x.signum() < 0)
             throw new CalculatingException(CalculatingException.NEGATIVE_PARAMETER_OF_LOG);
         if (base.compareTo(BigDecimal.TEN) == 0)
-            return BigDecimalMath.log10(x, new MathContext(mRoundScale));
+            return BigDecimalMath.log10(x, new MathContext(roundScale));
         if (base.compareTo(BigDecimal.valueOf(2)) == 0)
-            return BigDecimalMath.log2(x, new MathContext(mRoundScale));
+            return BigDecimalMath.log2(x, new MathContext(roundScale));
 
-        int scale = 15;
-        BigDecimal logX = BigDecimalMath.log2(x, new MathContext(scale)),
-                logB = BigDecimalMath.log2(base, new MathContext(scale));
+        BigDecimal logX = BigDecimalMath.log2(x, new MathContext(mHighRoundScale)),
+                logB = BigDecimalMath.log2(base, new MathContext(mHighRoundScale));
         return logX.divide(logB, 8, RoundingMode.HALF_EVEN);
     }
 
@@ -77,7 +73,7 @@ public class MathUtils {
     public static BigDecimal tan(BigDecimal x) {
         if (x.compareTo(BigDecimal.valueOf(90)) == 0)
             throw new CalculatingException(CalculatingException.TAN_OF_90);
-        return BigDecimalMath.tan(toRadians(x), new MathContext(6));
+        return BigDecimalMath.tan(toRadians(x), new MathContext(roundScale));
     }
 
     public static BigDecimal sin(BigDecimal x) {
@@ -169,7 +165,7 @@ public class MathUtils {
         if (n.remainder(BigDecimal.valueOf(2)).signum() == 0 && a.signum() < 0)
             throw new CalculatingException(CalculatingException.ROOT_OF_EVEN_DEGREE_OF_NEGATIVE_NUMBER);
         BigDecimal log = ln(a);
-        BigDecimal dLog = log.divide(n, 10, RoundingMode.HALF_EVEN);
+        BigDecimal dLog = log.divide(n, mHighRoundScale, RoundingMode.HALF_EVEN);
         return exp(dLog);
     }
 

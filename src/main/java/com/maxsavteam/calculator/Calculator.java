@@ -49,7 +49,7 @@ public class Calculator {
     public static final String FI_SIGN = "\u03C6";
     public static final String E_SIGN = "\u0190";
 
-    public static final String VERSION = "1.6.2";
+    public static final String VERSION = "1.6.3";
 
     private final TreeBuilder builder;
     private final CalculatorExpressionTokenizer mExpressionTokenizer;
@@ -235,7 +235,10 @@ public class Calculator {
         expr = mBracketsChecker.tryToCloseExpressionBrackets(expr);
         expr = mBracketsChecker.formatNearBrackets(expr);
         ArrayList<TreeNode> nodes = builder.buildTree(expr);
-        return CalculatorUtils.removeZeros(calc(0, nodes));
+        BigDecimal result = CalculatorUtils.removeZeros(calc(0, nodes));
+        if(result.scale() > MathUtils.roundScale)
+            result = result.setScale(MathUtils.roundScale, RoundingMode.HALF_EVEN);
+        return result;
     }
 
     private BigDecimal calc(int v, ArrayList<TreeNode> nodes) {
