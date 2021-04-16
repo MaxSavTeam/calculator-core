@@ -39,8 +39,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParsePosition;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Calculator {
@@ -59,6 +63,8 @@ public class Calculator {
     private BracketsResolver bracketsResolver = defaultBracketsResolver;
     private FunctionsResolver functionsResolver = defaultFunctionsResolver;
     private SuffixOperatorResolver suffixResolver = defaultSuffixResolver;
+    private char decimalSeparator = DecimalFormatSymbols.getInstance(Locale.ROOT).getDecimalSeparator();
+    private char groupingSeparator = DecimalFormatSymbols.getInstance(Locale.ROOT).getGroupingSeparator();
 
     public static final Map<String, String> defaultReplacementMap = new HashMap<String, String>() {{
         put(PI_SIGN, "(" + MathUtils.PI.toPlainString() + ")");
@@ -226,6 +232,14 @@ public class Calculator {
         mExpressionTokenizer.setReplacementMap(map);
     }
 
+    public void setDecimalSeparator(char decimalSeparator) {
+        this.decimalSeparator = decimalSeparator;
+    }
+
+    public void setGroupingSeparator(char groupingSeparator) {
+        this.groupingSeparator = groupingSeparator;
+    }
+
     /**
      * Calculates answer of expression
      */
@@ -241,13 +255,22 @@ public class Calculator {
         return result;
     }
 
+    private BigDecimal parseDecimal(String source){
+        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.ROOT);
+        decimalFormatSymbols.setDecimalSeparator(decimalSeparator);
+        decimalFormatSymbols.setGroupingSeparator(groupingSeparator);
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0.###", decimalFormatSymbols);
+        decimalFormat.setParseBigDecimal(true);
+        return (BigDecimal) decimalFormat.parse(source, new ParsePosition(0));
+    }
+
     private BigDecimal calc(int v, ArrayList<TreeNode> nodes) {
         TreeNode node = nodes.get(v);
 
         if (node instanceof BracketsNode) {
             return bracketsResolver.resolve(((BracketsNode) node).getType(), calc(node.getLeftSonIndex(), nodes));
         } else if (node instanceof NumberNode) {
-            return ((NumberNode) node).getNumber();
+            return parseDecimal(((NumberNode) node).getNumber());
         } else if (node instanceof NegativeNumberNode) {
             return calc(node.getLeftSonIndex(), nodes).multiply(BigDecimal.valueOf(-1));
         } else if (node instanceof FunctionNode) {

@@ -46,8 +46,8 @@ public class Fraction {
 		return a.add(b);
 	}
 
-	public Fraction(String fraction){
-		String s = CalculatorUtils.removeZeros(fraction);
+	public Fraction(BigDecimal b){
+		String s = b.toPlainString();
 		if(s.contains(".")){
 			int pos = s.indexOf(".");
 			int n = s.length() - pos - 1;

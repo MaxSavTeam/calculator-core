@@ -17,17 +17,15 @@
 
 package com.maxsavteam.calculator.tree.nodes;
 
-import java.math.BigDecimal;
-
 public class NumberNode extends TreeNode {
 
-    private final BigDecimal number;
+    private final String number;
 
-    public NumberNode(BigDecimal number) {
+    public NumberNode(String number) {
         this.number = number;
     }
 
-    public BigDecimal getNumber() {
+    public String getNumber() {
         return number;
     }
 }

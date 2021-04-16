@@ -191,7 +191,7 @@ public class MathUtils {
         }
         if (Fraction.isFraction(n)) {
             BigDecimal scaledN = n.setScale(3, RoundingMode.HALF_DOWN);
-            Fraction fraction = new Fraction(scaledN.toPlainString());
+            Fraction fraction = new Fraction(scaledN);
             return MathUtils.rootWithBase(sysPow(a, fraction.getNumerator()), fraction.getDenominator());
         }
         return sysPow(a, n);

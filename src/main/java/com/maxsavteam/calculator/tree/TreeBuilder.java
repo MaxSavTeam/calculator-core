@@ -215,7 +215,7 @@ public class TreeBuilder {
                 parseSuffixOperator(v, expression, exampleOffset, rootLevel);
             }else {
                 try {
-                    NumberNode node = new NumberNode(new BigDecimal(expression));
+                    NumberNode node = new NumberNode(expression);
                     treeNodes.set(v, node);
                 }catch (NumberFormatException e){
                     throw new CalculatingException(CalculatingException.NUMBER_FORMAT_EXCEPTION, e);
