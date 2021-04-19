@@ -39,9 +39,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.text.ParsePosition;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -53,7 +51,7 @@ public class Calculator {
     public static final String FI_SIGN = "\u03C6";
     public static final String E_SIGN = "\u0190";
 
-    public static final String VERSION = "1.7.0";
+    public static final String VERSION = "1.7.1";
 
     private final TreeBuilder builder;
     private final CalculatorExpressionTokenizer mExpressionTokenizer;
@@ -244,7 +242,10 @@ public class Calculator {
      * Calculates answer of expression
      */
     public BigDecimal calculate(String expression) {
-        String expr = CalculatorUtils.removeSpaces(expression);
+        String expr = expression;
+        expr = expr.replace(String.valueOf(groupingSeparator), "");
+        if(decimalSeparator != '.')
+            expr = expr.replace(decimalSeparator, '.');
         expr = mExpressionTokenizer.tokenizeExpression(expr);
         expr = mBracketsChecker.tryToCloseExpressionBrackets(expr);
         expr = mBracketsChecker.formatNearBrackets(expr);
@@ -256,12 +257,7 @@ public class Calculator {
     }
 
     private BigDecimal parseDecimal(String source){
-        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.ROOT);
-        decimalFormatSymbols.setDecimalSeparator(decimalSeparator);
-        decimalFormatSymbols.setGroupingSeparator(groupingSeparator);
-        DecimalFormat decimalFormat = new DecimalFormat("#,##0.###", decimalFormatSymbols);
-        decimalFormat.setParseBigDecimal(true);
-        return (BigDecimal) decimalFormat.parse(source, new ParsePosition(0));
+        return new BigDecimal(source);
     }
 
     private BigDecimal calc(int v, ArrayList<TreeNode> nodes) {
