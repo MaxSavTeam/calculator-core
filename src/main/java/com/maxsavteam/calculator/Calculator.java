@@ -51,7 +51,7 @@ public class Calculator {
     public static final String FI_SIGN = "\u03C6";
     public static final String E_SIGN = "\u0190";
 
-    public static final String VERSION = "1.7.1";
+    public static final String VERSION = "1.7.2";
 
     private final TreeBuilder builder;
     private final CalculatorExpressionTokenizer mExpressionTokenizer;
@@ -257,7 +257,11 @@ public class Calculator {
     }
 
     private BigDecimal parseDecimal(String source){
-        return new BigDecimal(source);
+        try {
+            return new BigDecimal(source);
+        }catch (NumberFormatException e){
+            throw new CalculatingException(CalculatingException.NUMBER_FORMAT_EXCEPTION, e);
+        }
     }
 
     private BigDecimal calc(int v, ArrayList<TreeNode> nodes) {
