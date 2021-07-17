@@ -36,6 +36,6 @@ dependencies {
 <dependency>
     <groupId>com.github.MaxSavTeam</groupId>
     <artifactId>calculator-core</artifactId>
-    <version>1.6.1</version>
+    <version>1.7.2</version>
 </dependency>
 ```
