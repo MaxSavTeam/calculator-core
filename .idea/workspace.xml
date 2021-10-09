@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="3" />
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="NumberFormatException will be rethrown as CalculationException">
+      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Calculator.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copyright/License.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries-with-intellij-classes.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/Calculator.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="KotlinMultiplatform">
+    <allAvailableExecutables />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="2" />
+  </component>
+  <component name="ProjectId" id="1pHncfRdtait9ujhFgeQL5jdczs" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../CalculatorCore1" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.3034483" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveMembersDialog.RECENTS_KEY">
+      <recent name="com.maxsavteam.calculator.utils.CalculatorUtils" />
+      <recent name="com.maxsavteam.exceptions.CalculatingException" />
+      <recent name="com.maxsavteam.utils.MathUtils" />
+      <recent name="com.maxsavteam.utils.CalculatorUtils" />
+    </key>
+    <key name="MoveInnerDialog.RECENTS_KEY">
+      <recent name="com.maxsavteam.tree" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Gradle.Calculator [sourcesJar]">
+    <configuration name="Main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.maxsavteam.Main" />
+      <module name="Calculator.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Calculator [sourcesJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="sourcesJar" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.Calculator [sourcesJar]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="" />
+      <created>1614848963813</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1614848963813</updated>
+      <workItem from="1614848965250" duration="4843000" />
+      <workItem from="1614867800794" duration="8957000" />
+      <workItem from="1614884222682" duration="1290000" />
+      <workItem from="1614924512747" duration="2078000" />
+      <workItem from="1614926614940" duration="16898000" />
+      <workItem from="1615291989248" duration="10682000" />
+      <workItem from="1615630518972" duration="1475000" />
+      <workItem from="1615645266766" duration="6825000" />
+      <workItem from="1615703136474" duration="17488000" />
+      <workItem from="1615746339832" duration="1295000" />
+      <workItem from="1615797322912" duration="2967000" />
+      <workItem from="1615822752722" duration="178000" />
+      <workItem from="1616145503303" duration="11943000" />
+      <workItem from="1616163336282" duration="5154000" />
+      <workItem from="1616180376636" duration="969000" />
+      <workItem from="1616350052102" duration="2247000" />
+      <workItem from="1616352381714" duration="2035000" />
+      <workItem from="1616402151087" duration="7772000" />
+      <workItem from="1616424418392" duration="2761000" />
+      <workItem from="1616750404853" duration="1788000" />
+      <workItem from="1618062875977" duration="1105000" />
+      <workItem from="1618417859520" duration="1864000" />
+      <workItem from="1618491593306" duration="595000" />
+      <workItem from="1618583431107" duration="10582000" />
+      <workItem from="1618772597724" duration="624000" />
+      <workItem from="1618843612100" duration="347000" />
+      <workItem from="1618856815417" duration="1092000" />
+      <workItem from="1618857966199" duration="2364000" />
+      <workItem from="1618933098050" duration="703000" />
+      <workItem from="1620459735282" duration="2558000" />
+      <workItem from="1633784814790" duration="1653000" />
+      <workItem from="1633786539480" duration="738000" />
+      <workItem from="1633787326690" duration="253000" />
+      <workItem from="1633787622710" duration="3292000" />
+    </task>
+    <task id="LOCAL-00033" summary="CalculatorExpressionBracketsChecker refactor">
+      <created>1615706210420</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1615706210420</updated>
+    </task>
+    <task id="LOCAL-00034" summary="added formatter to add multiply sign between number and bracket (e.g. 2(2+4) will be formatted like 2*(2+4))">
+      <created>1615707806272</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1615707806272</updated>
+    </task>
+    <task id="LOCAL-00035" summary="version increment">
+      <created>1615708117810</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1615708117810</updated>
+    </task>
+    <task id="LOCAL-00036" summary="CalculatorExpressionTokenizer now customizable">
+      <created>1615709494984</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1615709494984</updated>
+    </task>
+    <task id="LOCAL-00037" summary="added exponent constant">
+      <created>1615710952942</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1615710952942</updated>
+    </task>
+    <task id="LOCAL-00038" summary="added removeSpaces utility method">
+      <created>1615713166663</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1615713166663</updated>
+    </task>
+    <task id="LOCAL-00039" summary="added optimized method for factorial calculating">
+      <created>1615741422778</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1615741422778</updated>
+    </task>
+    <task id="LOCAL-00040" summary="version increment">
+      <created>1615741503381</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1615741503381</updated>
+    </task>
+    <task id="LOCAL-00041" summary="CalculatorExpressionTokenizer refactor">
+      <created>1615747610705</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1615747610705</updated>
+    </task>
+    <task id="LOCAL-00042" summary="fixed functions parsing">
+      <created>1615797702088</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1615797702088</updated>
+    </task>
+    <task id="LOCAL-00043" summary="version increment">
+      <created>1615797730100</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1615797730100</updated>
+    </task>
+    <task id="LOCAL-00044" summary="fixed suffix function parsing">
+      <created>1615799118189</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1615799118189</updated>
+    </task>
+    <task id="LOCAL-00045" summary="TreeBuilder documentation">
+      <created>1616150948559</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1616150948559</updated>
+    </task>
+    <task id="LOCAL-00046" summary="CalculatorExpressionTokenizer documentation">
+      <created>1616151152529</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1616151152529</updated>
+    </task>
+    <task id="LOCAL-00047" summary="Documentation for resolvers">
+      <created>1616151712137</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1616151712137</updated>
+    </task>
+    <task id="LOCAL-00048" summary="Documentation for Calculator">
+      <created>1616151997616</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1616151997616</updated>
+    </task>
+    <task id="LOCAL-00049" summary="version increment">
+      <created>1616152075647</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1616152075647</updated>
+    </task>
+    <task id="LOCAL-00050" summary="version increment">
+      <created>1616153173967</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1616153173968</updated>
+    </task>
+    <task id="LOCAL-00051" summary="new tree building and storing method (heap)">
+      <created>1616159849607</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1616159849607</updated>
+    </task>
+    <task id="LOCAL-00052" summary="fixed crush at second calculation">
+      <created>1616160387264</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1616160387264</updated>
+    </task>
+    <task id="LOCAL-00053" summary="CalculatorExpressionBracketsChecker now inserts multiply sign between suffix operators and digits, brackets, functions">
+      <created>1616164175134</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1616164175135</updated>
+    </task>
+    <task id="LOCAL-00054" summary="version increment">
+      <created>1616164223461</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1616164223461</updated>
+    </task>
+    <task id="LOCAL-00055" summary="CalculatorExpressionBracketsChecker.java renamed to CalculatorExpressionFormatter">
+      <created>1616169727832</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1616169727832</updated>
+    </task>
+    <task id="LOCAL-00056" summary="added localizeExpression method">
+      <created>1616171912323</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1616171912323</updated>
+    </task>
+    <task id="LOCAL-00057" summary="fixed crash when replacing symbols in CalculatorExpressionTokenizer">
+      <created>1616173010596</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1616173010596</updated>
+    </task>
+    <task id="LOCAL-00058" summary="fixed accuracy of logWithBase function">
+      <created>1616174394449</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1616174394449</updated>
+    </task>
+    <task id="LOCAL-00059" summary="stable version">
+      <created>1616180563676</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1616180563676</updated>
+    </task>
+    <task id="LOCAL-00060" summary="CalculatorExpressionFormatter now customizable">
+      <created>1616352920081</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1616352920081</updated>
+    </task>
+    <task id="LOCAL-00061" summary="added formatter default brackets types and suffix operators">
+      <created>1616352971621</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1616352971621</updated>
+    </task>
+    <task id="LOCAL-00062" summary="added parameter to insert multiply sign between close and open bracket (e.g. (1+2)(3+4) will be formatted to (1+2)*(3+4))">
+      <created>1616353303841</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1616353303841</updated>
+    </task>
+    <task id="LOCAL-00063" summary="refactor">
+      <created>1616353742431</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1616353742431</updated>
+    </task>
+    <task id="LOCAL-00064" summary="version increment">
+      <created>1616402284208</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1616402284208</updated>
+    </task>
+    <task id="LOCAL-00065" summary="added multiple percents (500%..%)">
+      <created>1616403480164</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1616403480164</updated>
+    </task>
+    <task id="LOCAL-00066" summary="version increment">
+      <created>1616403528640</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1616403528640</updated>
+    </task>
+    <task id="LOCAL-00067" summary="fixed average function">
+      <created>1616404604973</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1616404604973</updated>
+    </task>
+    <task id="LOCAL-00068" summary="added insert between close bracket and dot and between non digit and dot">
+      <created>1616409061718</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1616409061718</updated>
+    </task>
+    <task id="LOCAL-00069" summary="if NumberFormatException thrown then CalculatingException will be thrown">
+      <created>1616422873830</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1616422873830</updated>
+    </task>
+    <task id="LOCAL-00070" summary="changed visibility of Parameters constructor">
+      <created>1616423704261</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1616423704261</updated>
+    </task>
+    <task id="LOCAL-00071" summary="refactor">
+      <created>1616424045244</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1616424045250</updated>
+    </task>
+    <task id="LOCAL-00072" summary="processAverage refactor">
+      <created>1616425383519</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1616425383526</updated>
+    </task>
+    <task id="LOCAL-00073" summary="added license to files">
+      <created>1616751066573</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1616751066573</updated>
+    </task>
+    <task id="LOCAL-00074" summary="fix: ArithmeticException when calculating square root of 0">
+      <created>1618063207783</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1618063207784</updated>
+    </task>
+    <task id="LOCAL-00075" summary="v1.6.2">
+      <created>1618063304556</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1618063304556</updated>
+    </task>
+    <task id="LOCAL-00076" summary="added highest round scale">
+      <created>1618583618052</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1618583618052</updated>
+    </task>
+    <task id="LOCAL-00077" summary="added customizable decimal and grouping separators">
+      <created>1618596276194</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1618596276194</updated>
+    </task>
+    <task id="LOCAL-00078" summary="Fraction#isFraction method refactor">
+      <created>1618596708303</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1618596708303</updated>
+    </task>
+    <task id="LOCAL-00079" summary="v1.7.0">
+      <created>1618596765119</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1618596765119</updated>
+    </task>
+    <task id="LOCAL-00080" summary="new decimal parsing method">
+      <created>1618859162870</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1618859162871</updated>
+    </task>
+    <task id="LOCAL-00081" summary="NumberFormatException will be rethrown as CalculationException">
+      <created>1620460816764</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1620460816765</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="CalculatorExpressionBracketsChecker.java renamed to CalculatorExpressionFormatter" />
+    <MESSAGE value="added localizeExpression method" />
+    <MESSAGE value="fixed crash when replacing symbols in CalculatorExpressionTokenizer" />
+    <MESSAGE value="fixed accuracy of logWithBase function" />
+    <MESSAGE value="stable version" />
+    <MESSAGE value="CalculatorExpressionFormatter now customizable" />
+    <MESSAGE value="added formatter default brackets types and suffix operators" />
+    <MESSAGE value="added parameter to insert multiply sign between close and open bracket (e.g. (1+2)(3+4) will be formatted to (1+2)*(3+4))" />
+    <MESSAGE value="added multiple percents (500%..%)" />
+    <MESSAGE value="version increment" />
+    <MESSAGE value="fixed average function" />
+    <MESSAGE value="added insert between close bracket and dot and between non digit and dot" />
+    <MESSAGE value="if NumberFormatException thrown then CalculatingException will be thrown" />
+    <MESSAGE value="changed visibility of Parameters constructor" />
+    <MESSAGE value="refactor" />
+    <MESSAGE value="processAverage refactor" />
+    <MESSAGE value="added license to files" />
+    <MESSAGE value="fix: ArithmeticException when calculating square root of 0" />
+    <MESSAGE value="v1.6.2" />
+    <MESSAGE value="added highest round scale" />
+    <MESSAGE value="added customizable decimal and grouping separators" />
+    <MESSAGE value="Fraction#isFraction method refactor" />
+    <MESSAGE value="v1.7.0" />
+    <MESSAGE value="new decimal parsing method" />
+    <MESSAGE value="NumberFormatException will be rethrown as CalculationException" />
+    <option name="LAST_COMMIT_MESSAGE" value="NumberFormatException will be rethrown as CalculationException" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint type="java-exception">
+          <properties class="java.lang.NumberFormatException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
