@@ -10,7 +10,7 @@ Add it in your root build.gradle at the end of repositories:
 ```groovy
 allprojects {
   repositories {
-    maven { url 'https://jitpack.io' }
+    maven { url 'https://repo.maxsavteam.com' }
   }
 }
 ```
@@ -19,8 +19,7 @@ Add the JitPack repository to your build file:
 ```xml
 <repositories>
   <repository>
-      <id>jitpack.io</id>
-      <url>https://jitpack.io</url>
+      <url>https://repo.maxsavteam.com</url>
   </repository>
 </repositories>
 ```
@@ -28,13 +27,13 @@ Add the JitPack repository to your build file:
 #### Gradle
 ```groovy
 dependencies {
-        implementation 'com.github.MaxSavTeam:calculator-core:1.7.2'
+        implementation 'com.maxsavteam:calculator-core:1.7.2'
 }
 ```
 #### Maven
 ```xml
 <dependency>
-    <groupId>com.github.MaxSavTeam</groupId>
+    <groupId>com.maxsavteam</groupId>
     <artifactId>calculator-core</artifactId>
     <version>1.7.2</version>
 </dependency>
