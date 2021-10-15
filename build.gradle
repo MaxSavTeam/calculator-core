@@ -11,7 +11,7 @@ repositories {
 }
 
 sourceSets {
-    main {
+    release {
         java {
             srcDir 'src'
             exclude '**/Main.java'
@@ -20,7 +20,7 @@ sourceSets {
 }
 
 task sourcesJar(type: Jar) {
-    from sourceSets.main.output
+    from sourceSets.release.output
     classifier = 'sources'
 }
 
