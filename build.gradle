@@ -4,24 +4,24 @@ plugins {
 }
 
 group 'com.maxsavteam'
-version '1.7.2'
+version '1.8.0'
 
 repositories {
     mavenCentral()
 }
 
 sourceSets {
-    release {
+    main {
         java {
             srcDir 'src'
-            exclude '**/Main.java'
         }
     }
 }
 
 task sourcesJar(type: Jar) {
-    from sourceSets.release.output
+    from sourceSets.main.output
     classifier = 'sources'
+    exclude '**/Main.java'
 }
 
 task javadocJar(type: Jar) {
