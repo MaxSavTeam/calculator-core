@@ -53,9 +53,9 @@ public class MathUtils {
         if (x.signum() < 0)
             throw new CalculatingException(CalculatingException.NEGATIVE_PARAMETER_OF_LOG);
         if (base.compareTo(BigDecimal.TEN) == 0)
-            return BigDecimalMath.log10(x, new MathContext(roundScale));
+            return BigDecimalMath.log10(x, new MathContext(mHighRoundScale));
         if (base.compareTo(BigDecimal.valueOf(2)) == 0)
-            return BigDecimalMath.log2(x, new MathContext(roundScale));
+            return BigDecimalMath.log2(x, new MathContext(mHighRoundScale));
 
         BigDecimal logX = BigDecimalMath.log2(x, new MathContext(mHighRoundScale)),
                 logB = BigDecimalMath.log2(base, new MathContext(mHighRoundScale));
@@ -73,15 +73,15 @@ public class MathUtils {
     public static BigDecimal tan(BigDecimal x) {
         if (x.compareTo(BigDecimal.valueOf(90)) == 0)
             throw new CalculatingException(CalculatingException.TAN_OF_90);
-        return BigDecimalMath.tan(toRadians(x), new MathContext(roundScale));
+        return BigDecimalMath.tan(toRadians(x), new MathContext(mHighRoundScale));
     }
 
     public static BigDecimal sin(BigDecimal x) {
-        return BigDecimalMath.sin(toRadians(x), new MathContext(6));
+        return BigDecimalMath.sin(toRadians(x), new MathContext(mHighRoundScale));
     }
 
     public static BigDecimal cos(BigDecimal x) {
-        return BigDecimalMath.cos(toRadians(x), new MathContext(6));
+        return BigDecimalMath.cos(toRadians(x), new MathContext(mHighRoundScale));
     }
 
     public static BigDecimal fact(BigDecimal a, int step) {
@@ -186,7 +186,7 @@ public class MathUtils {
         }
         if (n.signum() < 0) {
             BigDecimal result = pow(a, n.multiply(BigDecimal.valueOf(-1)));
-            String strRes = BigDecimal.ONE.divide(result, 8, RoundingMode.HALF_EVEN).toPlainString();
+            String strRes = BigDecimal.ONE.divide(result, mHighRoundScale, RoundingMode.HALF_EVEN).toPlainString();
             return new BigDecimal(CalculatorUtils.removeZeros(strRes));
         }
         if (Fraction.isFraction(n)) {

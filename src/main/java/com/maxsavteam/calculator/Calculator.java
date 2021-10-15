@@ -252,8 +252,8 @@ public class Calculator {
         expr = mBracketsChecker.formatNearBrackets(expr);
         ArrayList<TreeNode> nodes = builder.buildTree(expr);
         BigDecimal result = CalculatorUtils.removeZeros(calc(0, nodes));
-        if(result.scale() > MathUtils.roundScale)
-            result = result.setScale(MathUtils.roundScale, RoundingMode.HALF_EVEN);
+        if(result.scale() > roundScale)
+            result = result.setScale(roundScale, RoundingMode.HALF_EVEN);
         return result;
     }
 
