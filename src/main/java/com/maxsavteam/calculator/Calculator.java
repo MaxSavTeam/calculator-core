@@ -128,6 +128,7 @@ public class Calculator {
             case "sin":
                 return MathUtils.sin(notNullNum);
             case "tan":
+            case "tg":
                 return MathUtils.tan(notNullNum);
             case "ln":
                 return MathUtils.ln(notNullNum);

@@ -210,6 +210,6 @@ public class MathUtils {
     }
 
     public static BigDecimal toRadians(BigDecimal decimal) {
-        return decimal.multiply(PI).divide(BigDecimal.valueOf(180), 15, RoundingMode.HALF_EVEN);
+        return decimal.multiply(PI).divide(BigDecimal.valueOf(180), mHighRoundScale, RoundingMode.HALF_EVEN);
     }
 }
