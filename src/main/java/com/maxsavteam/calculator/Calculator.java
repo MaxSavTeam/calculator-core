@@ -125,11 +125,24 @@ public class Calculator {
                 }
             case "cos":
                 return MathUtils.cos(notNullNum);
+            case "arccos":
+                return MathUtils.arccos(notNullNum);
             case "sin":
                 return MathUtils.sin(notNullNum);
+            case "arcsin":
+                return MathUtils.arcsin(notNullNum);
             case "tan":
             case "tg":
                 return MathUtils.tan(notNullNum);
+            case "arctan":
+            case "arctg":
+                return MathUtils.arctan(notNullNum);
+            case "ctg":
+            case "cot":
+                return MathUtils.cot(notNullNum);
+            case "arccot":
+            case "arcctg":
+                return MathUtils.arccot(notNullNum);
             case "ln":
                 return MathUtils.ln(notNullNum);
             case "R":

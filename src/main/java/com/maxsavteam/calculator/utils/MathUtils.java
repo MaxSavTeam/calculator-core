@@ -76,12 +76,32 @@ public class MathUtils {
         return BigDecimalMath.tan(toRadians(x), new MathContext(mHighRoundScale));
     }
 
+    public static BigDecimal arctan(BigDecimal x){
+        return toDegrees(BigDecimalMath.atan(x, new MathContext(mHighRoundScale)));
+    }
+
+    public static BigDecimal cot(BigDecimal x){
+        return BigDecimalMath.cot(toRadians(x), new MathContext(mHighRoundScale));
+    }
+
+    public static BigDecimal arccot(BigDecimal x){
+        return toDegrees(BigDecimalMath.acot(x, new MathContext(mHighRoundScale)));
+    }
+
     public static BigDecimal sin(BigDecimal x) {
         return BigDecimalMath.sin(toRadians(x), new MathContext(mHighRoundScale));
     }
 
+    public static BigDecimal arcsin(BigDecimal x){
+        return toDegrees(BigDecimalMath.asin(x, new MathContext(mHighRoundScale)));
+    }
+
     public static BigDecimal cos(BigDecimal x) {
         return BigDecimalMath.cos(toRadians(x), new MathContext(mHighRoundScale));
+    }
+
+    public static BigDecimal arccos(BigDecimal x){
+        return toDegrees(BigDecimalMath.acos(x, new MathContext(mHighRoundScale)));
     }
 
     public static BigDecimal fact(BigDecimal a, int step) {
@@ -212,4 +232,9 @@ public class MathUtils {
     public static BigDecimal toRadians(BigDecimal decimal) {
         return decimal.multiply(PI).divide(BigDecimal.valueOf(180), mHighRoundScale, RoundingMode.HALF_EVEN);
     }
+
+    public static BigDecimal toDegrees(BigDecimal x){
+        return x.multiply(BigDecimal.valueOf(180)).divide(PI, mHighRoundScale, RoundingMode.HALF_EVEN);
+    }
+
 }
