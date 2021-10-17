@@ -38,6 +38,7 @@ public class CalculatingException extends RuntimeException {
             "Factorial limit exceeded",
             "Average function has no arguments",
             "Number format exception",
+            "Multiple answers are not supported yet",
     };
     public static final int INVALID_BINARY_OPERATOR = 0;
     public static final int NEGATIVE_PARAMETER_OF_LOG = 1;
@@ -57,6 +58,7 @@ public class CalculatingException extends RuntimeException {
     public static final int FACTORIAL_LIMIT_EXCEEDED = 15;
     public static final int AVERAGE_FUNCTION_HAS_NO_ARGUMENTS = 16;
     public static final int NUMBER_FORMAT_EXCEPTION = 17;
+    public static final int MULTIPLE_ANSWERS_ARE_NOT_SUPPORTED_YET = 18;
 
     private final int errorCode;
 

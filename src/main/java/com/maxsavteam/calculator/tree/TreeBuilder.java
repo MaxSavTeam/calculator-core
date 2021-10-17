@@ -21,6 +21,7 @@ import com.maxsavteam.calculator.exceptions.CalculatingException;
 import com.maxsavteam.calculator.exceptions.TreeBuildingException;
 import com.maxsavteam.calculator.tree.nodes.BracketsNode;
 import com.maxsavteam.calculator.tree.nodes.FunctionNode;
+import com.maxsavteam.calculator.tree.nodes.ListNode;
 import com.maxsavteam.calculator.tree.nodes.NegativeNumberNode;
 import com.maxsavteam.calculator.tree.nodes.NumberNode;
 import com.maxsavteam.calculator.tree.nodes.OperatorNode;
@@ -91,6 +92,7 @@ public class TreeBuilder {
     private ArrayList<BinaryOperator> operators = defaultBinaryOperators;
     private ArrayList<SuffixOperator> suffixOperators = defaultSuffixOperators;
     private ArrayList<OperatorPosition> mOperatorPositions;
+    private ArrayList<SemicolonPosition> mSemicolonPositions;
 
     private int currentIndex = 0;
 
@@ -141,6 +143,7 @@ public class TreeBuilder {
         treeNodes = new ArrayList<>();
         currentIndex = 0;
         mOperatorPositions = new ArrayList<>();
+        mSemicolonPositions = new ArrayList<>();
 
         int bracketsLevel = 0;
         for (int i = 0; i < expression.length(); i++) {
@@ -149,6 +152,9 @@ public class TreeBuilder {
                 bracketsLevel++;
             else if (isCloseBracket(c))
                 bracketsLevel--;
+            else if(c == ';'){
+                mSemicolonPositions.add(new SemicolonPosition(bracketsLevel, i));
+            }
             else if (isBinaryOperator(c)) {
                 int priority = getOperatorPriority(c);
                 mOperatorPositions.add(new OperatorPosition(bracketsLevel, priority, i));
@@ -185,7 +191,38 @@ public class TreeBuilder {
             return;
         }
 
-        OperatorPosition foundPos = findPosition(expression, exampleOffset, rootLevel);
+        ArrayList<SemicolonPosition> semicolonPositions = findSemicolonsInExpression(expression, exampleOffset, rootLevel);
+        if(semicolonPositions.size() > 0){
+            String s = "";
+            ArrayList<String> parts = new ArrayList<>();
+            for(int i = 0; i < expression.length(); i++){
+                char c = expression.charAt(i);
+                if(c == ';'){
+                    parts.add(s);
+                    s = "";
+                }else{
+                    s += c;
+                }
+            }
+            if(s.length() != 0)
+                parts.add(s);
+            ArrayList<TreeNode> nodes = new ArrayList<>();
+            int partsOffset = 0;
+            for (String part : parts) {
+                TreeNode treeNode = new TreeNode();
+                int index = nextIndex();
+                treeNode.setLeftSonIndex(index);
+                nodes.add(treeNode);
+
+                build(index, part, rootLevel, exampleOffset + partsOffset);
+                partsOffset += part.length() + 1;
+            }
+            ListNode listNode = new ListNode(nodes);
+            treeNodes.set(v, listNode);
+            return;
+        }
+
+        OperatorPosition foundPos = findNearestOperatorInExpression(expression, exampleOffset, rootLevel);
         if(foundPos != null){
             String firstPart = expression.substring(0, foundPos.position - exampleOffset);
             String secondPart = expression.substring(foundPos.position - exampleOffset + 1);
@@ -268,7 +305,7 @@ public class TreeBuilder {
         }
     }
 
-    protected OperatorPosition findPosition(String ex, int offset, int rootLevel){
+    protected OperatorPosition findNearestOperatorInExpression(String ex, int offset, int rootLevel){
         int end = offset + ex.length();
         OperatorPosition foundPos = null;
         OperatorPosition lastPos = null;
@@ -296,6 +333,19 @@ public class TreeBuilder {
         if(arePrioritiesEqual)
             foundPos = lastPos;
         return foundPos;
+    }
+
+    protected ArrayList<SemicolonPosition> findSemicolonsInExpression(String ex, int offset, int level){
+        int end = offset + ex.length();
+        ArrayList<SemicolonPosition> positions = new ArrayList<>();
+        for(SemicolonPosition semicolonPosition : mSemicolonPositions){
+            if(offset > semicolonPosition.position || semicolonPosition.level != level)
+                continue;
+            if(semicolonPosition.position >= end)
+                break;
+            positions.add(semicolonPosition);
+        }
+        return positions;
     }
 
     protected void expandTreeToPosition(int pos){

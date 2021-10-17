@@ -28,6 +28,7 @@ import com.maxsavteam.calculator.tree.SuffixOperator;
 import com.maxsavteam.calculator.tree.TreeBuilder;
 import com.maxsavteam.calculator.tree.nodes.BracketsNode;
 import com.maxsavteam.calculator.tree.nodes.FunctionNode;
+import com.maxsavteam.calculator.tree.nodes.ListNode;
 import com.maxsavteam.calculator.tree.nodes.NegativeNumberNode;
 import com.maxsavteam.calculator.tree.nodes.NumberNode;
 import com.maxsavteam.calculator.tree.nodes.OperatorNode;
@@ -108,20 +109,32 @@ public class Calculator {
         }
     };
 
-    public static final FunctionsResolver defaultFunctionsResolver = (funcName, suffix, operand) -> {
-        if (suffix == null && operand == null) {
+    public static final FunctionsResolver defaultFunctionsResolver = (funcName, suffix, operands) -> {
+        if (suffix == null && (operands == null || operands.size() == 0)) {
             throw new CalculatingException(CalculatingException.FUNCTION_SUFFIX_AND_OPERAND_NULL);
         }
-        BigDecimal notNullNum = suffix == null ? operand : suffix;
+        BigDecimal firstOperand;
+        if(operands.size() == 0)
+            firstOperand = null;
+        else
+            firstOperand = operands.get(0);
+        BigDecimal notNullNum = suffix == null ? firstOperand : suffix;
         switch (funcName) {
+            case "sum": { // example of using lists
+                BigDecimal result = BigDecimal.ZERO;
+                for(BigDecimal b : operands){
+                    result = result.add(b);
+                }
+                return result;
+            }
             case "log":
                 if (suffix != null) {
-                    if (operand != null)
-                        return MathUtils.logWithBase(operand, suffix);
+                    if (firstOperand != null)
+                        return MathUtils.logWithBase(firstOperand, suffix);
                     else
                         return MathUtils.log(suffix);
                 } else {
-                    return MathUtils.log(operand);
+                    return MathUtils.log(firstOperand);
                 }
             case "cos":
                 return MathUtils.cos(notNullNum);
@@ -295,7 +308,9 @@ public class Calculator {
                 throw new CalculatingException(CalculatingException.NO_OPERAND_FOR_SUFFIX_OPERATOR);
             return suffixResolver.resolve(suffixNode.operator, suffixNode.count, calc(node.getLeftSonIndex(), nodes));
         } else if (node instanceof OperatorNode) {
-            return processOperatorNode(v, nodes);
+	        return processOperatorNode(v, nodes);
+        }else if(node instanceof ListNode){
+			throw new CalculatingException(CalculatingException.MULTIPLE_ANSWERS_ARE_NOT_SUPPORTED_YET);
         } else {
             throw new CalculatingException(CalculatingException.REQUESTED_EMPTY_NODE);
         }
@@ -323,10 +338,24 @@ public class Calculator {
         FunctionNode functionNode = (FunctionNode) nodes.get(v);
         if (functionNode.funcName.equals("A"))
             return processAverage(v, nodes);
-        BigDecimal operand = null;
-        if (!TreeBuilder.isNodeEmpty(functionNode.getLeftSonIndex(), nodes))
-            operand = calc(functionNode.getLeftSonIndex(), nodes);
-        return functionsResolver.resolve(functionNode.funcName, functionNode.suffix, operand);
+        ArrayList<BigDecimal> operands = new ArrayList<>();
+        if (!TreeBuilder.isNodeEmpty(functionNode.getLeftSonIndex(), nodes)) {
+            TreeNode node = nodes.get(functionNode.getLeftSonIndex());
+            if(node instanceof BracketsNode){
+                node = nodes.get(node.getLeftSonIndex());
+                if(node instanceof ListNode) {
+                    ArrayList<TreeNode> listNodes = ((ListNode) node).getNodes();
+                    for (TreeNode n : listNodes) {
+                        operands.add(calc(n.getLeftSonIndex(), nodes));
+                    }
+                }else{
+                    operands.add(calc(functionNode.getLeftSonIndex(), nodes));
+                }
+            }else {
+                operands.add(calc(functionNode.getLeftSonIndex(), nodes));
+            }
+        }
+        return functionsResolver.resolve(functionNode.funcName, functionNode.suffix, operands);
     }
 
     protected BigDecimal processAverage(int vertex, ArrayList<TreeNode> nodes) {

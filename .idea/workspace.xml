@@ -7,10 +7,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="feat: add arcsin, arccos, arctan, cotan, arccotan">
+    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="build: change version to 1.8.0">
+      <change afterPath="$PROJECT_DIR$/.idea/copyright/Copyright.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/SemicolonPosition.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/nodes/ListNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/Calculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/exceptions/CalculatingException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/exceptions/CalculatingException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/resolvers/FunctionsResolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/resolvers/FunctionsResolver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/TreeBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/TreeBuilder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +52,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
@@ -94,7 +105,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.3034483" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
+    <property name="settings.editor.selected.configurable" value="copyright.profiles" />
   </component>
   <component name="RecentsManager">
     <key name="MoveMembersDialog.RECENTS_KEY">
@@ -189,14 +200,9 @@
       <workItem from="1633786539480" duration="738000" />
       <workItem from="1633787326690" duration="253000" />
       <workItem from="1633787622710" duration="3664000" />
-      <workItem from="1634307292416" duration="6489000" />
-    </task>
-    <task id="LOCAL-00039" summary="added optimized method for factorial calculating">
-      <created>1615741422778</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1615741422778</updated>
+      <workItem from="1634307292416" duration="7712000" />
+      <workItem from="1634465997119" duration="7687000" />
+      <workItem from="1634483673075" duration="663000" />
     </task>
     <task id="LOCAL-00040" summary="version increment">
       <created>1615741503381</created>
@@ -534,7 +540,14 @@
       <option name="project" value="LOCAL" />
       <updated>1634310963316</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <task id="LOCAL-00088" summary="build: change version to 1.8.0">
+      <created>1634313884590</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1634313884590</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -563,7 +576,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added formatter default brackets types and suffix operators" />
     <MESSAGE value="added parameter to insert multiply sign between close and open bracket (e.g. (1+2)(3+4) will be formatted to (1+2)*(3+4))" />
     <MESSAGE value="added multiple percents (500%..%)" />
     <MESSAGE value="version increment" />
@@ -588,7 +600,8 @@
     <MESSAGE value="feat: add tg function" />
     <MESSAGE value="feat: all operations with round scale in MathUtils replaced with high round scale (=20)" />
     <MESSAGE value="feat: add arcsin, arccos, arctan, cotan, arccotan" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add arcsin, arccos, arctan, cotan, arccotan" />
+    <MESSAGE value="build: change version to 1.8.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="build: change version to 1.8.0" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -597,6 +610,11 @@
           <properties class="java.lang.NumberFormatException" package="java.lang" />
           <option name="timeStamp" value="1" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/TreeBuilder.java</url>
+          <line>219</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
