@@ -23,8 +23,8 @@ import java.math.BigDecimal;
 
 /**
  * Resolver for suffix operators (e.g. % (percent), ! (factorial))
- * */
+ */
 public interface SuffixOperatorResolver {
-    @NotNull
-    BigDecimal resolve(char operator, int count, BigDecimal operand);
+	@NotNull
+	BigDecimal resolve(char operator, int count, BigDecimal operand);
 }

@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2021 MaxSav Team
- *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
  * Software Foundation, either version 3 of the License, or (at your option)
@@ -15,20 +14,19 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.maxsavteam.calculator.resolvers;
-
-import org.jetbrains.annotations.NotNull;
+package com.maxsavteam.calculator.results;
 
 import java.math.BigDecimal;
 
-/**
- * Resolver for different brackets types
- * */
-public interface BracketsResolver {
-    /**
-     * @param bracketType Type of bracket in list of brackets
-     * @param a Result in brackets
-     * */
-    @NotNull
-    BigDecimal resolve(int bracketType, BigDecimal a);
+public class NumberResult extends BaseResult {
+
+	private final BigDecimal a;
+
+	public NumberResult(BigDecimal a) {
+		this.a = a;
+	}
+
+	public BigDecimal get() {
+		return a;
+	}
 }

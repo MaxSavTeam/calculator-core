@@ -21,7 +21,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 
 /**
  * Resolver for all functions
@@ -33,5 +32,5 @@ public interface FunctionsResolver {
      * @param operands List of results in brackets of function separated by semicolon  (e.g. "sin(45)" 45 is operand or "sin(45*2)" operand will be 90)
      * */
     @NotNull
-    BigDecimal resolve(String funcName, @Nullable BigDecimal suffix, ArrayList<BigDecimal> operands);
+    BigDecimal resolve(String funcName, @Nullable BigDecimal suffix, BigDecimal operand);
 }

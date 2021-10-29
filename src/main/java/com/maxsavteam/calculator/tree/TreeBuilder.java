@@ -193,19 +193,14 @@ public class TreeBuilder {
 
         ArrayList<SemicolonPosition> semicolonPositions = findSemicolonsInExpression(expression, exampleOffset, rootLevel);
         if(semicolonPositions.size() > 0){
-            String s = "";
+            semicolonPositions.add(0, new SemicolonPosition(0, exampleOffset - 1));
+            semicolonPositions.add(new SemicolonPosition(0, expression.length() + exampleOffset));
             ArrayList<String> parts = new ArrayList<>();
-            for(int i = 0; i < expression.length(); i++){
-                char c = expression.charAt(i);
-                if(c == ';'){
-                    parts.add(s);
-                    s = "";
-                }else{
-                    s += c;
-                }
+            for(int i = 0; i < semicolonPositions.size() - 1; i++){
+                SemicolonPosition pos = semicolonPositions.get(i);
+                SemicolonPosition next = semicolonPositions.get(i + 1);
+                parts.add(expression.substring(pos.position + 1 - exampleOffset, next.position - exampleOffset));
             }
-            if(s.length() != 0)
-                parts.add(s);
             ArrayList<TreeNode> nodes = new ArrayList<>();
             int partsOffset = 0;
             for (String part : parts) {

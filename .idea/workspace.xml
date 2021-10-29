@@ -7,16 +7,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="build: change version to 1.8.0">
-      <change afterPath="$PROJECT_DIR$/.idea/copyright/Copyright.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/SemicolonPosition.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/nodes/ListNode.java" afterDir="false" />
+    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="feat: lists as functions operand">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/resolvers/ListFunctionsResolver.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/results/BaseResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/results/ListResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/results/NumberResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/Calculator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/exceptions/CalculatingException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/exceptions/CalculatingException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/resolvers/BracketsResolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/resolvers/BracketsResolver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/resolvers/FunctionsResolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/resolvers/FunctionsResolver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/resolvers/SuffixOperatorResolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/resolvers/SuffixOperatorResolver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/TreeBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/TreeBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/nodes/NegativeNumberNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/nodes/NegativeNumberNode.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,8 +51,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -101,7 +106,7 @@
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.3034483" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
@@ -121,6 +126,7 @@
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="14" />
       <option name="MAIN_CLASS_NAME" value="com.maxsavteam.Main" />
       <module name="calculator-core.main" />
       <method v="2">
@@ -202,14 +208,12 @@
       <workItem from="1633787622710" duration="3664000" />
       <workItem from="1634307292416" duration="7712000" />
       <workItem from="1634465997119" duration="7687000" />
-      <workItem from="1634483673075" duration="663000" />
-    </task>
-    <task id="LOCAL-00040" summary="version increment">
-      <created>1615741503381</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1615741503381</updated>
+      <workItem from="1634483673075" duration="4824000" />
+      <workItem from="1634575014701" duration="3586000" />
+      <workItem from="1634578728028" duration="1605000" />
+      <workItem from="1634820117223" duration="584000" />
+      <workItem from="1634906799478" duration="395000" />
+      <workItem from="1635512341182" duration="6597000" />
     </task>
     <task id="LOCAL-00041" summary="CalculatorExpressionTokenizer refactor">
       <created>1615747610705</created>
@@ -547,7 +551,14 @@
       <option name="project" value="LOCAL" />
       <updated>1634313884590</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="feat: lists as functions operand">
+      <created>1634484628560</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1634484628560</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -560,6 +571,7 @@
         <option value="Default.Author" />
         <option value="Default.Date" />
         <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
       </list>
     </option>
   </component>
@@ -576,7 +588,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added parameter to insert multiply sign between close and open bracket (e.g. (1+2)(3+4) will be formatted to (1+2)*(3+4))" />
     <MESSAGE value="added multiple percents (500%..%)" />
     <MESSAGE value="version increment" />
     <MESSAGE value="fixed average function" />
@@ -601,7 +612,8 @@
     <MESSAGE value="feat: all operations with round scale in MathUtils replaced with high round scale (=20)" />
     <MESSAGE value="feat: add arcsin, arccos, arctan, cotan, arccotan" />
     <MESSAGE value="build: change version to 1.8.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="build: change version to 1.8.0" />
+    <MESSAGE value="feat: lists as functions operand" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: lists as functions operand" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -612,8 +624,8 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/TreeBuilder.java</url>
-          <line>219</line>
-          <option name="timeStamp" value="4" />
+          <line>195</line>
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

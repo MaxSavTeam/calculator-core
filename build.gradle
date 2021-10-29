@@ -10,18 +10,10 @@ repositories {
     mavenCentral()
 }
 
-sourceSets {
-    main {
-        java {
-            srcDir 'src'
-        }
-    }
-}
-
 task sourcesJar(type: Jar) {
     from sourceSets.main.output
     classifier = 'sources'
-    exclude '**/Main.java'
+    //exclude '**/Main.java'
 }
 
 task javadocJar(type: Jar) {

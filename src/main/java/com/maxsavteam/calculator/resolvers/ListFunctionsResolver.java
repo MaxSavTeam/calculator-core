@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2021 MaxSav Team
- *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
  * Software Foundation, either version 3 of the License, or (at your option)
@@ -17,18 +16,18 @@
 
 package com.maxsavteam.calculator.resolvers;
 
+import com.maxsavteam.calculator.results.ListResult;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
 
-/**
- * Resolver for different brackets types
- * */
-public interface BracketsResolver {
-    /**
-     * @param bracketType Type of bracket in list of brackets
-     * @param a Result in brackets
-     * */
-    @NotNull
-    BigDecimal resolve(int bracketType, BigDecimal a);
+public interface ListFunctionsResolver {
+	/**
+	 * @param funcName Name of function to resolve.
+	 * @param suffix Suffix of function (e.g. in expression "sin45" 45 is suffix
+	 * @param list List of results in brackets of function separated by semicolon  (e.g. "sin(45)" 45 is operand or "sin(45*2)" operand will be 90)
+	 * */
+	@NotNull
+	ListResult resolve(String funcName, @Nullable BigDecimal suffix, ListResult list);
 }

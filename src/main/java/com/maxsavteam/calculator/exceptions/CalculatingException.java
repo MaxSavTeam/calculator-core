@@ -38,7 +38,9 @@ public class CalculatingException extends RuntimeException {
             "Factorial limit exceeded",
             "Average function has no arguments",
             "Number format exception",
-            "Multiple answers are not supported yet",
+            "Functions operands cannot be lists",
+            "Binary operators cannot be applied to lists",
+            "Operators or functions cannot be applied to list of lists",
     };
     public static final int INVALID_BINARY_OPERATOR = 0;
     public static final int NEGATIVE_PARAMETER_OF_LOG = 1;
@@ -58,9 +60,13 @@ public class CalculatingException extends RuntimeException {
     public static final int FACTORIAL_LIMIT_EXCEEDED = 15;
     public static final int AVERAGE_FUNCTION_HAS_NO_ARGUMENTS = 16;
     public static final int NUMBER_FORMAT_EXCEPTION = 17;
-    public static final int MULTIPLE_ANSWERS_ARE_NOT_SUPPORTED_YET = 18;
+    public static final int FUNCTIONS_OPERANDS_CANNOT_BE_LISTS = 18;
+    public static final int BINARY_OPERATOR_CANNOT_BE_APPLIED_TO_LISTS = 19;
+    public static final int OPERATOR_OR_FUNCTION_CANNOT_BE_APPLIED_TO_LIST_OF_LISTS = 20;
 
     private final int errorCode;
+
+    private final String additionalMessage;
 
     public int getErrorCode(){
         return errorCode;
@@ -71,16 +77,22 @@ public class CalculatingException extends RuntimeException {
         if(errorCode == NUMBER_FORMAT_EXCEPTION)
             return "NumberFormatException: " + getCause().getMessage();
         if(errorCode >= 0 && errorCode < messages.length)
-            return messages[errorCode];
+            return messages[errorCode] + (additionalMessage == null ? "" : ": " + additionalMessage);
         return "";
     }
 
-    public CalculatingException(int error){
+    public CalculatingException(int error, String message){
         errorCode = error;
+        additionalMessage = message;
+    }
+
+    public CalculatingException(int error){
+        this(error, (String) null);
     }
 
     public CalculatingException(int error, Throwable cause) {
         super(cause);
         errorCode = error;
+        additionalMessage = null;
     }
 }
