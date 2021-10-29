@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="doc: fix javadoc of FunctionsResolver">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/Calculator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/exceptions/CalculatingException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/exceptions/CalculatingException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/utils/MathUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/utils/MathUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +26,9 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand />
@@ -214,13 +217,6 @@
       <workItem from="1634820117223" duration="584000" />
       <workItem from="1634906799478" duration="395000" />
       <workItem from="1635512341182" duration="8829000" />
-    </task>
-    <task id="LOCAL-00043" summary="version increment">
-      <created>1615797730100</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1615797730100</updated>
     </task>
     <task id="LOCAL-00044" summary="fixed suffix function parsing">
       <created>1615799118189</created>
@@ -558,7 +554,14 @@
       <option name="project" value="LOCAL" />
       <updated>1635519575710</updated>
     </task>
-    <option name="localTasksCounter" value="92" />
+    <task id="LOCAL-00092" summary="build: change version to 1.8.1">
+      <created>1635523017859</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1635523017859</updated>
+    </task>
+    <option name="localTasksCounter" value="93" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -620,7 +623,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fixed average function" />
     <MESSAGE value="added insert between close bracket and dot and between non digit and dot" />
     <MESSAGE value="if NumberFormatException thrown then CalculatingException will be thrown" />
     <MESSAGE value="changed visibility of Parameters constructor" />
@@ -645,7 +647,8 @@
     <MESSAGE value="feat: lists as functions operand" />
     <MESSAGE value="feat: functions which arguments are list, moved to separate resolver; brackets and suffix operators can be applied for lists" />
     <MESSAGE value="doc: fix javadoc of FunctionsResolver" />
-    <option name="LAST_COMMIT_MESSAGE" value="doc: fix javadoc of FunctionsResolver" />
+    <MESSAGE value="build: change version to 1.8.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="build: change version to 1.8.1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
