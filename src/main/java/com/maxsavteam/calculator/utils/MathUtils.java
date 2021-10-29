@@ -44,13 +44,13 @@ public class MathUtils {
     }
 
     public static BigDecimal log(BigDecimal x) {
-        if (x.signum() < 0)
+        if (x.signum() <= 0)
             throw new CalculatingException(CalculatingException.NEGATIVE_PARAMETER_OF_LOG);
         return BigDecimalMath.log10(x, new MathContext(mHighRoundScale));
     }
 
     public static BigDecimal logWithBase(BigDecimal x, BigDecimal base) {
-        if (x.signum() < 0)
+        if (x.signum() <= 0)
             throw new CalculatingException(CalculatingException.NEGATIVE_PARAMETER_OF_LOG);
         if (base.compareTo(BigDecimal.TEN) == 0)
             return BigDecimalMath.log10(x, new MathContext(mHighRoundScale));
@@ -59,7 +59,7 @@ public class MathUtils {
 
         BigDecimal logX = BigDecimalMath.log2(x, new MathContext(mHighRoundScale)),
                 logB = BigDecimalMath.log2(base, new MathContext(mHighRoundScale));
-        return logX.divide(logB, 8, RoundingMode.HALF_EVEN);
+        return logX.divide(logB, mHighRoundScale, RoundingMode.HALF_EVEN);
     }
 
     public static BigDecimal abs(BigDecimal x) {
