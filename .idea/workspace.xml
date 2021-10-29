@@ -1,27 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AnalysisUIOptions">
-    <option name="SCOPE_TYPE" value="3" />
-  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="feat: lists as functions operand">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/resolvers/ListFunctionsResolver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/results/BaseResult.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/results/ListResult.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/results/NumberResult.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="doc: fix javadoc of FunctionsResolver">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/Calculator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/exceptions/CalculatingException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/exceptions/CalculatingException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/resolvers/BracketsResolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/resolvers/BracketsResolver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/resolvers/FunctionsResolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/resolvers/FunctionsResolver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/resolvers/SuffixOperatorResolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/resolvers/SuffixOperatorResolver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/TreeBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/TreeBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/nodes/NegativeNumberNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/nodes/NegativeNumberNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/utils/MathUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/utils/MathUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +44,19 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="2.x" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="master" />
@@ -213,21 +213,7 @@
       <workItem from="1634578728028" duration="1605000" />
       <workItem from="1634820117223" duration="584000" />
       <workItem from="1634906799478" duration="395000" />
-      <workItem from="1635512341182" duration="6597000" />
-    </task>
-    <task id="LOCAL-00041" summary="CalculatorExpressionTokenizer refactor">
-      <created>1615747610705</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1615747610705</updated>
-    </task>
-    <task id="LOCAL-00042" summary="fixed functions parsing">
-      <created>1615797702088</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1615797702088</updated>
+      <workItem from="1635512341182" duration="8829000" />
     </task>
     <task id="LOCAL-00043" summary="version increment">
       <created>1615797730100</created>
@@ -558,7 +544,21 @@
       <option name="project" value="LOCAL" />
       <updated>1634484628560</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="feat: functions which arguments are list, moved to separate resolver; brackets and suffix operators can be applied for lists">
+      <created>1635519470115</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1635519470116</updated>
+    </task>
+    <task id="LOCAL-00091" summary="doc: fix javadoc of FunctionsResolver">
+      <created>1635519575710</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1635519575710</updated>
+    </task>
+    <option name="localTasksCounter" value="92" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -580,7 +580,39 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="2.x" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="2.x" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="master" />
+                </option>
+              </RecentGroup>
+            </list>
           </value>
         </entry>
       </map>
@@ -588,8 +620,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added multiple percents (500%..%)" />
-    <MESSAGE value="version increment" />
     <MESSAGE value="fixed average function" />
     <MESSAGE value="added insert between close bracket and dot and between non digit and dot" />
     <MESSAGE value="if NumberFormatException thrown then CalculatingException will be thrown" />
@@ -613,7 +643,9 @@
     <MESSAGE value="feat: add arcsin, arccos, arctan, cotan, arccotan" />
     <MESSAGE value="build: change version to 1.8.0" />
     <MESSAGE value="feat: lists as functions operand" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: lists as functions operand" />
+    <MESSAGE value="feat: functions which arguments are list, moved to separate resolver; brackets and suffix operators can be applied for lists" />
+    <MESSAGE value="doc: fix javadoc of FunctionsResolver" />
+    <option name="LAST_COMMIT_MESSAGE" value="doc: fix javadoc of FunctionsResolver" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

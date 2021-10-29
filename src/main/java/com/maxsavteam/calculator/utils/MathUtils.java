@@ -70,6 +70,45 @@ public class MathUtils {
         }
     }
 
+    public static BigDecimal gcd(BigDecimal a, BigDecimal b){
+        a = a.abs();
+        b = b.abs();
+        while(a.signum() != 0 && b.signum() != 0){
+            if(a.compareTo(b) > 0){
+                a = a.remainder(b);
+            }else{
+                b = b.remainder(a);
+            }
+        }
+        return a.max(b);
+    }
+
+    public static BigDecimal gcd(BigDecimal... l){
+        if(l.length < 2){
+            throw new CalculatingException(CalculatingException.TOO_FEW_ARGUMENTS, "gcd: expected minimum 2, but found " + l.length);
+        }
+        BigDecimal r = gcd(l[0], l[1]);
+        for(int i = 2; i < l.length; i++)
+            r = gcd(r, l[i]);
+        return r;
+    }
+
+    public static BigDecimal lcm(BigDecimal a, BigDecimal b){
+        a = a.abs();
+        b = b.abs();
+        return a.multiply(b).divide(gcd(a, b), mHighRoundScale, RoundingMode.HALF_EVEN);
+    }
+
+    public static BigDecimal lcm(BigDecimal... l){
+        if(l.length < 2){
+            throw new CalculatingException(CalculatingException.TOO_FEW_ARGUMENTS, "lcm: expected minimum 2, but found " + l.length);
+        }
+        BigDecimal r = lcm(l[0], l[1]);
+        for(int i = 2; i < l.length; i++)
+            r = lcm(r, l[i]);
+        return r;
+    }
+
     public static BigDecimal tan(BigDecimal x) {
         if (x.compareTo(BigDecimal.valueOf(90)) == 0)
             throw new CalculatingException(CalculatingException.TAN_OF_90);

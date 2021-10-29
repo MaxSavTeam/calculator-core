@@ -130,6 +130,12 @@ public class Calculator {
                     sum = sum.add(d);
                 return ListResult.of(sum.divide(BigDecimal.valueOf(decimals.size()), roundScale, RoundingMode.HALF_EVEN));
             }
+            case "gcd":{
+                return ListResult.of(MathUtils.gcd(decimals.toArray(new BigDecimal[0])));
+            }
+            case "lcm":{
+                return ListResult.of(MathUtils.lcm(decimals.toArray(new BigDecimal[0])));
+            }
             default:
                 throw new CalculatingException(CalculatingException.UNKNOWN_FUNCTION, funcName);
         }
