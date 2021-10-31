@@ -204,12 +204,14 @@ public class TreeBuilder {
             ArrayList<TreeNode> nodes = new ArrayList<>();
             int partsOffset = 0;
             for (String part : parts) {
-                TreeNode treeNode = new TreeNode();
-                int index = nextIndex();
-                treeNode.setLeftSonIndex(index);
-                nodes.add(treeNode);
+                if(!part.isEmpty()) {
+                    TreeNode treeNode = new TreeNode();
+                    int index = nextIndex();
+                    treeNode.setLeftSonIndex(index);
+                    nodes.add(treeNode);
 
-                build(index, part, rootLevel, exampleOffset + partsOffset);
+                    build(index, part, rootLevel, exampleOffset + partsOffset);
+                }
                 partsOffset += part.length() + 1;
             }
             ListNode listNode = new ListNode(nodes);
