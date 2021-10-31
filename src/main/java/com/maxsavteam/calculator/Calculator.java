@@ -114,33 +114,6 @@ public class Calculator {
         }
     };
 
-    public static final ListFunctionsResolver defaultListFunctionResolver = (funcName, suffix, list) -> {
-        ArrayList<BigDecimal> decimals = new ArrayList<>();
-        for(var b : list.getResults()){
-            if(b instanceof ListResult){
-                throw new CalculatingException(CalculatingException.OPERATOR_OR_FUNCTION_CANNOT_BE_APPLIED_TO_LIST_OF_LISTS);
-            }else if(b instanceof NumberResult){
-                decimals.add(((NumberResult) b).get());
-            }
-        }
-        switch (funcName){
-            case "A":{
-                BigDecimal sum = BigDecimal.ZERO;
-                for(var d : decimals)
-                    sum = sum.add(d);
-                return ListResult.of(sum.divide(BigDecimal.valueOf(decimals.size()), roundScale, RoundingMode.HALF_EVEN));
-            }
-            case "gcd":{
-                return ListResult.of(MathUtils.gcd(decimals.toArray(new BigDecimal[0])));
-            }
-            case "lcm":{
-                return ListResult.of(MathUtils.lcm(decimals.toArray(new BigDecimal[0])));
-            }
-            default:
-                throw new CalculatingException(CalculatingException.UNKNOWN_FUNCTION, funcName);
-        }
-    };
-
     public static final FunctionsResolver defaultFunctionsResolver = (funcName, suffix, operand) -> {
         if (suffix == null && operand == null){
             throw new CalculatingException(CalculatingException.FUNCTION_SUFFIX_AND_OPERAND_NULL);
@@ -185,6 +158,38 @@ public class Calculator {
                 return MathUtils.abs(notNullNum);
             default:
                 throw new CalculatingException(CalculatingException.UNKNOWN_FUNCTION);
+        }
+    };
+
+    public static final ListFunctionsResolver defaultListFunctionResolver = (funcName, suffix, list) -> {
+        ArrayList<BigDecimal> decimals = new ArrayList<>();
+        for(var b : list.getResults()){
+            if(b instanceof ListResult){
+                throw new CalculatingException(CalculatingException.OPERATOR_OR_FUNCTION_CANNOT_BE_APPLIED_TO_LIST_OF_LISTS);
+            }else if(b instanceof NumberResult){
+                decimals.add(((NumberResult) b).get());
+            }
+        }
+        switch (funcName){
+            case "A":{
+                BigDecimal sum = BigDecimal.ZERO;
+                for(var d : decimals)
+                    sum = sum.add(d);
+                return ListResult.of(sum.divide(BigDecimal.valueOf(decimals.size()), roundScale, RoundingMode.HALF_EVEN));
+            }
+            case "gcd":{
+                return ListResult.of(MathUtils.gcd(decimals.toArray(new BigDecimal[0])));
+            }
+            case "lcm":{
+                return ListResult.of(MathUtils.lcm(decimals.toArray(new BigDecimal[0])));
+            }
+            default: {
+                ArrayList<BaseResult> results = new ArrayList<>();
+                for(var b : decimals){
+                    results.add(new NumberResult(defaultFunctionsResolver.resolve(funcName, suffix, b)));
+                }
+                return new ListResult(results);
+            }
         }
     };
 
