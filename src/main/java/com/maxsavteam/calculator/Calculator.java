@@ -56,7 +56,7 @@ public class Calculator {
     public static final String FI_SIGN = "\u03C6";
     public static final String E_SIGN = "\u0190";
 
-    public static final String VERSION = "2.0.0-beta2";
+    public static final String VERSION = "2.0.0-beta3";
 
     private final TreeBuilder builder;
     private final CalculatorExpressionTokenizer mExpressionTokenizer;
@@ -133,22 +133,28 @@ public class Calculator {
             case "cos":
                 return MathUtils.cos(notNullNum);
             case "arccos":
+            case "acos":
                 return MathUtils.arccos(notNullNum);
             case "sin":
                 return MathUtils.sin(notNullNum);
             case "arcsin":
+            case "asin":
                 return MathUtils.arcsin(notNullNum);
             case "tan":
             case "tg":
                 return MathUtils.tan(notNullNum);
             case "arctan":
             case "arctg":
+            case "atan":
+            case "atg":
                 return MathUtils.arctan(notNullNum);
             case "ctg":
             case "cot":
                 return MathUtils.cot(notNullNum);
             case "arccot":
             case "arcctg":
+            case "acot":
+            case "actg":
                 return MathUtils.arccot(notNullNum);
             case "ln":
                 return MathUtils.ln(notNullNum);

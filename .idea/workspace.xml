@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="feat: add rad function (to convert degrees to radians) and deg function (convert radians to degrees)&#10;&#10;BREAKING CHANGE: remove 'e' replacement">
+    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="feat: add functions without suffix and operand (for example &quot;pi&quot;)">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/Calculator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -217,14 +218,7 @@
       <workItem from="1635672852500" duration="386000" />
       <workItem from="1635673903508" duration="3301000" />
       <workItem from="1635681728194" duration="1700000" />
-      <workItem from="1635787187884" duration="5011000" />
-    </task>
-    <task id="LOCAL-00052" summary="fixed crush at second calculation">
-      <created>1616160387264</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1616160387264</updated>
+      <workItem from="1635787187884" duration="6499000" />
     </task>
     <task id="LOCAL-00053" summary="CalculatorExpressionBracketsChecker now inserts multiply sign between suffix operators and digits, brackets, functions">
       <created>1616164175134</created>
@@ -562,7 +556,14 @@
       <option name="project" value="LOCAL" />
       <updated>1635793576023</updated>
     </task>
-    <option name="localTasksCounter" value="101" />
+    <task id="LOCAL-00101" summary="feat: add functions without suffix and operand (for example &quot;pi&quot;)">
+      <created>1635794165106</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1635794165106</updated>
+    </task>
+    <option name="localTasksCounter" value="102" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -624,7 +625,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added highest round scale" />
     <MESSAGE value="added customizable decimal and grouping separators" />
     <MESSAGE value="Fraction#isFraction method refactor" />
     <MESSAGE value="v1.7.0" />
@@ -649,7 +649,8 @@
     <MESSAGE value="feat: add ListResult::format with DecimalFormat" />
     <MESSAGE value="build: change version to 2.0.0-beta2" />
     <MESSAGE value="feat: add rad function (to convert degrees to radians) and deg function (convert radians to degrees)&#10;&#10;BREAKING CHANGE: remove 'e' replacement" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add rad function (to convert degrees to radians) and deg function (convert radians to degrees)&#10;&#10;BREAKING CHANGE: remove 'e' replacement" />
+    <MESSAGE value="feat: add functions without suffix and operand (for example &quot;pi&quot;)" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add functions without suffix and operand (for example &quot;pi&quot;)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -658,11 +659,6 @@
           <properties class="java.lang.NumberFormatException" package="java.lang" />
           <option name="timeStamp" value="1" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/Calculator.java</url>
-          <line>346</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
