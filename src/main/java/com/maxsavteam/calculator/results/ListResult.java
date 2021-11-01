@@ -17,6 +17,7 @@
 package com.maxsavteam.calculator.results;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ListResult extends BaseResult {
@@ -49,7 +50,7 @@ public class ListResult extends BaseResult {
 		);
 	}
 
-	public String format(){
+	public String format(DecimalFormat decimalFormat){
 		if(isSingleNumber()){
 			return getSingleNumberIfTrue().toPlainString();
 		}
@@ -57,15 +58,23 @@ public class ListResult extends BaseResult {
 		for(int i = 0; i < mResults.size(); i++){
 			var b = mResults.get(i);
 			if(b instanceof ListResult){
-				sb.append(((ListResult) b).format());
+				sb.append(((ListResult) b).format(decimalFormat));
 			}else if(b instanceof NumberResult){
-				sb.append(((NumberResult) b).get());
+				BigDecimal bd = ((NumberResult) b).get();
+				if(decimalFormat != null)
+					sb.append(decimalFormat.format(bd));
+				else
+					sb.append(bd);
 			}
 			if(i != mResults.size() - 1)
 				sb.append(";");
 		}
 		sb.append(")");
 		return sb.toString();
+	}
+
+	public String format(){
+		return format(null);
 	}
 
 }
