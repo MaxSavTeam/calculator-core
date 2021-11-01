@@ -70,7 +70,7 @@ public class Calculator {
     private char decimalSeparator = DecimalFormatSymbols.getInstance(Locale.ROOT).getDecimalSeparator();
     private char groupingSeparator = DecimalFormatSymbols.getInstance(Locale.ROOT).getGroupingSeparator();
 
-    public static final Map<String, String> defaultReplacementMap = new HashMap<String, String>() {{
+    public static final Map<String, String> defaultReplacementMap = new HashMap<>() {{
         put(PI_SIGN, "(" + MathUtils.PI.toPlainString() + ")");
         put(FI_SIGN, "(" + MathUtils.FI.toPlainString() + ")");
         put(E_SIGN, "(" + MathUtils.E.toPlainString() + ")");
@@ -404,26 +404,27 @@ public class Calculator {
 
         ListResult r1 = calc(node.getLeftSonIndex(), nodes);
         ListResult r2 = calc(node.getRightSonIndex(), nodes);
-        if(r1.getResults().size() != 1 || r2.getResults().size() != 1)
+        if(!r1.isSingleNumber() && !r2.isSingleNumber())
             throw new CalculatingException(CalculatingException.BINARY_OPERATOR_CANNOT_BE_APPLIED_TO_LISTS);
 
-        BigDecimal a;
+        ListResult l;
         BigDecimal b;
-        try {
-            a = ((NumberResult) r1.getResults().get(0)).get();
-            b = ((NumberResult) r2.getResults().get(0)).get();
-        }catch (ClassCastException e){
-            throw new CalculatingException(CalculatingException.BINARY_OPERATOR_CANNOT_BE_APPLIED_TO_LISTS, e);
+        if(r1.isSingleNumber()){
+            l = r2;
+            b = r1.getSingleNumberIfTrue();
+        }else{
+            l = r1;
+            b = r2.getSingleNumberIfTrue();
         }
 
         TreeNode rightNode = nodes.get(node.getRightSonIndex());
         if (rightNode instanceof SuffixOperatorNode) {
             SuffixOperatorNode suffix = (SuffixOperatorNode) rightNode;
             if (suffix.operator == '%')
-                return ListResult.of(resolver.calculatePercent(symbol, a, b));
+                return resolveList(l, a->resolver.calculatePercent(symbol, a, b));
         }
 
-        return ListResult.of(resolver.calculate(symbol, a, b));
+        return resolveList(l, a->resolver.calculate(symbol, a, b));
     }
 
     protected ListResult processFunction(int v, ArrayList<TreeNode> nodes) {
