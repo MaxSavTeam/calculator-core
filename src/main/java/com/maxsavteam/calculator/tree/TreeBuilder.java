@@ -269,7 +269,7 @@ public class TreeBuilder {
         SuffixOperatorNode node = new SuffixOperatorNode(operator, count);
         node.setLeftSonIndex(nextIndex());
         treeNodes.set(v, node);
-        build(node.getLeftSonIndex(), ex.substring(0, i), offset, rootLevel);
+        build(node.getLeftSonIndex(), ex.substring(0, i), rootLevel, offset);
     }
 
     protected void parseFunc(int v, String ex, int offset, int rootLevel){

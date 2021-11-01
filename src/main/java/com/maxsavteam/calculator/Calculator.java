@@ -56,7 +56,7 @@ public class Calculator {
     public static final String FI_SIGN = "\u03C6";
     public static final String E_SIGN = "\u0190";
 
-    public static final String VERSION = "2.0.0-beta5";
+    public static final String VERSION = "2.0.0-beta6";
 
     private final TreeBuilder builder;
     private final CalculatorExpressionTokenizer mExpressionTokenizer;
@@ -434,24 +434,27 @@ public class Calculator {
         if(!r1.isSingleNumber() && !r2.isSingleNumber())
             throw new CalculatingException(CalculatingException.BINARY_OPERATOR_CANNOT_BE_APPLIED_TO_LISTS);
 
-        ListResult l;
-        BigDecimal b;
-        if(r1.isSingleNumber()){
-            l = r2;
-            b = r1.getSingleNumberIfTrue();
-        }else{
-            l = r1;
-            b = r2.getSingleNumberIfTrue();
-        }
-
         TreeNode rightNode = nodes.get(node.getRightSonIndex());
         if (rightNode instanceof SuffixOperatorNode) {
             SuffixOperatorNode suffix = (SuffixOperatorNode) rightNode;
-            if (suffix.operator == '%')
-                return resolveList(l, a->resolver.calculatePercent(symbol, a, b));
+            if (suffix.operator == '%') {
+                if(r1.isSingleNumber()) { // 10-(25;50;100)%
+                    BigDecimal rb = r1.getSingleNumberIfTrue();
+                    return resolveList(r2, a -> resolver.calculatePercent(symbol, rb, a));
+                }else{ // (100;50)-50%
+                    BigDecimal rb = r2.getSingleNumberIfTrue();
+                    return resolveList(r1, a -> resolver.calculatePercent(symbol, a, rb));
+                }
+            }
         }
 
-        return resolveList(l, a->resolver.calculate(symbol, a, b));
+        if(r1.isSingleNumber()){
+            BigDecimal b = r1.getSingleNumberIfTrue();
+            return resolveList(r2, a->resolver.calculate(symbol, b, a));
+        }else{
+            BigDecimal b = r2.getSingleNumberIfTrue();
+            return resolveList(r1, a->resolver.calculate(symbol, a, b));
+        }
     }
 
     protected ListResult processFunction(int v, ArrayList<TreeNode> nodes) {
