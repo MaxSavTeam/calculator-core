@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.maxsavteam'
-version '2.0.0-beta'
+version '2.0.0-beta2'
 
 repositories {
     mavenCentral()
@@ -13,7 +13,7 @@ repositories {
 task sourcesJar(type: Jar) {
     from sourceSets.main.output
     classifier = 'sources'
-    //exclude '**/Main.java'
+    exclude '**/Main.java'
 }
 
 task javadocJar(type: Jar) {
