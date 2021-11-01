@@ -52,7 +52,9 @@ public class ListResult extends BaseResult {
 
 	public String format(DecimalFormat decimalFormat){
 		if(isSingleNumber()){
-			return getSingleNumberIfTrue().toPlainString();
+			if(decimalFormat == null)
+				return getSingleNumberIfTrue().toPlainString();
+			return decimalFormat.format(getSingleNumberIfTrue());
 		}
 		StringBuilder sb = new StringBuilder("(");
 		for(int i = 0; i < mResults.size(); i++){
