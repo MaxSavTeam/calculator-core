@@ -114,6 +114,8 @@ public class Calculator {
     };
 
     public static final FunctionsResolver defaultFunctionsResolver = (funcName, suffix, operand) -> {
+        if(funcName.equals("pi") && suffix == null && operand == null)
+            return MathUtils.PI;
         if (suffix == null && operand == null){
             throw new CalculatingException(CalculatingException.FUNCTION_SUFFIX_AND_OPERAND_NULL);
         }
@@ -448,66 +450,15 @@ public class Calculator {
 
     protected ListResult processFunction(int v, ArrayList<TreeNode> nodes) {
         FunctionNode functionNode = (FunctionNode) nodes.get(v);
-        /*if (functionNode.funcName.equals("A"))
-            return ListResult.of(processAverage(v, nodes));*/
-        ListResult r = calc(functionNode.getLeftSonIndex(), nodes);
-        if(r.isSingleNumber()){
-            return ListResult.of(functionsResolver.resolve(functionNode.funcName, functionNode.suffix, r.getSingleNumberIfTrue()));
+        ListResult r = null;
+        if(!TreeBuilder.isNodeEmpty(functionNode.getLeftSonIndex(), nodes)) {
+            r = calc(functionNode.getLeftSonIndex(), nodes);
+        }
+        if (r == null || r.isSingleNumber()) {
+            BigDecimal b = r == null ? null : r.getSingleNumberIfTrue();
+            return ListResult.of(functionsResolver.resolve(functionNode.funcName, functionNode.suffix, b));
         }
         return listFunctionsResolver.resolve(functionNode.funcName, functionNode.suffix, r);
-    }
-
-    /*protected BigDecimal processAverage(int vertex, ArrayList<TreeNode> nodes) {
-        FunctionNode functionNode = (FunctionNode) nodes.get(vertex);
-        if(functionNode.suffix == null && TreeBuilder.isNodeEmpty(functionNode.getLeftSonIndex(), nodes))
-            throw new CalculatingException(CalculatingException.AVERAGE_FUNCTION_HAS_NO_ARGUMENTS);
-
-        BigDecimal sum = BigDecimal.ZERO;
-        int count = 0;
-        if(functionNode.suffix != null){
-            sum = sum.add(functionNode.suffix);
-            count++;
-        }
-        if(!TreeBuilder.isNodeEmpty(functionNode.getLeftSonIndex(), nodes)) {
-            sum = sum.add(calc(functionNode.getLeftSonIndex(), nodes));
-            count += 1 + getAverageCount(vertex, nodes);
-        }
-        return sum.divide(BigDecimal.valueOf(count), roundScale, RoundingMode.HALF_EVEN);
-    }*/
-
-    private int getAverageCount(int vertex, ArrayList<TreeNode> nodes){
-        int count = 1;
-        int v = nodes.get(nodes.get(vertex).getLeftSonIndex()).getLeftSonIndex();
-        int leftSon = nodes.get(v).getLeftSonIndex();
-        int rightSon = nodes.get(v).getRightSonIndex();
-        TreeNode left;
-        TreeNode right;
-        while (!TreeBuilder.isNodeEmpty(leftSon, nodes) &&
-                !TreeBuilder.isNodeEmpty(rightSon, nodes)
-        ) {
-            left = nodes.get(leftSon);
-            right = nodes.get(rightSon);
-            int next = -1;
-            if (left instanceof OperatorNode) {
-                OperatorNode node = (OperatorNode) left;
-                if (node.getOperator() == '-' || node.getOperator() == '+')
-                    next = leftSon;
-            } else if(right instanceof OperatorNode) {
-                OperatorNode node = (OperatorNode) right;
-                if (node.getOperator() == '-' || node.getOperator() == '+')
-                    next = rightSon;
-            }else{
-                break;
-            }
-            count++;
-            if (next == -1)
-                break;
-            else
-                v = next;
-            leftSon = nodes.get(v).getLeftSonIndex();
-            rightSon = nodes.get(v).getRightSonIndex();
-        }
-        return count;
     }
 
 }
