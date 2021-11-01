@@ -162,42 +162,54 @@ public class Calculator {
     };
 
     public static final ListFunctionsResolver defaultListFunctionResolver = (funcName, suffix, list) -> {
-        ArrayList<BigDecimal> decimals = new ArrayList<>();
-        for(var b : list.getResults()){
-            if(b instanceof ListResult){
-                throw new CalculatingException(CalculatingException.OPERATOR_OR_FUNCTION_CANNOT_BE_APPLIED_TO_LIST_OF_LISTS);
-            }else if(b instanceof NumberResult){
-                decimals.add(((NumberResult) b).get());
-            }
-        }
+        ListResult inlinedList = inlineElementsInList(list);
+        BigDecimal[] decimals = inlinedList.getResults().stream()
+                .filter(b->b instanceof NumberResult)
+                .map(b->((NumberResult) b).get())
+                .toArray(BigDecimal[]::new);
+
         switch (funcName){
             case "A":{
                 BigDecimal sum = BigDecimal.ZERO;
                 for(var d : decimals)
                     sum = sum.add(d);
-                return ListResult.of(sum.divide(BigDecimal.valueOf(decimals.size()), roundScale, RoundingMode.HALF_EVEN));
+                return ListResult.of(sum.divide(BigDecimal.valueOf(decimals.length), roundScale, RoundingMode.HALF_EVEN));
             }
             case "gcd":{
-                return ListResult.of(MathUtils.gcd(decimals.toArray(new BigDecimal[0])));
+                return ListResult.of(MathUtils.gcd(decimals));
             }
             case "lcm":{
-                return ListResult.of(MathUtils.lcm(decimals.toArray(new BigDecimal[0])));
+                return ListResult.of(MathUtils.lcm(decimals));
+            }
+            case "sum": {
+                BigDecimal sum = BigDecimal.ZERO;
+                for(var d : decimals)
+                    sum = sum.add(d);
+                return ListResult.of(sum);
             }
             default: {
-                ArrayList<BaseResult> results = new ArrayList<>();
-                for(var b : decimals){
-                    results.add(new NumberResult(defaultFunctionsResolver.resolve(funcName, suffix, b)));
-                }
-                return new ListResult(results);
+                return resolveList(list, b->defaultFunctionsResolver.resolve(funcName, suffix, b));
             }
         }
     };
+
+    private static ListResult inlineElementsInList(ListResult l){
+        ArrayList<BaseResult> results = new ArrayList<>();
+        for(var b : l.getResults()){
+            if(b instanceof NumberResult){
+                results.add(b);
+            }else if(b instanceof ListResult){
+                results.addAll(inlineElementsInList((ListResult) b).getResults());
+            }
+        }
+        return new ListResult(results);
+    }
 
     private interface ApplierForEachElement{
         BigDecimal apply(BigDecimal a);
     }
 
-    private ListResult resolveList(ListResult r, ApplierForEachElement applier){
+    private static ListResult resolveList(ListResult r, ApplierForEachElement applier){
         if(r.isSingleNumber()) {
             return ListResult.of(applier.apply(r.getSingleNumberIfTrue()));
         }else{
