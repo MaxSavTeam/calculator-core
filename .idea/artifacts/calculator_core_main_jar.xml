@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="calculator-core.main:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/calculator_core_main_jar</output-path>
+    <root id="archive" name="calculator-core.main.jar">
+      <element id="module-output" name="calculator-core.main" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/22.0.0/fb9bebc90794c7602e73d6ed0cb165a0c650be62/annotations-22.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/ch.obermuhlner/big-math/2.3.0/d3a202e31b5049a04a823a8290ef3991fdecc8a8/big-math-2.3.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
