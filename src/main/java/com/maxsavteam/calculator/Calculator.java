@@ -20,6 +20,7 @@ package com.maxsavteam.calculator;
 import com.maxsavteam.calculator.exceptions.CalculatingException;
 import com.maxsavteam.calculator.resolvers.BinaryOperatorResolver;
 import com.maxsavteam.calculator.resolvers.BracketsResolver;
+import com.maxsavteam.calculator.resolvers.ConstantsResolver;
 import com.maxsavteam.calculator.resolvers.FunctionsResolver;
 import com.maxsavteam.calculator.resolvers.ListFunctionsResolver;
 import com.maxsavteam.calculator.resolvers.SuffixOperatorResolver;
@@ -56,7 +57,7 @@ public class Calculator {
     public static final String FI_SIGN = "\u03C6";
     public static final String E_SIGN = "\u0190";
 
-    public static final String VERSION = "2.0.0-beta9";
+    public static final String VERSION = "2.0.0";
 
     private final TreeBuilder builder;
     private final CalculatorExpressionTokenizer mExpressionTokenizer;
@@ -67,6 +68,7 @@ public class Calculator {
     private FunctionsResolver functionsResolver = defaultFunctionsResolver;
     private ListFunctionsResolver listFunctionsResolver = defaultListFunctionResolver;
     private SuffixOperatorResolver suffixResolver = defaultSuffixResolver;
+    private ConstantsResolver constantsResolver = defaultConstantsResolver;
     private char decimalSeparator = DecimalFormatSymbols.getInstance(Locale.ROOT).getDecimalSeparator();
     private char groupingSeparator = DecimalFormatSymbols.getInstance(Locale.ROOT).getGroupingSeparator();
 
@@ -113,9 +115,18 @@ public class Calculator {
         }
     };
 
+    public static final ConstantsResolver defaultConstantsResolver = constantName -> {
+        switch (constantName) {
+            case "pi":
+                return ListResult.of(MathUtils.PI);
+	        case "fi":
+				return ListResult.of(MathUtils.FI);
+            default:
+                throw new CalculatingException(CalculatingException.UNKNOWN_CONSTANT, constantName);
+        }
+    };
+
     public static final FunctionsResolver defaultFunctionsResolver = (funcName, suffix, operand) -> {
-        if(funcName.equals("pi") && suffix == null && operand == null)
-            return MathUtils.PI;
         if (suffix == null && operand == null){
             throw new CalculatingException(CalculatingException.FUNCTION_SUFFIX_AND_OPERAND_NULL);
         }
@@ -347,6 +358,13 @@ public class Calculator {
     }
 
     /**
+     * Sets custom constants resolver
+     * */
+    public void setConstantsResolver(ConstantsResolver constantsResolver) {
+        this.constantsResolver = constantsResolver;
+    }
+
+    /**
      * Calculates answer of expression
      */
     public ListResult calculate(String expression) {
@@ -463,9 +481,13 @@ public class Calculator {
         if(!TreeBuilder.isNodeEmpty(functionNode.getLeftSonIndex(), nodes)) {
             r = calc(functionNode.getLeftSonIndex(), nodes);
         }
-        if (r == null || r.isSingleNumber()) {
-            BigDecimal b = r == null ? null : r.getSingleNumberIfTrue();
-            return ListResult.of(functionsResolver.resolve(functionNode.funcName, functionNode.suffix, b));
+        if (r == null) {
+            if(functionNode.suffix == null){
+                return constantsResolver.resolveConstant(functionNode.funcName);
+            }
+            return ListResult.of(functionsResolver.resolve(functionNode.funcName, functionNode.suffix, null));
+        }else if(r.isSingleNumber()){
+            return ListResult.of(functionsResolver.resolve(functionNode.funcName, functionNode.suffix, r.getSingleNumberIfTrue()));
         }
         return listFunctionsResolver.resolve(functionNode.funcName, functionNode.suffix, r);
     }

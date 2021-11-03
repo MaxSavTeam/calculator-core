@@ -42,6 +42,7 @@ public class CalculatingException extends RuntimeException {
             "Binary operators cannot be applied to lists",
             "Operators or functions cannot be applied to list of lists",
             "Too few arguments",
+            "Unknown constant",
     };
     public static final int INVALID_BINARY_OPERATOR = 0;
     public static final int NEGATIVE_PARAMETER_OF_LOG = 1;
@@ -65,6 +66,7 @@ public class CalculatingException extends RuntimeException {
     public static final int BINARY_OPERATOR_CANNOT_BE_APPLIED_TO_LISTS = 19;
     public static final int OPERATOR_OR_FUNCTION_CANNOT_BE_APPLIED_TO_LIST_OF_LISTS = 20;
     public static final int TOO_FEW_ARGUMENTS = 21;
+    public static final int UNKNOWN_CONSTANT = 22;
 
     private final int errorCode;
 

@@ -85,7 +85,7 @@ public class MathUtils {
 
     public static BigDecimal gcd(BigDecimal... l){
         if(l.length < 2){
-            throw new CalculatingException(CalculatingException.TOO_FEW_ARGUMENTS, "gcd: expected minimum 2, but found " + l.length);
+            throw new CalculatingException(CalculatingException.UNKNOWN_CONSTANT, "gcd: expected minimum 2, but found " + l.length);
         }
         BigDecimal r = gcd(l[0], l[1]);
         for(int i = 2; i < l.length; i++)
@@ -101,7 +101,7 @@ public class MathUtils {
 
     public static BigDecimal lcm(BigDecimal... l){
         if(l.length < 2){
-            throw new CalculatingException(CalculatingException.TOO_FEW_ARGUMENTS, "lcm: expected minimum 2, but found " + l.length);
+            throw new CalculatingException(CalculatingException.UNKNOWN_CONSTANT, "lcm: expected minimum 2, but found " + l.length);
         }
         BigDecimal r = lcm(l[0], l[1]);
         for(int i = 2; i < l.length; i++)
