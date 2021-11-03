@@ -21,16 +21,16 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Resolver for constants
- *
+ * <p>
  * Constants are set of letters (e.g. "pi", "F", "E", "energy" ans co on)
  * Constant can be interpreted like function without suffix and operands (in fact, they are processed in this way)
- * */
+ */
 public interface ConstantsResolver {
 
 	/**
 	 * @param constantName Name of constant
 	 * @return Returns one or list of values associated with given constant name
-	 * */
+	 */
 	@NotNull
 	ListResult resolveConstant(String constantName);
 

@@ -19,13 +19,13 @@ package com.maxsavteam.calculator.tree.nodes;
 
 public class NumberNode extends TreeNode {
 
-    private final String number;
+	private final String number;
 
-    public NumberNode(String number) {
-        this.number = number;
-    }
+	public NumberNode(String number) {
+		this.number = number;
+	}
 
-    public String getNumber() {
-        return number;
-    }
+	public String getNumber() {
+		return number;
+	}
 }

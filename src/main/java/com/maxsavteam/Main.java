@@ -24,27 +24,27 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
-        Calculator calculator = new Calculator();
-        Scanner scanner = new Scanner(System.in);
-        //calculator.setDecimalSeparator(scanner.nextLine().charAt(0));
-        //calculator.setGroupingSeparator(scanner.nextLine().charAt(0));
-        while(true){
-            String exp = scanner.nextLine();
-            if(exp.equals("stop"))
-                break;
-            if(exp.equals("restart")){
-                main(args);
-                break;
-            }
-            long start = System.currentTimeMillis();
-            try {
-                System.out.println(calculator.calculate(exp).format());
-            }catch (CalculatingException e){
-                e.printStackTrace();
-            }
-            System.err.println(System.currentTimeMillis() - start);
-        }
-    }
+	public static void main(String[] args) {
+		Calculator calculator = new Calculator();
+		Scanner scanner = new Scanner(System.in);
+		//calculator.setDecimalSeparator(scanner.nextLine().charAt(0));
+		//calculator.setGroupingSeparator(scanner.nextLine().charAt(0));
+		while (true) {
+			String exp = scanner.nextLine();
+			if (exp.equals("stop"))
+				break;
+			if (exp.equals("restart")) {
+				main(args);
+				break;
+			}
+			long start = System.currentTimeMillis();
+			try {
+				System.out.println(calculator.calculate(exp).format());
+			} catch (CalculatingException e) {
+				e.printStackTrace();
+			}
+			System.err.println(System.currentTimeMillis() - start);
+		}
+	}
 
 }

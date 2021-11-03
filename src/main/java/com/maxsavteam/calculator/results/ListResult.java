@@ -32,50 +32,50 @@ public class ListResult extends BaseResult {
 		return new ArrayList<>(mResults);
 	}
 
-	public boolean isSingleNumber(){
+	public boolean isSingleNumber() {
 		return mResults.size() == 1 && mResults.get(0) instanceof NumberResult;
 	}
 
-	public BigDecimal getSingleNumberIfTrue(){
-		if(!isSingleNumber())
+	public BigDecimal getSingleNumberIfTrue() {
+		if (!isSingleNumber())
 			throw new RuntimeException("List does not contain single number");
 		return ((NumberResult) mResults.get(0)).get();
 	}
 
-	public static ListResult of(BigDecimal a){
+	public static ListResult of(BigDecimal a) {
 		return new ListResult(
-				new ArrayList<>(){{
+				new ArrayList<>() {{
 					add(new NumberResult(a));
 				}}
 		);
 	}
 
-	public String format(DecimalFormat decimalFormat){
-		if(isSingleNumber()){
-			if(decimalFormat == null)
+	public String format(DecimalFormat decimalFormat) {
+		if (isSingleNumber()) {
+			if (decimalFormat == null)
 				return getSingleNumberIfTrue().toPlainString();
 			return decimalFormat.format(getSingleNumberIfTrue());
 		}
 		StringBuilder sb = new StringBuilder("(");
-		for(int i = 0; i < mResults.size(); i++){
+		for (int i = 0; i < mResults.size(); i++) {
 			var b = mResults.get(i);
-			if(b instanceof ListResult){
+			if (b instanceof ListResult) {
 				sb.append(((ListResult) b).format(decimalFormat));
-			}else if(b instanceof NumberResult){
+			} else if (b instanceof NumberResult) {
 				BigDecimal bd = ((NumberResult) b).get();
-				if(decimalFormat != null)
+				if (decimalFormat != null)
 					sb.append(decimalFormat.format(bd));
 				else
 					sb.append(bd);
 			}
-			if(i != mResults.size() - 1)
+			if (i != mResults.size() - 1)
 				sb.append(";");
 		}
 		sb.append(")");
 		return sb.toString();
 	}
 
-	public String format(){
+	public String format() {
 		return format(null);
 	}
 

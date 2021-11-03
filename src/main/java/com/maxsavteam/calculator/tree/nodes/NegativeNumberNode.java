@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 public class NegativeNumberNode extends TreeNode {
 
-	private static NumberResult applyOnNum(NumberResult r){
+	private static NumberResult applyOnNum(NumberResult r) {
 		return new NumberResult(r.get().multiply(BigDecimal.valueOf(-1)));
 	}
 
@@ -34,10 +34,10 @@ public class NegativeNumberNode extends TreeNode {
 		ArrayList<BaseResult> results = new ArrayList<>();
 		if (r instanceof NumberResult) {
 			results.add(applyOnNum((NumberResult) r));
-		}else{
+		} else {
 			ListResult l = (ListResult) r;
-			for(BaseResult b : l.getResults()){
-				if(b instanceof ListResult)
+			for (BaseResult b : l.getResults()) {
+				if (b instanceof ListResult)
 					results.add(apply(b));
 				else
 					results.add(applyOnNum((NumberResult) b));

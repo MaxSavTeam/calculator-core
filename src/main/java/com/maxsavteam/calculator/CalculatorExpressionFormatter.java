@@ -199,15 +199,15 @@ public class CalculatorExpressionFormatter {
 		private final boolean insertZeroBetweenNonDigitAndDot;
 
 		private Parameters(boolean insertMultiplySignBetweenNumberAndFunction,
-		                  boolean insertMultiplySignBetweenNumberAndOpenBracket,
-		                  boolean insertMultiplySignBetweenNumberAndCloseBracket,
-		                  boolean insertMultiplySignBetweenSuffixOperatorAndDigit,
-		                  boolean insertMultiplySignBetweenSuffixOperatorAndFunction,
-		                  boolean insertMultiplySignBetweenSuffixOperatorAndOpenBracket,
-		                  boolean insertMultiplySignBetweenFunctionSuffixAndOpenBracket,
-		                  boolean insertMultiplySignBetweenCloseAndOpenBrackets,
-		                  boolean insertZeroBetweenCloseBracketAndDot,
-		                  boolean insertZeroBetweenNonDigitAndDot) {
+		                   boolean insertMultiplySignBetweenNumberAndOpenBracket,
+		                   boolean insertMultiplySignBetweenNumberAndCloseBracket,
+		                   boolean insertMultiplySignBetweenSuffixOperatorAndDigit,
+		                   boolean insertMultiplySignBetweenSuffixOperatorAndFunction,
+		                   boolean insertMultiplySignBetweenSuffixOperatorAndOpenBracket,
+		                   boolean insertMultiplySignBetweenFunctionSuffixAndOpenBracket,
+		                   boolean insertMultiplySignBetweenCloseAndOpenBrackets,
+		                   boolean insertZeroBetweenCloseBracketAndDot,
+		                   boolean insertZeroBetweenNonDigitAndDot) {
 			this.insertMultiplySignBetweenNumberAndFunction = insertMultiplySignBetweenNumberAndFunction;
 			this.insertMultiplySignBetweenNumberAndOpenBracket = insertMultiplySignBetweenNumberAndOpenBracket;
 			this.insertMultiplySignBetweenNumberAndCloseBracket = insertMultiplySignBetweenNumberAndCloseBracket;

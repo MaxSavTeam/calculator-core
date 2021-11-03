@@ -23,12 +23,12 @@ import java.math.BigDecimal;
 
 /**
  * Resolver for different brackets types
- * */
+ */
 public interface BracketsResolver {
-    /**
-     * @param bracketType Type of bracket in list of brackets
-     * @param a Result in brackets
-     * */
-    @NotNull
-    BigDecimal resolve(int bracketType, BigDecimal a);
+	/**
+	 * @param bracketType Type of bracket in list of brackets
+	 * @param a           Result in brackets
+	 */
+	@NotNull
+	BigDecimal resolve(int bracketType, BigDecimal a);
 }

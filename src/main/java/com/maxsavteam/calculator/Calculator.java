@@ -53,443 +53,443 @@ import java.util.Map;
 
 public class Calculator {
 
-    public static final String PI_SIGN = "\u03C0";
-    public static final String FI_SIGN = "\u03C6";
-    public static final String E_SIGN = "\u0190";
+	public static final String PI_SIGN = "\u03C0";
+	public static final String FI_SIGN = "\u03C6";
+	public static final String E_SIGN = "\u0190";
 
-    public static final String VERSION = "2.0.0";
+	public static final String VERSION = "2.0.0";
 
-    private final TreeBuilder builder;
-    private final CalculatorExpressionTokenizer mExpressionTokenizer;
-    private final CalculatorExpressionFormatter mBracketsChecker;
-    public final static int roundScale = 8;
-    private BinaryOperatorResolver resolver = defaultResolver;
-    private BracketsResolver bracketsResolver = defaultBracketsResolver;
-    private FunctionsResolver functionsResolver = defaultFunctionsResolver;
-    private ListFunctionsResolver listFunctionsResolver = defaultListFunctionResolver;
-    private SuffixOperatorResolver suffixResolver = defaultSuffixResolver;
-    private ConstantsResolver constantsResolver = defaultConstantsResolver;
-    private char decimalSeparator = DecimalFormatSymbols.getInstance(Locale.ROOT).getDecimalSeparator();
-    private char groupingSeparator = DecimalFormatSymbols.getInstance(Locale.ROOT).getGroupingSeparator();
+	private final TreeBuilder builder;
+	private final CalculatorExpressionTokenizer mExpressionTokenizer;
+	private final CalculatorExpressionFormatter mBracketsChecker;
+	public final static int roundScale = 8;
+	private BinaryOperatorResolver resolver = defaultResolver;
+	private BracketsResolver bracketsResolver = defaultBracketsResolver;
+	private FunctionsResolver functionsResolver = defaultFunctionsResolver;
+	private ListFunctionsResolver listFunctionsResolver = defaultListFunctionResolver;
+	private SuffixOperatorResolver suffixResolver = defaultSuffixResolver;
+	private ConstantsResolver constantsResolver = defaultConstantsResolver;
+	private char decimalSeparator = DecimalFormatSymbols.getInstance(Locale.ROOT).getDecimalSeparator();
+	private char groupingSeparator = DecimalFormatSymbols.getInstance(Locale.ROOT).getGroupingSeparator();
 
-    public static final Map<String, String> defaultReplacementMap = new HashMap<>() {{
-        put(PI_SIGN, "(" + MathUtils.PI.toPlainString() + ")");
-        put(FI_SIGN, "(" + MathUtils.FI.toPlainString() + ")");
-        put(E_SIGN, "(" + MathUtils.E.toPlainString() + ")");
-    }};
+	public static final Map<String, String> defaultReplacementMap = new HashMap<>() {{
+		put(PI_SIGN, "(" + MathUtils.PI.toPlainString() + ")");
+		put(FI_SIGN, "(" + MathUtils.FI.toPlainString() + ")");
+		put(E_SIGN, "(" + MathUtils.E.toPlainString() + ")");
+	}};
 
-    public static final BinaryOperatorResolver defaultResolver = new BinaryOperatorResolver() {
-        @Override
-        public @NotNull BigDecimal calculate(char operator, BigDecimal a, BigDecimal b) {
-            if (operator == '+')
-                return a.add(b);
-            if (operator == '-')
-                return a.subtract(b);
-            if (operator == '*')
-                return a.multiply(b);
-            if (operator == '/')
-                if (b.signum() == 0)
-                    throw new CalculatingException(CalculatingException.DIVISION_BY_ZERO);
-                else
-                    return CalculatorUtils.removeZeros(a.divide(b, roundScale, RoundingMode.HALF_EVEN));
-            if (operator == '^')
-                return CalculatorUtils.removeZeros(MathUtils.pow(a, b));
-            throw new CalculatingException(CalculatingException.INVALID_BINARY_OPERATOR);
-        }
+	public static final BinaryOperatorResolver defaultResolver = new BinaryOperatorResolver() {
+		@Override
+		public @NotNull BigDecimal calculate(char operator, BigDecimal a, BigDecimal b) {
+			if (operator == '+')
+				return a.add(b);
+			if (operator == '-')
+				return a.subtract(b);
+			if (operator == '*')
+				return a.multiply(b);
+			if (operator == '/')
+				if (b.signum() == 0)
+					throw new CalculatingException(CalculatingException.DIVISION_BY_ZERO);
+				else
+					return CalculatorUtils.removeZeros(a.divide(b, roundScale, RoundingMode.HALF_EVEN));
+			if (operator == '^')
+				return CalculatorUtils.removeZeros(MathUtils.pow(a, b));
+			throw new CalculatingException(CalculatingException.INVALID_BINARY_OPERATOR);
+		}
 
-        @Override
-        public @NotNull BigDecimal calculatePercent(char binaryOperator, BigDecimal a, BigDecimal percent) {
-            BigDecimal percentOfNum = a.multiply(percent); // percent already divided by zero
-            if (binaryOperator == '+')
-                return a.add(percentOfNum);
-            else if (binaryOperator == '-')
-                return a.subtract(percentOfNum);
-            else if (binaryOperator == '*')
-                return percentOfNum;
-            else if (binaryOperator == '/')
-                if (percent.signum() == 0)
-                    throw new CalculatingException(CalculatingException.DIVISION_BY_ZERO);
-                else
-                    return a.divide(percent, roundScale, RoundingMode.HALF_EVEN);
-            throw new CalculatingException(CalculatingException.INVALID_OPERATOR_FOR_PERCENT);
-        }
-    };
+		@Override
+		public @NotNull BigDecimal calculatePercent(char binaryOperator, BigDecimal a, BigDecimal percent) {
+			BigDecimal percentOfNum = a.multiply(percent); // percent already divided by zero
+			if (binaryOperator == '+')
+				return a.add(percentOfNum);
+			else if (binaryOperator == '-')
+				return a.subtract(percentOfNum);
+			else if (binaryOperator == '*')
+				return percentOfNum;
+			else if (binaryOperator == '/')
+				if (percent.signum() == 0)
+					throw new CalculatingException(CalculatingException.DIVISION_BY_ZERO);
+				else
+					return a.divide(percent, roundScale, RoundingMode.HALF_EVEN);
+			throw new CalculatingException(CalculatingException.INVALID_OPERATOR_FOR_PERCENT);
+		}
+	};
 
-    public static final ConstantsResolver defaultConstantsResolver = constantName -> {
-        switch (constantName) {
-            case "pi":
-                return ListResult.of(MathUtils.PI);
-	        case "fi":
+	public static final ConstantsResolver defaultConstantsResolver = constantName -> {
+		switch (constantName) {
+			case "pi":
+				return ListResult.of(MathUtils.PI);
+			case "fi":
 				return ListResult.of(MathUtils.FI);
-            default:
-                throw new CalculatingException(CalculatingException.UNKNOWN_CONSTANT, constantName);
-        }
-    };
+			default:
+				throw new CalculatingException(CalculatingException.UNKNOWN_CONSTANT, constantName);
+		}
+	};
 
-    public static final FunctionsResolver defaultFunctionsResolver = (funcName, suffix, operand) -> {
-        if (suffix == null && operand == null){
-            throw new CalculatingException(CalculatingException.FUNCTION_SUFFIX_AND_OPERAND_NULL);
-        }
-        BigDecimal notNullNum = suffix == null ? operand : suffix;
-        switch (funcName) {
-            case "log":
-                if (suffix != null) {
-                    if (operand != null)
-                        return MathUtils.logWithBase(operand, suffix);
-                    else
-                        return MathUtils.log(suffix);
-                } else {
-                    return MathUtils.log(operand);
-                }
-            case "cos":
-                return MathUtils.cos(notNullNum);
-            case "arccos":
-            case "acos":
-                return MathUtils.arccos(notNullNum);
-            case "sin":
-                return MathUtils.sin(notNullNum);
-            case "arcsin":
-            case "asin":
-                return MathUtils.arcsin(notNullNum);
-            case "tan":
-            case "tg":
-                return MathUtils.tan(notNullNum);
-            case "arctan":
-            case "arctg":
-            case "atan":
-            case "atg":
-                return MathUtils.arctan(notNullNum);
-            case "ctg":
-            case "cot":
-                return MathUtils.cot(notNullNum);
-            case "arccot":
-            case "arcctg":
-            case "acot":
-            case "actg":
-                return MathUtils.arccot(notNullNum);
-            case "ln":
-                return MathUtils.ln(notNullNum);
-            case "R":
-            case "sqrt":
-                return MathUtils.rootWithBase(notNullNum, BigDecimal.valueOf(2));
-            case "abs":
-                return MathUtils.abs(notNullNum);
-            case "rad":
-            case "torad":
-            case "to_rad":
-                return MathUtils.toRadians(notNullNum);
-            case "deg":
-            case "todeg":
-            case "to_deg":
-                return MathUtils.toDegrees(notNullNum);
-            default:
-                throw new CalculatingException(CalculatingException.UNKNOWN_FUNCTION);
-        }
-    };
+	public static final FunctionsResolver defaultFunctionsResolver = (funcName, suffix, operand) -> {
+		if (suffix == null && operand == null) {
+			throw new CalculatingException(CalculatingException.FUNCTION_SUFFIX_AND_OPERAND_NULL);
+		}
+		BigDecimal notNullNum = suffix == null ? operand : suffix;
+		switch (funcName) {
+			case "log":
+				if (suffix != null) {
+					if (operand != null)
+						return MathUtils.logWithBase(operand, suffix);
+					else
+						return MathUtils.log(suffix);
+				} else {
+					return MathUtils.log(operand);
+				}
+			case "cos":
+				return MathUtils.cos(notNullNum);
+			case "arccos":
+			case "acos":
+				return MathUtils.arccos(notNullNum);
+			case "sin":
+				return MathUtils.sin(notNullNum);
+			case "arcsin":
+			case "asin":
+				return MathUtils.arcsin(notNullNum);
+			case "tan":
+			case "tg":
+				return MathUtils.tan(notNullNum);
+			case "arctan":
+			case "arctg":
+			case "atan":
+			case "atg":
+				return MathUtils.arctan(notNullNum);
+			case "ctg":
+			case "cot":
+				return MathUtils.cot(notNullNum);
+			case "arccot":
+			case "arcctg":
+			case "acot":
+			case "actg":
+				return MathUtils.arccot(notNullNum);
+			case "ln":
+				return MathUtils.ln(notNullNum);
+			case "R":
+			case "sqrt":
+				return MathUtils.rootWithBase(notNullNum, BigDecimal.valueOf(2));
+			case "abs":
+				return MathUtils.abs(notNullNum);
+			case "rad":
+			case "torad":
+			case "to_rad":
+				return MathUtils.toRadians(notNullNum);
+			case "deg":
+			case "todeg":
+			case "to_deg":
+				return MathUtils.toDegrees(notNullNum);
+			default:
+				throw new CalculatingException(CalculatingException.UNKNOWN_FUNCTION);
+		}
+	};
 
-    public static final ListFunctionsResolver defaultListFunctionResolver = (funcName, suffix, list) -> {
-        ListResult inlinedList = inlineElementsInList(list);
-        BigDecimal[] decimals = inlinedList.getResults().stream()
-                .filter(b->b instanceof NumberResult)
-                .map(b->((NumberResult) b).get())
-                .toArray(BigDecimal[]::new);
+	public static final ListFunctionsResolver defaultListFunctionResolver = (funcName, suffix, list) -> {
+		ListResult inlinedList = inlineElementsInList(list);
+		BigDecimal[] decimals = inlinedList.getResults().stream()
+				.filter(b -> b instanceof NumberResult)
+				.map(b -> ((NumberResult) b).get())
+				.toArray(BigDecimal[]::new);
 
-        switch (funcName){
-            case "A":{
-                BigDecimal sum = BigDecimal.ZERO;
-                for(var d : decimals)
-                    sum = sum.add(d);
-                return ListResult.of(sum.divide(BigDecimal.valueOf(decimals.length), roundScale, RoundingMode.HALF_EVEN));
-            }
-            case "gcd":{
-                return ListResult.of(MathUtils.gcd(decimals));
-            }
-            case "lcm":{
-                return ListResult.of(MathUtils.lcm(decimals));
-            }
-            case "sum": {
-                BigDecimal sum = BigDecimal.ZERO;
-                for(var d : decimals)
-                    sum = sum.add(d);
-                return ListResult.of(sum);
-            }
-            default: {
-                return resolveList(list, b->defaultFunctionsResolver.resolve(funcName, suffix, b));
-            }
-        }
-    };
+		switch (funcName) {
+			case "A": {
+				BigDecimal sum = BigDecimal.ZERO;
+				for (var d : decimals)
+					sum = sum.add(d);
+				return ListResult.of(sum.divide(BigDecimal.valueOf(decimals.length), roundScale, RoundingMode.HALF_EVEN));
+			}
+			case "gcd": {
+				return ListResult.of(MathUtils.gcd(decimals));
+			}
+			case "lcm": {
+				return ListResult.of(MathUtils.lcm(decimals));
+			}
+			case "sum": {
+				BigDecimal sum = BigDecimal.ZERO;
+				for (var d : decimals)
+					sum = sum.add(d);
+				return ListResult.of(sum);
+			}
+			default: {
+				return resolveList(list, b -> defaultFunctionsResolver.resolve(funcName, suffix, b));
+			}
+		}
+	};
 
-    private static ListResult inlineElementsInList(ListResult l){
-        ArrayList<BaseResult> results = new ArrayList<>();
-        for(var b : l.getResults()){
-            if(b instanceof NumberResult){
-                results.add(b);
-            }else if(b instanceof ListResult){
-                results.addAll(inlineElementsInList((ListResult) b).getResults());
-            }
-        }
-        return new ListResult(results);
-    }
+	private static ListResult inlineElementsInList(ListResult l) {
+		ArrayList<BaseResult> results = new ArrayList<>();
+		for (var b : l.getResults()) {
+			if (b instanceof NumberResult) {
+				results.add(b);
+			} else if (b instanceof ListResult) {
+				results.addAll(inlineElementsInList((ListResult) b).getResults());
+			}
+		}
+		return new ListResult(results);
+	}
 
-    private interface ApplierForEachElement{
-        BigDecimal apply(BigDecimal a);
-    }
+	private interface ApplierForEachElement {
+		BigDecimal apply(BigDecimal a);
+	}
 
-    private static ListResult resolveList(ListResult r, ApplierForEachElement applier){
-        if(r.isSingleNumber()) {
-            return ListResult.of(applier.apply(r.getSingleNumberIfTrue()));
-        }else{
-            ArrayList<BaseResult> resultsList = new ArrayList<>();
-            for(var b : r.getResults()){
-                if(b instanceof NumberResult){
-                    resultsList.add(new NumberResult(applier.apply(((NumberResult) b).get())));
-                }else if(b instanceof ListResult){
-                    resultsList.add(resolveList((ListResult) b, applier));
-                }else{
-                    resultsList.add(b);
-                }
-            }
-            return new ListResult(resultsList);
-        }
-    }
+	private static ListResult resolveList(ListResult r, ApplierForEachElement applier) {
+		if (r.isSingleNumber()) {
+			return ListResult.of(applier.apply(r.getSingleNumberIfTrue()));
+		} else {
+			ArrayList<BaseResult> resultsList = new ArrayList<>();
+			for (var b : r.getResults()) {
+				if (b instanceof NumberResult) {
+					resultsList.add(new NumberResult(applier.apply(((NumberResult) b).get())));
+				} else if (b instanceof ListResult) {
+					resultsList.add(resolveList((ListResult) b, applier));
+				} else {
+					resultsList.add(b);
+				}
+			}
+			return new ListResult(resultsList);
+		}
+	}
 
-    public static final BracketsResolver defaultBracketsResolver = (type, a) -> {
-        if (type == 1)
-            return a;
-        else if (type == 2)
-            return MathUtils.round(a);
-        else if (type == 3)
-            return MathUtils.floor(a);
-        else if (type == 4)
-            return MathUtils.ceil(a);
-        throw new CalculatingException(CalculatingException.UNKNOWN_BRACKET_TYPE);
-    };
+	public static final BracketsResolver defaultBracketsResolver = (type, a) -> {
+		if (type == 1)
+			return a;
+		else if (type == 2)
+			return MathUtils.round(a);
+		else if (type == 3)
+			return MathUtils.floor(a);
+		else if (type == 4)
+			return MathUtils.ceil(a);
+		throw new CalculatingException(CalculatingException.UNKNOWN_BRACKET_TYPE);
+	};
 
-    public static final SuffixOperatorResolver defaultSuffixResolver = (operator, count, operand) -> {
-        if (operator == '!')
-            return MathUtils.fact(operand, count);
-        else if (operator == '%')
-            return operand.divide(MathUtils.pow(BigDecimal.valueOf(100), BigDecimal.valueOf(count)), roundScale, RoundingMode.HALF_EVEN);
-        throw new CalculatingException(CalculatingException.UNKNOWN_SUFFIX_OPERATOR);
-    };
+	public static final SuffixOperatorResolver defaultSuffixResolver = (operator, count, operand) -> {
+		if (operator == '!')
+			return MathUtils.fact(operand, count);
+		else if (operator == '%')
+			return operand.divide(MathUtils.pow(BigDecimal.valueOf(100), BigDecimal.valueOf(count)), roundScale, RoundingMode.HALF_EVEN);
+		throw new CalculatingException(CalculatingException.UNKNOWN_SUFFIX_OPERATOR);
+	};
 
-    public Calculator() {
-        builder = new TreeBuilder();
+	public Calculator() {
+		builder = new TreeBuilder();
 
-        mBracketsChecker = new CalculatorExpressionFormatter();
-        mBracketsChecker.setBracketsTypes(TreeBuilder.defaultBrackets);
-        mBracketsChecker.setSuffixOperators(TreeBuilder.defaultSuffixOperators);
+		mBracketsChecker = new CalculatorExpressionFormatter();
+		mBracketsChecker.setBracketsTypes(TreeBuilder.defaultBrackets);
+		mBracketsChecker.setSuffixOperators(TreeBuilder.defaultSuffixOperators);
 
-        mExpressionTokenizer = new CalculatorExpressionTokenizer();
-        mExpressionTokenizer.setReplacementMap(defaultReplacementMap);
-    }
+		mExpressionTokenizer = new CalculatorExpressionTokenizer();
+		mExpressionTokenizer.setReplacementMap(defaultReplacementMap);
+	}
 
-    /**
-     * Sets brackets for TreeBuilder
-     **/
-    public void setBracketsTypes(ArrayList<BracketsType> brackets) {
-        builder.setBracketsTypes(brackets);
-        mBracketsChecker.setBracketsTypes(brackets);
-    }
+	/**
+	 * Sets brackets for TreeBuilder
+	 **/
+	public void setBracketsTypes(ArrayList<BracketsType> brackets) {
+		builder.setBracketsTypes(brackets);
+		mBracketsChecker.setBracketsTypes(brackets);
+	}
 
-    /**
-     * Sets binary operators for TreeBuilder
-     **/
-    public void setBinaryOperators(ArrayList<BinaryOperator> operators) {
-        builder.setBinaryOperators(operators);
-    }
+	/**
+	 * Sets binary operators for TreeBuilder
+	 **/
+	public void setBinaryOperators(ArrayList<BinaryOperator> operators) {
+		builder.setBinaryOperators(operators);
+	}
 
-    /**
-     * Sets suffix operators for TreeBuilder
-     **/
-    public void setSuffixOperators(ArrayList<SuffixOperator> operators) {
-        builder.setSuffixOperators(operators);
-        mBracketsChecker.setSuffixOperators(operators);
-    }
+	/**
+	 * Sets suffix operators for TreeBuilder
+	 **/
+	public void setSuffixOperators(ArrayList<SuffixOperator> operators) {
+		builder.setSuffixOperators(operators);
+		mBracketsChecker.setSuffixOperators(operators);
+	}
 
-    /**
-     * Sets custom binary operators resolver
-     */
-    public void setBinaryOperatorResolver(BinaryOperatorResolver resolver) {
-        this.resolver = resolver;
-    }
+	/**
+	 * Sets custom binary operators resolver
+	 */
+	public void setBinaryOperatorResolver(BinaryOperatorResolver resolver) {
+		this.resolver = resolver;
+	}
 
-    /**
-     * Sets custom brackets resolver
-     */
-    public void setBracketsResolver(BracketsResolver bracketsResolver) {
-        this.bracketsResolver = bracketsResolver;
-    }
+	/**
+	 * Sets custom brackets resolver
+	 */
+	public void setBracketsResolver(BracketsResolver bracketsResolver) {
+		this.bracketsResolver = bracketsResolver;
+	}
 
-    /**
-     * Sets custom functions resolver
-     */
-    public void setFunctionsResolver(FunctionsResolver functionsResolver) {
-        this.functionsResolver = functionsResolver;
-    }
+	/**
+	 * Sets custom functions resolver
+	 */
+	public void setFunctionsResolver(FunctionsResolver functionsResolver) {
+		this.functionsResolver = functionsResolver;
+	}
 
-    /**
-     * Sets custom functions resolver for lists
-     * */
-    public void setListFunctionsResolver(ListFunctionsResolver listFunctionsResolver) {
-        this.listFunctionsResolver = listFunctionsResolver;
-    }
+	/**
+	 * Sets custom functions resolver for lists
+	 */
+	public void setListFunctionsResolver(ListFunctionsResolver listFunctionsResolver) {
+		this.listFunctionsResolver = listFunctionsResolver;
+	}
 
-    /**
-     * Sets custom suffix operators resolver
-     */
-    public void setSuffixResolver(SuffixOperatorResolver suffixResolver) {
-        this.suffixResolver = suffixResolver;
-    }
+	/**
+	 * Sets custom suffix operators resolver
+	 */
+	public void setSuffixResolver(SuffixOperatorResolver suffixResolver) {
+		this.suffixResolver = suffixResolver;
+	}
 
-    /**
-     * Sets custom aliases for tokenizer
-     */
-    public void setAliases(Map<String, String> map) {
-        mExpressionTokenizer.setReplacementMap(map);
-    }
+	/**
+	 * Sets custom aliases for tokenizer
+	 */
+	public void setAliases(Map<String, String> map) {
+		mExpressionTokenizer.setReplacementMap(map);
+	}
 
-    public void setDecimalSeparator(char decimalSeparator) {
-        this.decimalSeparator = decimalSeparator;
-    }
+	public void setDecimalSeparator(char decimalSeparator) {
+		this.decimalSeparator = decimalSeparator;
+	}
 
-    public void setGroupingSeparator(char groupingSeparator) {
-        this.groupingSeparator = groupingSeparator;
-    }
+	public void setGroupingSeparator(char groupingSeparator) {
+		this.groupingSeparator = groupingSeparator;
+	}
 
-    /**
-     * Sets custom constants resolver
-     * */
-    public void setConstantsResolver(ConstantsResolver constantsResolver) {
-        this.constantsResolver = constantsResolver;
-    }
+	/**
+	 * Sets custom constants resolver
+	 */
+	public void setConstantsResolver(ConstantsResolver constantsResolver) {
+		this.constantsResolver = constantsResolver;
+	}
 
-    /**
-     * Calculates answer of expression
-     */
-    public ListResult calculate(String expression) {
-        String expr = expression;
-        expr = expr.replace(String.valueOf(groupingSeparator), "");
-        if(decimalSeparator != '.')
-            expr = expr.replace(decimalSeparator, '.');
-        expr = mExpressionTokenizer.tokenizeExpression(expr);
-        expr = mBracketsChecker.tryToCloseExpressionBrackets(expr);
-        expr = mBracketsChecker.formatNearBrackets(expr);
-        ArrayList<TreeNode> nodes = builder.buildTree(expr);
-        ListResult r = calc(0, nodes);
-        return formatAnswer(r);
-    }
+	/**
+	 * Calculates answer of expression
+	 */
+	public ListResult calculate(String expression) {
+		String expr = expression;
+		expr = expr.replace(String.valueOf(groupingSeparator), "");
+		if (decimalSeparator != '.')
+			expr = expr.replace(decimalSeparator, '.');
+		expr = mExpressionTokenizer.tokenizeExpression(expr);
+		expr = mBracketsChecker.tryToCloseExpressionBrackets(expr);
+		expr = mBracketsChecker.formatNearBrackets(expr);
+		ArrayList<TreeNode> nodes = builder.buildTree(expr);
+		ListResult r = calc(0, nodes);
+		return formatAnswer(r);
+	}
 
-    private ListResult formatAnswer(ListResult r){
-        ArrayList<BaseResult> n = new ArrayList<>();
-        for(var b : r.getResults()){
-            if(b instanceof ListResult) {
-                n.add(formatAnswer((ListResult) b));
-            }else if (b instanceof NumberResult){
-                BigDecimal a = ((NumberResult) b).get();
-                a = CalculatorUtils.removeZeros(a);
-                if(a.scale() > roundScale)
-                    a = a.setScale(roundScale, RoundingMode.HALF_EVEN);
-                n.add(new NumberResult(a));
-            }
-        }
-        return new ListResult(n);
-    }
+	private ListResult formatAnswer(ListResult r) {
+		ArrayList<BaseResult> n = new ArrayList<>();
+		for (var b : r.getResults()) {
+			if (b instanceof ListResult) {
+				n.add(formatAnswer((ListResult) b));
+			} else if (b instanceof NumberResult) {
+				BigDecimal a = ((NumberResult) b).get();
+				a = CalculatorUtils.removeZeros(a);
+				if (a.scale() > roundScale)
+					a = a.setScale(roundScale, RoundingMode.HALF_EVEN);
+				n.add(new NumberResult(a));
+			}
+		}
+		return new ListResult(n);
+	}
 
-    private BigDecimal parseDecimal(String source){
-        try {
-            return new BigDecimal(source);
-        }catch (NumberFormatException e){
-            throw new CalculatingException(CalculatingException.NUMBER_FORMAT_EXCEPTION, e);
-        }
-    }
+	private BigDecimal parseDecimal(String source) {
+		try {
+			return new BigDecimal(source);
+		} catch (NumberFormatException e) {
+			throw new CalculatingException(CalculatingException.NUMBER_FORMAT_EXCEPTION, e);
+		}
+	}
 
-    private ListResult calc(int v, ArrayList<TreeNode> nodes) {
-        TreeNode node = nodes.get(v);
+	private ListResult calc(int v, ArrayList<TreeNode> nodes) {
+		TreeNode node = nodes.get(v);
 
-        if (node instanceof BracketsNode) {
-            ListResult r = calc(node.getLeftSonIndex(), nodes);
-            int type = ((BracketsNode) node).getType();
-            return resolveList(r, a->bracketsResolver.resolve(type, a));
-        } else if (node instanceof NumberNode) {
-            return ListResult.of(parseDecimal(((NumberNode) node).getNumber()));
-        } else if (node instanceof NegativeNumberNode) {
-            return NegativeNumberNode.apply(calc(node.getLeftSonIndex(), nodes));
-        } else if (node instanceof FunctionNode) {
-            return processFunction(v, nodes);
-        } else if (node instanceof SuffixOperatorNode) {
-            SuffixOperatorNode suffixNode = (SuffixOperatorNode) node;
-            if (TreeBuilder.isNodeEmpty(node.getLeftSonIndex(), nodes))
-                throw new CalculatingException(CalculatingException.NO_OPERAND_FOR_SUFFIX_OPERATOR);
-            return resolveList(calc(node.getLeftSonIndex(), nodes), a->suffixResolver.resolve(suffixNode.operator, suffixNode.count, a));
-        } else if (node instanceof OperatorNode) {
-            return processOperatorNode(v, nodes);
-        }else if(node instanceof ListNode){
-            ListNode listNode = (ListNode) node;
-            ArrayList<BaseResult> results = new ArrayList<>();
-            for(TreeNode treeNode : listNode.getNodes()){
-                ListResult r = calc(treeNode.getLeftSonIndex(), nodes);
-                if(r.isSingleNumber()){
-                    results.add(new NumberResult(r.getSingleNumberIfTrue()));
-                }else{
-                    results.add(r);
-                }
-            }
-            return new ListResult(results);
-        } else {
-            throw new CalculatingException(CalculatingException.REQUESTED_EMPTY_NODE);
-        }
-    }
+		if (node instanceof BracketsNode) {
+			ListResult r = calc(node.getLeftSonIndex(), nodes);
+			int type = ((BracketsNode) node).getType();
+			return resolveList(r, a -> bracketsResolver.resolve(type, a));
+		} else if (node instanceof NumberNode) {
+			return ListResult.of(parseDecimal(((NumberNode) node).getNumber()));
+		} else if (node instanceof NegativeNumberNode) {
+			return NegativeNumberNode.apply(calc(node.getLeftSonIndex(), nodes));
+		} else if (node instanceof FunctionNode) {
+			return processFunction(v, nodes);
+		} else if (node instanceof SuffixOperatorNode) {
+			SuffixOperatorNode suffixNode = (SuffixOperatorNode) node;
+			if (TreeBuilder.isNodeEmpty(node.getLeftSonIndex(), nodes))
+				throw new CalculatingException(CalculatingException.NO_OPERAND_FOR_SUFFIX_OPERATOR);
+			return resolveList(calc(node.getLeftSonIndex(), nodes), a -> suffixResolver.resolve(suffixNode.operator, suffixNode.count, a));
+		} else if (node instanceof OperatorNode) {
+			return processOperatorNode(v, nodes);
+		} else if (node instanceof ListNode) {
+			ListNode listNode = (ListNode) node;
+			ArrayList<BaseResult> results = new ArrayList<>();
+			for (TreeNode treeNode : listNode.getNodes()) {
+				ListResult r = calc(treeNode.getLeftSonIndex(), nodes);
+				if (r.isSingleNumber()) {
+					results.add(new NumberResult(r.getSingleNumberIfTrue()));
+				} else {
+					results.add(r);
+				}
+			}
+			return new ListResult(results);
+		} else {
+			throw new CalculatingException(CalculatingException.REQUESTED_EMPTY_NODE);
+		}
+	}
 
-    protected ListResult processOperatorNode(int v, ArrayList<TreeNode> nodes) {
-        TreeNode node = nodes.get(v);
-        char symbol = ((OperatorNode) node).getOperator();
-        if (TreeBuilder.isNodeEmpty(node.getLeftSonIndex(), nodes) || TreeBuilder.isNodeEmpty(node.getRightSonIndex(), nodes))
-            throw new CalculatingException(CalculatingException.INVALID_BINARY_OPERATOR);
+	protected ListResult processOperatorNode(int v, ArrayList<TreeNode> nodes) {
+		TreeNode node = nodes.get(v);
+		char symbol = ((OperatorNode) node).getOperator();
+		if (TreeBuilder.isNodeEmpty(node.getLeftSonIndex(), nodes) || TreeBuilder.isNodeEmpty(node.getRightSonIndex(), nodes))
+			throw new CalculatingException(CalculatingException.INVALID_BINARY_OPERATOR);
 
-        ListResult r1 = calc(node.getLeftSonIndex(), nodes);
-        ListResult r2 = calc(node.getRightSonIndex(), nodes);
-        if(!r1.isSingleNumber() && !r2.isSingleNumber())
-            throw new CalculatingException(CalculatingException.BINARY_OPERATOR_CANNOT_BE_APPLIED_TO_LISTS);
+		ListResult r1 = calc(node.getLeftSonIndex(), nodes);
+		ListResult r2 = calc(node.getRightSonIndex(), nodes);
+		if (!r1.isSingleNumber() && !r2.isSingleNumber())
+			throw new CalculatingException(CalculatingException.BINARY_OPERATOR_CANNOT_BE_APPLIED_TO_LISTS);
 
-        TreeNode rightNode = nodes.get(node.getRightSonIndex());
-        if (rightNode instanceof SuffixOperatorNode) {
-            SuffixOperatorNode suffix = (SuffixOperatorNode) rightNode;
-            if (suffix.operator == '%') {
-                if(r1.isSingleNumber()) { // 10-(25;50;100)%
-                    BigDecimal rb = r1.getSingleNumberIfTrue();
-                    return resolveList(r2, a -> resolver.calculatePercent(symbol, rb, a));
-                }else{ // (100;50)-50%
-                    BigDecimal rb = r2.getSingleNumberIfTrue();
-                    return resolveList(r1, a -> resolver.calculatePercent(symbol, a, rb));
-                }
-            }
-        }
+		TreeNode rightNode = nodes.get(node.getRightSonIndex());
+		if (rightNode instanceof SuffixOperatorNode) {
+			SuffixOperatorNode suffix = (SuffixOperatorNode) rightNode;
+			if (suffix.operator == '%') {
+				if (r1.isSingleNumber()) { // 10-(25;50;100)%
+					BigDecimal rb = r1.getSingleNumberIfTrue();
+					return resolveList(r2, a -> resolver.calculatePercent(symbol, rb, a));
+				} else { // (100;50)-50%
+					BigDecimal rb = r2.getSingleNumberIfTrue();
+					return resolveList(r1, a -> resolver.calculatePercent(symbol, a, rb));
+				}
+			}
+		}
 
-        if(r1.isSingleNumber()){
-            BigDecimal b = r1.getSingleNumberIfTrue();
-            return resolveList(r2, a->resolver.calculate(symbol, b, a));
-        }else{
-            BigDecimal b = r2.getSingleNumberIfTrue();
-            return resolveList(r1, a->resolver.calculate(symbol, a, b));
-        }
-    }
+		if (r1.isSingleNumber()) {
+			BigDecimal b = r1.getSingleNumberIfTrue();
+			return resolveList(r2, a -> resolver.calculate(symbol, b, a));
+		} else {
+			BigDecimal b = r2.getSingleNumberIfTrue();
+			return resolveList(r1, a -> resolver.calculate(symbol, a, b));
+		}
+	}
 
-    protected ListResult processFunction(int v, ArrayList<TreeNode> nodes) {
-        FunctionNode functionNode = (FunctionNode) nodes.get(v);
-        ListResult r = null;
-        if(!TreeBuilder.isNodeEmpty(functionNode.getLeftSonIndex(), nodes)) {
-            r = calc(functionNode.getLeftSonIndex(), nodes);
-        }
-        if (r == null) {
-            if(functionNode.suffix == null){
-                return constantsResolver.resolveConstant(functionNode.funcName);
-            }
-            return ListResult.of(functionsResolver.resolve(functionNode.funcName, functionNode.suffix, null));
-        }else if(r.isSingleNumber()){
-            return ListResult.of(functionsResolver.resolve(functionNode.funcName, functionNode.suffix, r.getSingleNumberIfTrue()));
-        }
-        return listFunctionsResolver.resolve(functionNode.funcName, functionNode.suffix, r);
-    }
+	protected ListResult processFunction(int v, ArrayList<TreeNode> nodes) {
+		FunctionNode functionNode = (FunctionNode) nodes.get(v);
+		ListResult r = null;
+		if (!TreeBuilder.isNodeEmpty(functionNode.getLeftSonIndex(), nodes)) {
+			r = calc(functionNode.getLeftSonIndex(), nodes);
+		}
+		if (r == null) {
+			if (functionNode.suffix == null) {
+				return constantsResolver.resolveConstant(functionNode.funcName);
+			}
+			return ListResult.of(functionsResolver.resolve(functionNode.funcName, functionNode.suffix, null));
+		} else if (r.isSingleNumber()) {
+			return ListResult.of(functionsResolver.resolve(functionNode.funcName, functionNode.suffix, r.getSingleNumberIfTrue()));
+		}
+		return listFunctionsResolver.resolve(functionNode.funcName, functionNode.suffix, r);
+	}
 
 }

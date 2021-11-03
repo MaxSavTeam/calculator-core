@@ -19,11 +19,11 @@ package com.maxsavteam.calculator.tree;
 
 public class BinaryOperator {
 
-    public final char symbol;
-    public final int priority;
+	public final char symbol;
+	public final int priority;
 
-    public BinaryOperator(char symbol, int priority) {
-        this.symbol = symbol;
-        this.priority = priority;
-    }
+	public BinaryOperator(char symbol, int priority) {
+		this.symbol = symbol;
+		this.priority = priority;
+	}
 }

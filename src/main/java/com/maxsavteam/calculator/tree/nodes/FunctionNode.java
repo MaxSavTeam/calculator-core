@@ -23,12 +23,12 @@ import java.math.BigDecimal;
 
 public class FunctionNode extends TreeNode {
 
-    public final String funcName;
-    @Nullable
-    public final BigDecimal suffix;
+	public final String funcName;
+	@Nullable
+	public final BigDecimal suffix;
 
-    public FunctionNode(String funcName, @Nullable BigDecimal suffix) {
-        this.funcName = funcName;
-        this.suffix = suffix;
-    }
+	public FunctionNode(String funcName, @Nullable BigDecimal suffix) {
+		this.funcName = funcName;
+		this.suffix = suffix;
+	}
 }

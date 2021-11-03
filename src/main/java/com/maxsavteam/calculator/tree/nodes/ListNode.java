@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 /**
  * Node which contains list of nodes
- *
+ * <p>
  * Each item is always TreeNode and contains only left son
- * */
+ */
 public class ListNode extends TreeNode {
 
 	private final ArrayList<TreeNode> nodes;
@@ -16,6 +16,6 @@ public class ListNode extends TreeNode {
 	}
 
 	public ArrayList<TreeNode> getNodes() {
-		return new ArrayList<>( nodes );
+		return new ArrayList<>(nodes);
 	}
 }
