@@ -27,7 +27,7 @@ Add the JitPack repository to your build file:
 #### Gradle
 ```groovy
 dependencies {
-        implementation 'com.maxsavteam:calculator-core:1.7.2'
+        implementation 'com.maxsavteam:calculator-core:2.0.0'
 }
 ```
 #### Maven
@@ -35,6 +35,6 @@ dependencies {
 <dependency>
     <groupId>com.maxsavteam</groupId>
     <artifactId>calculator-core</artifactId>
-    <version>1.7.2</version>
+    <version>2.0.0</version>
 </dependency>
 ```
