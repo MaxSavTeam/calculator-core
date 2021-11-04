@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.maxsavteam'
-version '2.0.0'
+version '2.1.0'
 
 repositories {
     mavenCentral()
@@ -19,6 +19,11 @@ task sourcesJar(type: Jar) {
     archiveClassifier.set('sources')
     from sourceSets.main.java.srcDirs
     exclude '**/Main.java'
+}
+
+task apiJar(type: Jar){
+    from sourceSets.main.output
+    exclude '**/Main.class'
 }
 
 task javadocJar(type: Jar) {
@@ -38,8 +43,9 @@ afterEvaluate {
     publishing {
         publications {
             maven(MavenPublication) {
-                from components.java
+                //from components.java
 
+                artifact apiJar
                 artifact sourcesJar
                 artifact javadocJar
             }
