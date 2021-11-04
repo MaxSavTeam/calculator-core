@@ -171,6 +171,9 @@ public class Calculator {
 				return MathUtils.ln(notNullNum);
 			case "R":
 			case "sqrt":
+				if(suffix != null && operand != null){
+					return MathUtils.rootWithBase(operand, suffix);
+				}
 				return MathUtils.rootWithBase(notNullNum, BigDecimal.valueOf(2));
 			case "abs":
 				return MathUtils.abs(notNullNum);

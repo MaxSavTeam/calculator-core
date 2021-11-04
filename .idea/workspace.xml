@@ -9,15 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="build: fix sources publishing">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/resolvers/ConstantsResolver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="style: reformat code (reformatted in Intellij Idea)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/Calculator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/exceptions/CalculatingException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/exceptions/CalculatingException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/utils/MathUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/utils/MathUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +120,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.3034483" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
     <key name="MoveMembersDialog.RECENTS_KEY">
@@ -238,21 +231,9 @@
       <workItem from="1635804113778" duration="388000" />
       <workItem from="1635853851763" duration="3491000" />
       <workItem from="1635862494291" duration="1493000" />
-      <workItem from="1635935012694" duration="3426000" />
-    </task>
-    <task id="LOCAL-00058" summary="fixed accuracy of logWithBase function">
-      <created>1616174394449</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1616174394449</updated>
-    </task>
-    <task id="LOCAL-00059" summary="stable version">
-      <created>1616180563676</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1616180563676</updated>
+      <workItem from="1635935012694" duration="4876000" />
+      <workItem from="1635947189726" duration="7197000" />
+      <workItem from="1636016567702" duration="486000" />
     </task>
     <task id="LOCAL-00060" summary="CalculatorExpressionFormatter now customizable">
       <created>1616352920081</created>
@@ -583,7 +564,21 @@
       <option name="project" value="LOCAL" />
       <updated>1635863456865</updated>
     </task>
-    <option name="localTasksCounter" value="107" />
+    <task id="LOCAL-00107" summary="feat: add ConstantsResolver">
+      <created>1635943368704</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1635943368705</updated>
+    </task>
+    <task id="LOCAL-00108" summary="style: reformat code (reformatted in Intellij Idea)">
+      <created>1635943756035</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1635943756035</updated>
+    </task>
+    <option name="localTasksCounter" value="109" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -645,8 +640,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="library moved to MaxSav Team Repository" />
-    <MESSAGE value="update README.md" />
     <MESSAGE value="fix: fix tan of 45 to return 1" />
     <MESSAGE value="feat: add tg function" />
     <MESSAGE value="feat: all operations with round scale in MathUtils replaced with high round scale (=20)" />
@@ -670,7 +663,9 @@
     <MESSAGE value="chore" />
     <MESSAGE value="fix: fix binary operators" />
     <MESSAGE value="build: fix sources publishing" />
-    <option name="LAST_COMMIT_MESSAGE" value="build: fix sources publishing" />
+    <MESSAGE value="feat: add ConstantsResolver" />
+    <MESSAGE value="style: reformat code (reformatted in Intellij Idea)" />
+    <option name="LAST_COMMIT_MESSAGE" value="style: reformat code (reformatted in Intellij Idea)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -681,7 +676,7 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/TreeBuilder.java</url>
-          <line>163</line>
+          <line>162</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
