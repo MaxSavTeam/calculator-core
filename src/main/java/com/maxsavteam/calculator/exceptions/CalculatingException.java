@@ -43,6 +43,7 @@ public class CalculatingException extends RuntimeException {
 			"Operators or functions cannot be applied to list of lists",
 			"Too few arguments",
 			"Unknown constant",
+			"Invalid asin or acos value",
 	};
 	public static final int INVALID_BINARY_OPERATOR = 0;
 	public static final int NEGATIVE_PARAMETER_OF_LOG = 1;
@@ -67,6 +68,7 @@ public class CalculatingException extends RuntimeException {
 	public static final int OPERATOR_OR_FUNCTION_CANNOT_BE_APPLIED_TO_LIST_OF_LISTS = 20;
 	public static final int TOO_FEW_ARGUMENTS = 21;
 	public static final int UNKNOWN_CONSTANT = 22;
+	public static final int INVALID_ASIN_ACOS_VALUE = 23;
 
 	private final int errorCode;
 

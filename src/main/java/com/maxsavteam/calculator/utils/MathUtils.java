@@ -132,6 +132,8 @@ public class MathUtils {
 	}
 
 	public static BigDecimal arcsin(BigDecimal x) {
+		if(x.compareTo(BigDecimal.valueOf(-1)) < 0 || x.compareTo(BigDecimal.ONE) > 0)
+			throw new CalculatingException(CalculatingException.INVALID_ASIN_ACOS_VALUE);
 		return toDegrees(BigDecimalMath.asin(x, new MathContext(mHighRoundScale)));
 	}
 
@@ -140,6 +142,8 @@ public class MathUtils {
 	}
 
 	public static BigDecimal arccos(BigDecimal x) {
+		if(x.compareTo(BigDecimal.valueOf(-1)) < 0 || x.compareTo(BigDecimal.ONE) > 0)
+			throw new CalculatingException(CalculatingException.INVALID_ASIN_ACOS_VALUE);
 		return toDegrees(BigDecimalMath.acos(x, new MathContext(mHighRoundScale)));
 	}
 
