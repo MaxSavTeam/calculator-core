@@ -33,19 +33,19 @@ public class List extends BaseResult {
 	}
 
 	public boolean isSingleNumber() {
-		return mResults.size() == 1 && mResults.get(0) instanceof NumberResult;
+		return mResults.size() == 1 && mResults.get(0) instanceof Number;
 	}
 
 	public BigDecimal getSingleNumberIfTrue() {
 		if (!isSingleNumber())
 			throw new RuntimeException("List does not contain single number");
-		return ((NumberResult) mResults.get(0)).get();
+		return ((Number) mResults.get(0)).get();
 	}
 
 	public static List of(BigDecimal a) {
 		return new List(
 				new ArrayList<>() {{
-					add(new NumberResult(a));
+					add(new Number(a));
 				}}
 		);
 	}
@@ -61,8 +61,8 @@ public class List extends BaseResult {
 			var b = mResults.get(i);
 			if (b instanceof List) {
 				sb.append(((List) b).format(decimalFormat));
-			} else if (b instanceof NumberResult) {
-				BigDecimal bd = ((NumberResult) b).get();
+			} else if (b instanceof Number) {
+				BigDecimal bd = ((Number) b).get();
 				if (decimalFormat != null)
 					sb.append(decimalFormat.format(bd));
 				else

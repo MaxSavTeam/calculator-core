@@ -18,11 +18,11 @@ package com.maxsavteam.calculator.results;
 
 import java.math.BigDecimal;
 
-public class NumberResult extends BaseResult {
+public class Number extends BaseResult {
 
 	private final BigDecimal a;
 
-	public NumberResult(BigDecimal a) {
+	public Number(BigDecimal a) {
 		this.a = a;
 	}
 

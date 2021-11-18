@@ -26,7 +26,7 @@ import com.maxsavteam.calculator.resolvers.ListFunctionsResolver;
 import com.maxsavteam.calculator.resolvers.SuffixOperatorResolver;
 import com.maxsavteam.calculator.results.BaseResult;
 import com.maxsavteam.calculator.results.List;
-import com.maxsavteam.calculator.results.NumberResult;
+import com.maxsavteam.calculator.results.Number;
 import com.maxsavteam.calculator.tree.BinaryOperator;
 import com.maxsavteam.calculator.tree.BracketsType;
 import com.maxsavteam.calculator.tree.SuffixOperator;
@@ -193,8 +193,8 @@ public class Calculator {
 	public static final ListFunctionsResolver defaultListFunctionResolver = (funcName, suffix, list) -> {
 		List inlinedList = inlineElementsInList(list);
 		BigDecimal[] decimals = inlinedList.getResults().stream()
-				.filter(b -> b instanceof NumberResult)
-				.map(b -> ((NumberResult) b).get())
+				.filter(b -> b instanceof Number)
+				.map(b -> ((Number) b).get())
 				.toArray(BigDecimal[]::new);
 
 		switch (funcName) {
@@ -225,7 +225,7 @@ public class Calculator {
 	private static List inlineElementsInList(List l) {
 		ArrayList<BaseResult> results = new ArrayList<>();
 		for (var b : l.getResults()) {
-			if (b instanceof NumberResult) {
+			if (b instanceof Number) {
 				results.add(b);
 			} else if (b instanceof List) {
 				results.addAll(inlineElementsInList((List) b).getResults());
@@ -244,8 +244,8 @@ public class Calculator {
 		} else {
 			ArrayList<BaseResult> resultsList = new ArrayList<>();
 			for (var b : r.getResults()) {
-				if (b instanceof NumberResult) {
-					resultsList.add(new NumberResult(applier.apply(((NumberResult) b).get())));
+				if (b instanceof Number) {
+					resultsList.add(new Number(applier.apply(((Number) b).get())));
 				} else if (b instanceof List) {
 					resultsList.add(resolveList((List) b, applier));
 				} else {
@@ -388,12 +388,12 @@ public class Calculator {
 		for (var b : r.getResults()) {
 			if (b instanceof List) {
 				n.add(formatAnswer((List) b));
-			} else if (b instanceof NumberResult) {
-				BigDecimal a = ((NumberResult) b).get();
+			} else if (b instanceof Number) {
+				BigDecimal a = ((Number) b).get();
 				a = CalculatorUtils.removeZeros(a);
 				if (a.scale() > roundScale)
 					a = a.setScale(roundScale, RoundingMode.HALF_EVEN);
-				n.add(new NumberResult(a));
+				n.add(new Number(a));
 			}
 		}
 		return new List(n);
@@ -433,7 +433,7 @@ public class Calculator {
 			for (TreeNode treeNode : listNode.getNodes()) {
 				List r = calc(treeNode.getLeftSonIndex(), nodes);
 				if (r.isSingleNumber()) {
-					results.add(new NumberResult(r.getSingleNumberIfTrue()));
+					results.add(new Number(r.getSingleNumberIfTrue()));
 				} else {
 					results.add(r);
 				}
