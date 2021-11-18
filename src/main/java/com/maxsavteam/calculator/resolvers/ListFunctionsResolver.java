@@ -16,7 +16,7 @@
 
 package com.maxsavteam.calculator.resolvers;
 
-import com.maxsavteam.calculator.results.ListResult;
+import com.maxsavteam.calculator.results.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -29,5 +29,5 @@ public interface ListFunctionsResolver {
 	 * @param list     List of results in brackets of function separated by semicolon  (e.g. "sin(45)" 45 is operand or "sin(45*2)" operand will be 90)
 	 */
 	@NotNull
-	ListResult resolve(String funcName, @Nullable BigDecimal suffix, ListResult list);
+	List resolve(String funcName, @Nullable BigDecimal suffix, List list);
 }

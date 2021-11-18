@@ -20,11 +20,11 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class ListResult extends BaseResult {
+public class List extends BaseResult {
 
 	private final ArrayList<BaseResult> mResults;
 
-	public ListResult(ArrayList<BaseResult> results) {
+	public List(ArrayList<BaseResult> results) {
 		mResults = results;
 	}
 
@@ -42,8 +42,8 @@ public class ListResult extends BaseResult {
 		return ((NumberResult) mResults.get(0)).get();
 	}
 
-	public static ListResult of(BigDecimal a) {
-		return new ListResult(
+	public static List of(BigDecimal a) {
+		return new List(
 				new ArrayList<>() {{
 					add(new NumberResult(a));
 				}}
@@ -59,8 +59,8 @@ public class ListResult extends BaseResult {
 		StringBuilder sb = new StringBuilder("(");
 		for (int i = 0; i < mResults.size(); i++) {
 			var b = mResults.get(i);
-			if (b instanceof ListResult) {
-				sb.append(((ListResult) b).format(decimalFormat));
+			if (b instanceof List) {
+				sb.append(((List) b).format(decimalFormat));
 			} else if (b instanceof NumberResult) {
 				BigDecimal bd = ((NumberResult) b).get();
 				if (decimalFormat != null)

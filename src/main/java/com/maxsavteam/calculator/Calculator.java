@@ -25,7 +25,7 @@ import com.maxsavteam.calculator.resolvers.FunctionsResolver;
 import com.maxsavteam.calculator.resolvers.ListFunctionsResolver;
 import com.maxsavteam.calculator.resolvers.SuffixOperatorResolver;
 import com.maxsavteam.calculator.results.BaseResult;
-import com.maxsavteam.calculator.results.ListResult;
+import com.maxsavteam.calculator.results.List;
 import com.maxsavteam.calculator.results.NumberResult;
 import com.maxsavteam.calculator.tree.BinaryOperator;
 import com.maxsavteam.calculator.tree.BracketsType;
@@ -118,9 +118,9 @@ public class Calculator {
 	public static final ConstantsResolver defaultConstantsResolver = constantName -> {
 		switch (constantName) {
 			case "pi":
-				return ListResult.of(MathUtils.PI);
+				return List.of(MathUtils.PI);
 			case "fi":
-				return ListResult.of(MathUtils.FI);
+				return List.of(MathUtils.FI);
 			default:
 				throw new CalculatingException(CalculatingException.UNKNOWN_CONSTANT, constantName);
 		}
@@ -191,7 +191,7 @@ public class Calculator {
 	};
 
 	public static final ListFunctionsResolver defaultListFunctionResolver = (funcName, suffix, list) -> {
-		ListResult inlinedList = inlineElementsInList(list);
+		List inlinedList = inlineElementsInList(list);
 		BigDecimal[] decimals = inlinedList.getResults().stream()
 				.filter(b -> b instanceof NumberResult)
 				.map(b -> ((NumberResult) b).get())
@@ -202,19 +202,19 @@ public class Calculator {
 				BigDecimal sum = BigDecimal.ZERO;
 				for (var d : decimals)
 					sum = sum.add(d);
-				return ListResult.of(sum.divide(BigDecimal.valueOf(decimals.length), roundScale, RoundingMode.HALF_EVEN));
+				return List.of(sum.divide(BigDecimal.valueOf(decimals.length), roundScale, RoundingMode.HALF_EVEN));
 			}
 			case "gcd": {
-				return ListResult.of(MathUtils.gcd(decimals));
+				return List.of(MathUtils.gcd(decimals));
 			}
 			case "lcm": {
-				return ListResult.of(MathUtils.lcm(decimals));
+				return List.of(MathUtils.lcm(decimals));
 			}
 			case "sum": {
 				BigDecimal sum = BigDecimal.ZERO;
 				for (var d : decimals)
 					sum = sum.add(d);
-				return ListResult.of(sum);
+				return List.of(sum);
 			}
 			default: {
 				return resolveList(list, b -> defaultFunctionsResolver.resolve(funcName, suffix, b));
@@ -222,37 +222,37 @@ public class Calculator {
 		}
 	};
 
-	private static ListResult inlineElementsInList(ListResult l) {
+	private static List inlineElementsInList(List l) {
 		ArrayList<BaseResult> results = new ArrayList<>();
 		for (var b : l.getResults()) {
 			if (b instanceof NumberResult) {
 				results.add(b);
-			} else if (b instanceof ListResult) {
-				results.addAll(inlineElementsInList((ListResult) b).getResults());
+			} else if (b instanceof List) {
+				results.addAll(inlineElementsInList((List) b).getResults());
 			}
 		}
-		return new ListResult(results);
+		return new List(results);
 	}
 
 	private interface ApplierForEachElement {
 		BigDecimal apply(BigDecimal a);
 	}
 
-	private static ListResult resolveList(ListResult r, ApplierForEachElement applier) {
+	private static List resolveList(List r, ApplierForEachElement applier) {
 		if (r.isSingleNumber()) {
-			return ListResult.of(applier.apply(r.getSingleNumberIfTrue()));
+			return List.of(applier.apply(r.getSingleNumberIfTrue()));
 		} else {
 			ArrayList<BaseResult> resultsList = new ArrayList<>();
 			for (var b : r.getResults()) {
 				if (b instanceof NumberResult) {
 					resultsList.add(new NumberResult(applier.apply(((NumberResult) b).get())));
-				} else if (b instanceof ListResult) {
-					resultsList.add(resolveList((ListResult) b, applier));
+				} else if (b instanceof List) {
+					resultsList.add(resolveList((List) b, applier));
 				} else {
 					resultsList.add(b);
 				}
 			}
-			return new ListResult(resultsList);
+			return new List(resultsList);
 		}
 	}
 
@@ -370,7 +370,7 @@ public class Calculator {
 	/**
 	 * Calculates answer of expression
 	 */
-	public ListResult calculate(String expression) {
+	public List calculate(String expression) {
 		String expr = expression;
 		expr = expr.replace(String.valueOf(groupingSeparator), "");
 		if (decimalSeparator != '.')
@@ -379,15 +379,15 @@ public class Calculator {
 		expr = mBracketsChecker.tryToCloseExpressionBrackets(expr);
 		expr = mBracketsChecker.formatNearBrackets(expr);
 		ArrayList<TreeNode> nodes = builder.buildTree(expr);
-		ListResult r = calc(0, nodes);
+		List r = calc(0, nodes);
 		return formatAnswer(r);
 	}
 
-	private ListResult formatAnswer(ListResult r) {
+	private List formatAnswer(List r) {
 		ArrayList<BaseResult> n = new ArrayList<>();
 		for (var b : r.getResults()) {
-			if (b instanceof ListResult) {
-				n.add(formatAnswer((ListResult) b));
+			if (b instanceof List) {
+				n.add(formatAnswer((List) b));
 			} else if (b instanceof NumberResult) {
 				BigDecimal a = ((NumberResult) b).get();
 				a = CalculatorUtils.removeZeros(a);
@@ -396,7 +396,7 @@ public class Calculator {
 				n.add(new NumberResult(a));
 			}
 		}
-		return new ListResult(n);
+		return new List(n);
 	}
 
 	private BigDecimal parseDecimal(String source) {
@@ -407,15 +407,15 @@ public class Calculator {
 		}
 	}
 
-	private ListResult calc(int v, ArrayList<TreeNode> nodes) {
+	private List calc(int v, ArrayList<TreeNode> nodes) {
 		TreeNode node = nodes.get(v);
 
 		if (node instanceof BracketsNode) {
-			ListResult r = calc(node.getLeftSonIndex(), nodes);
+			List r = calc(node.getLeftSonIndex(), nodes);
 			int type = ((BracketsNode) node).getType();
 			return resolveList(r, a -> bracketsResolver.resolve(type, a));
 		} else if (node instanceof NumberNode) {
-			return ListResult.of(parseDecimal(((NumberNode) node).getNumber()));
+			return List.of(parseDecimal(((NumberNode) node).getNumber()));
 		} else if (node instanceof NegativeNumberNode) {
 			return NegativeNumberNode.apply(calc(node.getLeftSonIndex(), nodes));
 		} else if (node instanceof FunctionNode) {
@@ -431,27 +431,27 @@ public class Calculator {
 			ListNode listNode = (ListNode) node;
 			ArrayList<BaseResult> results = new ArrayList<>();
 			for (TreeNode treeNode : listNode.getNodes()) {
-				ListResult r = calc(treeNode.getLeftSonIndex(), nodes);
+				List r = calc(treeNode.getLeftSonIndex(), nodes);
 				if (r.isSingleNumber()) {
 					results.add(new NumberResult(r.getSingleNumberIfTrue()));
 				} else {
 					results.add(r);
 				}
 			}
-			return new ListResult(results);
+			return new List(results);
 		} else {
 			throw new CalculatingException(CalculatingException.REQUESTED_EMPTY_NODE);
 		}
 	}
 
-	protected ListResult processOperatorNode(int v, ArrayList<TreeNode> nodes) {
+	protected List processOperatorNode(int v, ArrayList<TreeNode> nodes) {
 		TreeNode node = nodes.get(v);
 		char symbol = ((OperatorNode) node).getOperator();
 		if (TreeBuilder.isNodeEmpty(node.getLeftSonIndex(), nodes) || TreeBuilder.isNodeEmpty(node.getRightSonIndex(), nodes))
 			throw new CalculatingException(CalculatingException.INVALID_BINARY_OPERATOR);
 
-		ListResult r1 = calc(node.getLeftSonIndex(), nodes);
-		ListResult r2 = calc(node.getRightSonIndex(), nodes);
+		List r1 = calc(node.getLeftSonIndex(), nodes);
+		List r2 = calc(node.getRightSonIndex(), nodes);
 		if (!r1.isSingleNumber() && !r2.isSingleNumber())
 			throw new CalculatingException(CalculatingException.BINARY_OPERATOR_CANNOT_BE_APPLIED_TO_LISTS);
 
@@ -478,9 +478,9 @@ public class Calculator {
 		}
 	}
 
-	protected ListResult processFunction(int v, ArrayList<TreeNode> nodes) {
+	protected List processFunction(int v, ArrayList<TreeNode> nodes) {
 		FunctionNode functionNode = (FunctionNode) nodes.get(v);
-		ListResult r = null;
+		List r = null;
 		if (!TreeBuilder.isNodeEmpty(functionNode.getLeftSonIndex(), nodes)) {
 			r = calc(functionNode.getLeftSonIndex(), nodes);
 		}
@@ -488,9 +488,9 @@ public class Calculator {
 			if (functionNode.suffix == null) {
 				return constantsResolver.resolveConstant(functionNode.funcName);
 			}
-			return ListResult.of(functionsResolver.resolve(functionNode.funcName, functionNode.suffix, null));
+			return List.of(functionsResolver.resolve(functionNode.funcName, functionNode.suffix, null));
 		} else if (r.isSingleNumber()) {
-			return ListResult.of(functionsResolver.resolve(functionNode.funcName, functionNode.suffix, r.getSingleNumberIfTrue()));
+			return List.of(functionsResolver.resolve(functionNode.funcName, functionNode.suffix, r.getSingleNumberIfTrue()));
 		}
 		return listFunctionsResolver.resolve(functionNode.funcName, functionNode.suffix, r);
 	}

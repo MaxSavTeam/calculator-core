@@ -16,7 +16,7 @@
 
 package com.maxsavteam.calculator.resolvers;
 
-import com.maxsavteam.calculator.results.ListResult;
+import com.maxsavteam.calculator.results.List;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -32,6 +32,6 @@ public interface ConstantsResolver {
 	 * @return Returns one or list of values associated with given constant name
 	 */
 	@NotNull
-	ListResult resolveConstant(String constantName);
+	List resolveConstant(String constantName);
 
 }
