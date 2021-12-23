@@ -368,10 +368,7 @@ public class Calculator {
 		this.constantsResolver = constantsResolver;
 	}
 
-	/**
-	 * Calculates answer of expression
-	 */
-	public List calculate(String expression) {
+	public String formatExpression(String expression){
 		String expr = expression;
 		expr = expr.replace(String.valueOf(groupingSeparator), "");
 		if (decimalSeparator != '.')
@@ -379,7 +376,14 @@ public class Calculator {
 		expr = mExpressionTokenizer.tokenizeExpression(expr);
 		expr = mBracketsChecker.tryToCloseExpressionBrackets(expr);
 		expr = mBracketsChecker.formatNearBrackets(expr);
-		ArrayList<TreeNode> nodes = builder.buildTree(expr);
+		return expr;
+	}
+
+	/**
+	 * Calculates answer of expression
+	 */
+	public List calculate(String expression) {
+		ArrayList<TreeNode> nodes = builder.buildTree(formatExpression(expression));
 		List r = calc(0, nodes);
 		return formatAnswer(r);
 	}
