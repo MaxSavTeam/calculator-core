@@ -73,11 +73,7 @@ public class Calculator {
 	private char decimalSeparator = DecimalFormatSymbols.getInstance(Locale.ROOT).getDecimalSeparator();
 	private char groupingSeparator = DecimalFormatSymbols.getInstance(Locale.ROOT).getGroupingSeparator();
 
-	public static final Map<String, String> defaultReplacementMap = new HashMap<>() {{
-		put(PI_SIGN, "(" + MathUtils.PI.toPlainString() + ")");
-		put(FI_SIGN, "(" + MathUtils.FI.toPlainString() + ")");
-		put(E_SIGN, "(" + MathUtils.E.toPlainString() + ")");
-	}};
+	public static final Map<String, String> defaultReplacementMap = new HashMap<>();
 
 	public static final BinaryOperatorResolver defaultResolver = new BinaryOperatorResolver() {
 		@Override
@@ -119,9 +115,13 @@ public class Calculator {
 	public static final ConstantsResolver defaultConstantsResolver = constantName -> {
 		switch (constantName) {
 			case "pi":
+			case PI_SIGN:
 				return List.of(MathUtils.PI);
 			case "fi":
+			case FI_SIGN:
 				return List.of(MathUtils.FI);
+			case E_SIGN:
+				return List.of(MathUtils.E);
 			default:
 				throw new CalculatingException(CalculatingException.UNKNOWN_CONSTANT, constantName);
 		}
