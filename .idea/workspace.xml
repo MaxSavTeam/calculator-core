@@ -9,12 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="refactor: rename NumberResult to Number&#10;&#10;BREAKING CHANGE">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/nodes/ConstantNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/Calculator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/TreeBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/TreeBuilder.java" afterDir="false" />
+    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="feat: add Calculator#formatExpression">
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -271,21 +267,7 @@
       <workItem from="1636025698330" duration="918000" />
       <workItem from="1636111171390" duration="7156000" />
       <workItem from="1637239929946" duration="2526000" />
-      <workItem from="1640286529774" duration="890000" />
-    </task>
-    <task id="LOCAL-00066" summary="version increment">
-      <created>1616403528640</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1616403528640</updated>
-    </task>
-    <task id="LOCAL-00067" summary="fixed average function">
-      <created>1616404604973</created>
-      <option name="number" value="00067" />
-      <option name="presentableId" value="LOCAL-00067" />
-      <option name="project" value="LOCAL" />
-      <updated>1616404604973</updated>
+      <workItem from="1640286529774" duration="1205000" />
     </task>
     <task id="LOCAL-00068" summary="added insert between close bracket and dot and between non digit and dot">
       <created>1616409061718</created>
@@ -616,7 +598,21 @@
       <option name="project" value="LOCAL" />
       <updated>1637240613061</updated>
     </task>
-    <option name="localTasksCounter" value="115" />
+    <task id="LOCAL-00115" summary="feat: add ConstantNode">
+      <created>1640287548285</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1640287548286</updated>
+    </task>
+    <task id="LOCAL-00116" summary="feat: add Calculator#formatExpression">
+      <created>1640287710017</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
+      <option name="project" value="LOCAL" />
+      <updated>1640287710017</updated>
+    </task>
+    <option name="localTasksCounter" value="117" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -677,8 +673,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: functions which arguments are list, moved to separate resolver; brackets and suffix operators can be applied for lists" />
-    <MESSAGE value="doc: fix javadoc of FunctionsResolver" />
     <MESSAGE value="build: change version to 1.8.1" />
     <MESSAGE value="build: change version to 2.0.0-beta" />
     <MESSAGE value="feat: change default behaviour of list functions resolver" />
@@ -702,7 +696,9 @@
     <MESSAGE value="fix: fix IllegalStateException when calculating asin and acos" />
     <MESSAGE value="refactor: rename ListResult to List&#10;&#10;BREAKING CHANGE" />
     <MESSAGE value="refactor: rename NumberResult to Number&#10;&#10;BREAKING CHANGE" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor: rename NumberResult to Number&#10;&#10;BREAKING CHANGE" />
+    <MESSAGE value="feat: add ConstantNode" />
+    <MESSAGE value="feat: add Calculator#formatExpression" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add Calculator#formatExpression" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
