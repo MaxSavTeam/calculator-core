@@ -32,6 +32,7 @@ import com.maxsavteam.calculator.tree.BracketsType;
 import com.maxsavteam.calculator.tree.SuffixOperator;
 import com.maxsavteam.calculator.tree.TreeBuilder;
 import com.maxsavteam.calculator.tree.nodes.BracketsNode;
+import com.maxsavteam.calculator.tree.nodes.ConstantNode;
 import com.maxsavteam.calculator.tree.nodes.FunctionNode;
 import com.maxsavteam.calculator.tree.nodes.ListNode;
 import com.maxsavteam.calculator.tree.nodes.NegativeNumberNode;
@@ -439,6 +440,8 @@ public class Calculator {
 				}
 			}
 			return new List(results);
+		} else if(node instanceof ConstantNode) {
+			return constantsResolver.resolveConstant(((ConstantNode) node).getName());
 		} else {
 			throw new CalculatingException(CalculatingException.REQUESTED_EMPTY_NODE);
 		}
@@ -485,9 +488,6 @@ public class Calculator {
 			r = calc(functionNode.getLeftSonIndex(), nodes);
 		}
 		if (r == null) {
-			if (functionNode.suffix == null) {
-				return constantsResolver.resolveConstant(functionNode.funcName);
-			}
 			return List.of(functionsResolver.resolve(functionNode.funcName, functionNode.suffix, null));
 		} else if (r.isSingleNumber()) {
 			return List.of(functionsResolver.resolve(functionNode.funcName, functionNode.suffix, r.getSingleNumberIfTrue()));

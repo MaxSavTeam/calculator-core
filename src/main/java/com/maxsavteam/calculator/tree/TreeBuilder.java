@@ -20,6 +20,7 @@ package com.maxsavteam.calculator.tree;
 import com.maxsavteam.calculator.exceptions.CalculatingException;
 import com.maxsavteam.calculator.exceptions.TreeBuildingException;
 import com.maxsavteam.calculator.tree.nodes.BracketsNode;
+import com.maxsavteam.calculator.tree.nodes.ConstantNode;
 import com.maxsavteam.calculator.tree.nodes.FunctionNode;
 import com.maxsavteam.calculator.tree.nodes.ListNode;
 import com.maxsavteam.calculator.tree.nodes.NegativeNumberNode;
@@ -279,11 +280,13 @@ public class TreeBuilder {
 			i++;
 		}
 		if (i == ex.length() || !CalculatorUtils.isDigit(ex.charAt(i))) {
-			FunctionNode node = new FunctionNode(funcName.toString(), null);
-			treeNodes.set(v, node);
 			if (i != ex.length() && !CalculatorUtils.isDigit(ex.charAt(i))) {
+				FunctionNode node = new FunctionNode(funcName.toString(), null);
+				treeNodes.set(v, node);
 				node.setLeftSonIndex(nextIndex());
 				build(node.getLeftSonIndex(), ex.substring(i), rootLevel, offset + i);
+			}else{
+				treeNodes.set(v, new ConstantNode(funcName.toString()));
 			}
 		} else {
 			StringBuilder suffix = new StringBuilder();
