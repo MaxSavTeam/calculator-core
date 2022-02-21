@@ -63,7 +63,7 @@ public class Calculator {
 	private final TreeBuilder builder;
 	private final CalculatorExpressionTokenizer mExpressionTokenizer;
 	private final CalculatorExpressionFormatter mBracketsChecker;
-	public final static int roundScale = 8;
+	public static final int roundScale = 8;
 	private BinaryOperatorResolver resolver = defaultResolver;
 	private BracketsResolver bracketsResolver = defaultBracketsResolver;
 	private FunctionsResolver functionsResolver = defaultFunctionsResolver;
@@ -84,11 +84,12 @@ public class Calculator {
 				return a.subtract(b);
 			if (operator == '*')
 				return a.multiply(b);
-			if (operator == '/')
+			if (operator == '/') {
 				if (b.signum() == 0)
 					throw new CalculatingException(CalculatingException.DIVISION_BY_ZERO);
 				else
 					return CalculatorUtils.removeZeros(a.divide(b, roundScale, RoundingMode.HALF_EVEN));
+			}
 			if (operator == '^')
 				return CalculatorUtils.removeZeros(MathUtils.pow(a, b));
 			throw new CalculatingException(CalculatingException.INVALID_BINARY_OPERATOR);
@@ -103,11 +104,12 @@ public class Calculator {
 				return a.subtract(percentOfNum);
 			else if (binaryOperator == '*')
 				return percentOfNum;
-			else if (binaryOperator == '/')
+			else if (binaryOperator == '/') {
 				if (percent.signum() == 0)
 					throw new CalculatingException(CalculatingException.DIVISION_BY_ZERO);
 				else
 					return a.divide(percent, roundScale, RoundingMode.HALF_EVEN);
+			}
 			throw new CalculatingException(CalculatingException.INVALID_OPERATOR_FOR_PERCENT);
 		}
 	};
@@ -194,7 +196,7 @@ public class Calculator {
 	public static final ListFunctionsResolver defaultListFunctionResolver = (funcName, suffix, list) -> {
 		List inlinedList = inlineElementsInList(list);
 		BigDecimal[] decimals = inlinedList.getResults().stream()
-				.filter(b -> b instanceof Number)
+				.filter(Number.class::isInstance)
 				.map(b -> ((Number) b).get())
 				.toArray(BigDecimal[]::new);
 
@@ -291,22 +293,22 @@ public class Calculator {
 	/**
 	 * Sets brackets for TreeBuilder
 	 **/
-	public void setBracketsTypes(ArrayList<BracketsType> brackets) {
+	public void setBracketsTypes(java.util.List<BracketsType> brackets) {
 		builder.setBracketsTypes(brackets);
 		mBracketsChecker.setBracketsTypes(brackets);
 	}
 
-	/**
+	/**t
 	 * Sets binary operators for TreeBuilder
 	 **/
-	public void setBinaryOperators(ArrayList<BinaryOperator> operators) {
+	public void setBinaryOperators(java.util.List<BinaryOperator> operators) {
 		builder.setBinaryOperators(operators);
 	}
 
 	/**
 	 * Sets suffix operators for TreeBuilder
 	 **/
-	public void setSuffixOperators(ArrayList<SuffixOperator> operators) {
+	public void setSuffixOperators(java.util.List<SuffixOperator> operators) {
 		builder.setSuffixOperators(operators);
 		mBracketsChecker.setSuffixOperators(operators);
 	}
@@ -383,7 +385,7 @@ public class Calculator {
 	 * Calculates answer of expression
 	 */
 	public List calculate(String expression) {
-		ArrayList<TreeNode> nodes = builder.buildTree(formatExpression(expression));
+		java.util.List<TreeNode> nodes = builder.buildTree(formatExpression(expression));
 		List r = calc(0, nodes);
 		return formatAnswer(r);
 	}
@@ -412,7 +414,7 @@ public class Calculator {
 		}
 	}
 
-	private List calc(int v, ArrayList<TreeNode> nodes) {
+	private List calc(int v, java.util.List<TreeNode> nodes) {
 		TreeNode node = nodes.get(v);
 
 		if (node instanceof BracketsNode) {
@@ -451,7 +453,7 @@ public class Calculator {
 		}
 	}
 
-	protected List processOperatorNode(int v, ArrayList<TreeNode> nodes) {
+	protected List processOperatorNode(int v, java.util.List<TreeNode> nodes) {
 		TreeNode node = nodes.get(v);
 		char symbol = ((OperatorNode) node).getOperator();
 		if (TreeBuilder.isNodeEmpty(node.getLeftSonIndex(), nodes) || TreeBuilder.isNodeEmpty(node.getRightSonIndex(), nodes))
@@ -485,7 +487,7 @@ public class Calculator {
 		}
 	}
 
-	protected List processFunction(int v, ArrayList<TreeNode> nodes) {
+	protected List processFunction(int v, java.util.List<TreeNode> nodes) {
 		FunctionNode functionNode = (FunctionNode) nodes.get(v);
 		List r = null;
 		if (!TreeBuilder.isNodeEmpty(functionNode.getLeftSonIndex(), nodes)) {

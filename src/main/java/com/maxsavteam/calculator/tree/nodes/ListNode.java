@@ -1,6 +1,7 @@
 package com.maxsavteam.calculator.tree.nodes;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Node which contains list of nodes
@@ -9,13 +10,13 @@ import java.util.ArrayList;
  */
 public class ListNode extends TreeNode {
 
-	private final ArrayList<TreeNode> nodes;
+	private final List<TreeNode> nodes;
 
-	public ListNode(ArrayList<TreeNode> nodes) {
+	public ListNode(List<TreeNode> nodes) {
 		this.nodes = nodes;
 	}
 
-	public ArrayList<TreeNode> getNodes() {
+	public List<TreeNode> getNodes() {
 		return new ArrayList<>(nodes);
 	}
 }

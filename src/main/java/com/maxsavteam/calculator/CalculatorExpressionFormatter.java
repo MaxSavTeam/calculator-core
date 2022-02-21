@@ -23,15 +23,15 @@ import com.maxsavteam.calculator.tree.SuffixOperator;
 import com.maxsavteam.calculator.tree.TreeBuilder;
 import com.maxsavteam.calculator.utils.CalculatorUtils;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 public class CalculatorExpressionFormatter {
 
 	public static final Parameters defaultParameters = new Parameters.Builder().build();
 
-	private ArrayList<BracketsType> bracketsTypes = TreeBuilder.defaultBrackets;
-	private ArrayList<SuffixOperator> mSuffixOperators = TreeBuilder.defaultSuffixOperators;
+	private List<BracketsType> bracketsTypes = TreeBuilder.defaultBrackets;
+	private List<SuffixOperator> mSuffixOperators = TreeBuilder.defaultSuffixOperators;
 	private final Parameters mParameters;
 
 	public CalculatorExpressionFormatter() {
@@ -42,11 +42,11 @@ public class CalculatorExpressionFormatter {
 		mParameters = parameters;
 	}
 
-	public void setBracketsTypes(ArrayList<BracketsType> bracketsTypes) {
+	public void setBracketsTypes(List<BracketsType> bracketsTypes) {
 		this.bracketsTypes = bracketsTypes;
 	}
 
-	public void setSuffixOperators(ArrayList<SuffixOperator> suffixOperators) {
+	public void setSuffixOperators(List<SuffixOperator> suffixOperators) {
 		mSuffixOperators = suffixOperators;
 	}
 

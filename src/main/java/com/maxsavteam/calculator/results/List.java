@@ -22,13 +22,13 @@ import java.util.ArrayList;
 
 public class List extends BaseResult {
 
-	private final ArrayList<BaseResult> mResults;
+	private final java.util.List<BaseResult> mResults;
 
-	public List(ArrayList<BaseResult> results) {
+	public List(java.util.List<BaseResult> results) {
 		mResults = results;
 	}
 
-	public ArrayList<BaseResult> getResults() {
+	public java.util.List<BaseResult> getResults() {
 		return new ArrayList<>(mResults);
 	}
 
@@ -38,15 +38,13 @@ public class List extends BaseResult {
 
 	public BigDecimal getSingleNumberIfTrue() {
 		if (!isSingleNumber())
-			throw new RuntimeException("List does not contain single number");
+			throw new IllegalStateException("List does not contain single number");
 		return ((Number) mResults.get(0)).get();
 	}
 
 	public static List of(BigDecimal a) {
 		return new List(
-				new ArrayList<>() {{
-					add(new Number(a));
-				}}
+				java.util.List.of(new Number(a))
 		);
 	}
 

@@ -18,7 +18,8 @@ package com.maxsavteam.calculator.tree;
 
 public class SemicolonPosition {
 
-	public final int level, position;
+	public final int level;
+	public final int position;
 
 	public SemicolonPosition(int level, int position) {
 		this.level = level;

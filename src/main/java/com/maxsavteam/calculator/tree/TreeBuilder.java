@@ -32,6 +32,7 @@ import com.maxsavteam.calculator.utils.CalculatorUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -69,29 +70,29 @@ import java.util.Stack;
  */
 public class TreeBuilder {
 
-	public static final ArrayList<BracketsType> defaultBrackets = new ArrayList<>() {{
+	public static final List<BracketsType> defaultBrackets = new ArrayList<>() {{
 		add(new BracketsType('(', ')', 1));
 		add(new BracketsType('[', ']', 2)); // round
 		add(new BracketsType('\u23A3', '\u23A6', 3)); // round floor
 		add(new BracketsType('\u23A1', '\u23A4', 4)); // round ceil
 	}};
-	public static final ArrayList<BinaryOperator> defaultBinaryOperators = new ArrayList<>() {{
+	public static final List<BinaryOperator> defaultBinaryOperators = new ArrayList<>() {{
 		add(new BinaryOperator('+', 0));
 		add(new BinaryOperator('-', 0));
 		add(new BinaryOperator('*', 1));
 		add(new BinaryOperator('/', 1));
 		add(new BinaryOperator('^', 2));
 	}};
-	public static final ArrayList<SuffixOperator> defaultSuffixOperators = new ArrayList<>() {{
+	public static final List<SuffixOperator> defaultSuffixOperators = new ArrayList<>() {{
 		add(new SuffixOperator('!'));
 		add(new SuffixOperator('%'));
 	}};
 	public static final TreeNode emptyNode = new TreeNode();
 
 	private ArrayList<TreeNode> treeNodes;
-	private ArrayList<BracketsType> brackets = defaultBrackets;
-	private ArrayList<BinaryOperator> operators = defaultBinaryOperators;
-	private ArrayList<SuffixOperator> suffixOperators = defaultSuffixOperators;
+	private List<BracketsType> brackets = defaultBrackets;
+	private List<BinaryOperator> operators = defaultBinaryOperators;
+	private List<SuffixOperator> suffixOperators = defaultSuffixOperators;
 	private ArrayList<OperatorPosition> mOperatorPositions;
 	private ArrayList<SemicolonPosition> mSemicolonPositions;
 
@@ -105,33 +106,33 @@ public class TreeBuilder {
 	/**
 	 * Sets custom brackets
 	 */
-	public void setBracketsTypes(ArrayList<BracketsType> brackets) {
+	public void setBracketsTypes(List<BracketsType> brackets) {
 		this.brackets = brackets;
 	}
 
 	/**
 	 * Sets custom binary operators
 	 */
-	public void setBinaryOperators(ArrayList<BinaryOperator> operators) {
+	public void setBinaryOperators(List<BinaryOperator> operators) {
 		this.operators = operators;
 	}
 
 	/**
 	 * Sets custom suffix operators
 	 */
-	public void setSuffixOperators(ArrayList<SuffixOperator> suffixOperators) {
+	public void setSuffixOperators(List<SuffixOperator> suffixOperators) {
 		this.suffixOperators = suffixOperators;
 	}
 
-	public ArrayList<BracketsType> getBrackets() {
+	public List<BracketsType> getBrackets() {
 		return brackets;
 	}
 
-	public ArrayList<BinaryOperator> getOperators() {
+	public List<BinaryOperator> getOperators() {
 		return operators;
 	}
 
-	public ArrayList<SuffixOperator> getSuffixOperators() {
+	public List<SuffixOperator> getSuffixOperators() {
 		return suffixOperators;
 	}
 
@@ -140,7 +141,7 @@ public class TreeBuilder {
 	 * <p>
 	 * Parses this expression and resolves binary operators
 	 */
-	public ArrayList<TreeNode> buildTree(String expression) {
+	public List<TreeNode> buildTree(String expression) {
 		treeNodes = new ArrayList<>();
 		currentIndex = 0;
 		mOperatorPositions = new ArrayList<>();
@@ -419,7 +420,7 @@ public class TreeBuilder {
 		return Integer.MAX_VALUE;
 	}
 
-	public static boolean isNodeEmpty(int v, ArrayList<TreeNode> nodes) {
+	public static boolean isNodeEmpty(int v, List<TreeNode> nodes) {
 		return v == -1 || nodes.size() <= v || nodes.get(v) == emptyNode;
 	}
 
