@@ -25,8 +25,8 @@ import com.maxsavteam.calculator.resolvers.FunctionsResolver;
 import com.maxsavteam.calculator.resolvers.ListFunctionsResolver;
 import com.maxsavteam.calculator.resolvers.SuffixOperatorResolver;
 import com.maxsavteam.calculator.results.BaseResult;
-import com.maxsavteam.calculator.results.NumberList;
 import com.maxsavteam.calculator.results.Number;
+import com.maxsavteam.calculator.results.NumberList;
 import com.maxsavteam.calculator.tree.BinaryOperator;
 import com.maxsavteam.calculator.tree.BracketsType;
 import com.maxsavteam.calculator.tree.SuffixOperator;
@@ -49,6 +49,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -58,7 +59,7 @@ public class Calculator {
 	public static final String FI_SIGN = "\u03C6";
 	public static final String E_SIGN = "\u0190";
 
-	public static final String VERSION = "2.3.0";
+	public static final String VERSION = "2.3.1";
 
 	private final TreeBuilder builder;
 	private final CalculatorExpressionTokenizer mExpressionTokenizer;
@@ -125,7 +126,7 @@ public class Calculator {
 			case E_SIGN:
 				return NumberList.of(MathUtils.E);
 			default:
-				throw new CalculationException(CalculationException.UNKNOWN_CONSTANT, constantName);
+				return null;
 		}
 	};
 
@@ -220,7 +221,12 @@ public class Calculator {
 				return NumberList.of(sum);
 			}
 			default: {
-				return resolveList(list, b -> defaultFunctionsResolver.resolve(funcName, suffix, b));
+				return resolveList(list, b -> {
+					BigDecimal res = defaultFunctionsResolver.resolve(funcName, suffix, b);
+					if(res == null)
+						throw new CalculationException(CalculationException.UNKNOWN_FUNCTION, funcName);
+					return res;
+				});
 			}
 		}
 	};
@@ -293,7 +299,7 @@ public class Calculator {
 	/**
 	 * Sets brackets for TreeBuilder
 	 **/
-	public void setBracketsTypes(java.util.List<BracketsType> brackets) {
+	public void setBracketsTypes(List<BracketsType> brackets) {
 		builder.setBracketsTypes(brackets);
 		mBracketsChecker.setBracketsTypes(brackets);
 	}
@@ -301,14 +307,14 @@ public class Calculator {
 	/**t
 	 * Sets binary operators for TreeBuilder
 	 **/
-	public void setBinaryOperators(java.util.List<BinaryOperator> operators) {
+	public void setBinaryOperators(List<BinaryOperator> operators) {
 		builder.setBinaryOperators(operators);
 	}
 
 	/**
 	 * Sets suffix operators for TreeBuilder
 	 **/
-	public void setSuffixOperators(java.util.List<SuffixOperator> operators) {
+	public void setSuffixOperators(List<SuffixOperator> operators) {
 		builder.setSuffixOperators(operators);
 		mBracketsChecker.setSuffixOperators(operators);
 	}
@@ -385,7 +391,7 @@ public class Calculator {
 	 * Calculates answer of expression
 	 */
 	public NumberList calculate(String expression) {
-		java.util.List<TreeNode> nodes = builder.buildTree(formatExpression(expression));
+		List<TreeNode> nodes = builder.buildTree(formatExpression(expression));
 		NumberList r = calc(0, nodes);
 		return formatAnswer(r);
 	}
@@ -414,7 +420,7 @@ public class Calculator {
 		}
 	}
 
-	private NumberList calc(int v, java.util.List<TreeNode> nodes) {
+	private NumberList calc(int v, List<TreeNode> nodes) {
 		TreeNode node = nodes.get(v);
 
 		if (node instanceof BracketsNode) {
@@ -456,7 +462,7 @@ public class Calculator {
 	protected NumberList resolveConstant(ConstantNode node){
 		NumberList resolved = constantsResolver.resolveConstant(node.getName());
 		if(resolved == null)
-			throw new CalculationException(CalculationException.UNKNOWN_CONSTANT);
+			throw new CalculationException(CalculationException.UNKNOWN_CONSTANT, node.getName());
 		return resolved;
 	}
 
