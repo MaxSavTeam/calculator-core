@@ -447,10 +447,17 @@ public class Calculator {
 			}
 			return new List(results);
 		} else if(node instanceof ConstantNode) {
-			return constantsResolver.resolveConstant(((ConstantNode) node).getName());
+			return resolveConstant((ConstantNode) node);
 		} else {
 			throw new CalculatingException(CalculatingException.REQUESTED_EMPTY_NODE);
 		}
+	}
+
+	protected List resolveConstant(ConstantNode node){
+		List resolved = constantsResolver.resolveConstant(node.getName());
+		if(resolved == null)
+			throw new CalculatingException(CalculatingException.UNKNOWN_CONSTANT);
+		return resolved;
 	}
 
 	protected List processOperatorNode(int v, java.util.List<TreeNode> nodes) {
