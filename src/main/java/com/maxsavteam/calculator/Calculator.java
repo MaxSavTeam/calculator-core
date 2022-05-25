@@ -189,7 +189,7 @@ public class Calculator {
 			case "to_deg":
 				return MathUtils.toDegrees(notNullNum);
 			default:
-				throw new CalculatingException(CalculatingException.UNKNOWN_FUNCTION);
+				return null;
 		}
 	};
 
@@ -508,11 +508,21 @@ public class Calculator {
 			r = calc(functionNode.getLeftSonIndex(), nodes);
 		}
 		if (r == null) {
-			return List.of(functionsResolver.resolve(functionNode.funcName, functionNode.suffix, null));
+			return List.of(resolveSingleArgumentList(functionNode, null));
 		} else if (r.isSingleNumber()) {
-			return List.of(functionsResolver.resolve(functionNode.funcName, functionNode.suffix, r.getSingleNumberIfTrue()));
+			return List.of(resolveSingleArgumentList(functionNode, r.getSingleNumberIfTrue()));
 		}
-		return listFunctionsResolver.resolve(functionNode.funcName, functionNode.suffix, r);
+		List resolved = listFunctionsResolver.resolve(functionNode.funcName, functionNode.suffix, r);
+		if(resolved == null)
+			throw new CalculatingException(CalculatingException.UNKNOWN_FUNCTION);
+		return resolved;
+	}
+
+	private BigDecimal resolveSingleArgumentList(FunctionNode functionNode, BigDecimal argument){
+		BigDecimal bigDecimal = functionsResolver.resolve(functionNode.funcName, functionNode.suffix, argument);
+		if(bigDecimal == null)
+			throw new CalculatingException(CalculatingException.UNKNOWN_FUNCTION);
+		return bigDecimal;
 	}
 
 }

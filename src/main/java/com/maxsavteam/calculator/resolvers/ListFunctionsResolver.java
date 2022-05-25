@@ -17,17 +17,15 @@
 package com.maxsavteam.calculator.resolvers;
 
 import com.maxsavteam.calculator.results.List;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
 
 public interface ListFunctionsResolver {
 	/**
-	 * @param funcName Name of function to resolve.
-	 * @param suffix   Suffix of function (e.g. in expression "sin45" 45 is suffix
-	 * @param list     List of results in brackets of function separated by semicolon  (e.g. "sin(45)" 45 is operand or "sin(45*2)" operand will be 90)
+	 * @param funcName      Name of function to resolve.
+	 * @param suffix        Suffix of function (e.g. in expression "sin45" 45 is suffix
+	 * @param argumentsList List of results in brackets of function separated by semicolon  (e.g. "sin(45)" 45 is operand or "sin(45*2)" operand will be 90)
 	 */
-	@NotNull
-	List resolve(String funcName, @Nullable BigDecimal suffix, List list);
+	List resolve(String funcName, @Nullable BigDecimal suffix, List argumentsList);
 }
