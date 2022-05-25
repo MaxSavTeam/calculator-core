@@ -62,8 +62,8 @@ public class Calculator {
 	public static final String VERSION = "2.3.1";
 
 	private final TreeBuilder builder;
-	private final CalculatorExpressionTokenizer mExpressionTokenizer;
-	private final CalculatorExpressionFormatter mBracketsChecker;
+	private final CalculatorExpressionTokenizer expressionTokenizer;
+	private final CalculatorExpressionFormatter expressionFormatter;
 	public static final int roundScale = 8;
 	private BinaryOperatorResolver resolver = defaultResolver;
 	private BracketsResolver bracketsResolver = defaultBracketsResolver;
@@ -288,12 +288,12 @@ public class Calculator {
 	public Calculator() {
 		builder = new TreeBuilder();
 
-		mBracketsChecker = new CalculatorExpressionFormatter();
-		mBracketsChecker.setBracketsTypes(TreeBuilder.defaultBrackets);
-		mBracketsChecker.setSuffixOperators(TreeBuilder.defaultSuffixOperators);
+		expressionFormatter = new CalculatorExpressionFormatter();
+		expressionFormatter.setBracketsTypes(TreeBuilder.defaultBrackets);
+		expressionFormatter.setSuffixOperators(TreeBuilder.defaultSuffixOperators);
 
-		mExpressionTokenizer = new CalculatorExpressionTokenizer();
-		mExpressionTokenizer.setReplacementMap(defaultReplacementMap);
+		expressionTokenizer = new CalculatorExpressionTokenizer();
+		expressionTokenizer.setReplacementMap(defaultReplacementMap);
 	}
 
 	/**
@@ -301,7 +301,7 @@ public class Calculator {
 	 **/
 	public void setBracketsTypes(List<BracketsType> brackets) {
 		builder.setBracketsTypes(brackets);
-		mBracketsChecker.setBracketsTypes(brackets);
+		expressionFormatter.setBracketsTypes(brackets);
 	}
 
 	/**t
@@ -316,7 +316,7 @@ public class Calculator {
 	 **/
 	public void setSuffixOperators(List<SuffixOperator> operators) {
 		builder.setSuffixOperators(operators);
-		mBracketsChecker.setSuffixOperators(operators);
+		expressionFormatter.setSuffixOperators(operators);
 	}
 
 	/**
@@ -358,7 +358,7 @@ public class Calculator {
 	 * Sets custom aliases for tokenizer
 	 */
 	public void setAliases(Map<String, String> map) {
-		mExpressionTokenizer.setReplacementMap(map);
+		expressionTokenizer.setReplacementMap(map);
 	}
 
 	public void setDecimalSeparator(char decimalSeparator) {
@@ -381,9 +381,10 @@ public class Calculator {
 		expr = expr.replace(String.valueOf(groupingSeparator), "");
 		if (decimalSeparator != '.')
 			expr = expr.replace(decimalSeparator, '.');
-		expr = mExpressionTokenizer.tokenizeExpression(expr);
-		expr = mBracketsChecker.tryToCloseExpressionBrackets(expr);
-		expr = mBracketsChecker.formatNearBrackets(expr);
+		expr = expressionFormatter.removeSpaces(expr);
+		expr = expressionTokenizer.tokenizeExpression(expr);
+		expr = expressionFormatter.tryToCloseExpressionBrackets(expr);
+		expr = expressionFormatter.formatNearBrackets(expr);
 		return expr;
 	}
 

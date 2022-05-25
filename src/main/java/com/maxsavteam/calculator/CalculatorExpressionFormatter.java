@@ -50,6 +50,10 @@ public class CalculatorExpressionFormatter {
 		mSuffixOperators = suffixOperators;
 	}
 
+	public String removeSpaces(String expression){
+		return expression.replace(" ", "");
+	}
+
 	public String tryToCloseExpressionBrackets(String expression) {
 		StringBuilder sbResult = new StringBuilder(expression);
 
