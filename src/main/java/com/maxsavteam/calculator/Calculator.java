@@ -17,7 +17,7 @@
 
 package com.maxsavteam.calculator;
 
-import com.maxsavteam.calculator.exceptions.CalculatingException;
+import com.maxsavteam.calculator.exceptions.CalculationException;
 import com.maxsavteam.calculator.resolvers.BinaryOperatorResolver;
 import com.maxsavteam.calculator.resolvers.BracketsResolver;
 import com.maxsavteam.calculator.resolvers.ConstantsResolver;
@@ -86,13 +86,13 @@ public class Calculator {
 				return a.multiply(b);
 			if (operator == '/') {
 				if (b.signum() == 0)
-					throw new CalculatingException(CalculatingException.DIVISION_BY_ZERO);
+					throw new CalculationException(CalculationException.DIVISION_BY_ZERO);
 				else
 					return CalculatorUtils.removeZeros(a.divide(b, roundScale, RoundingMode.HALF_EVEN));
 			}
 			if (operator == '^')
 				return CalculatorUtils.removeZeros(MathUtils.pow(a, b));
-			throw new CalculatingException(CalculatingException.INVALID_BINARY_OPERATOR);
+			throw new CalculationException(CalculationException.INVALID_BINARY_OPERATOR);
 		}
 
 		@Override
@@ -106,11 +106,11 @@ public class Calculator {
 				return percentOfNum;
 			else if (binaryOperator == '/') {
 				if (percent.signum() == 0)
-					throw new CalculatingException(CalculatingException.DIVISION_BY_ZERO);
+					throw new CalculationException(CalculationException.DIVISION_BY_ZERO);
 				else
 					return a.divide(percent, roundScale, RoundingMode.HALF_EVEN);
 			}
-			throw new CalculatingException(CalculatingException.INVALID_OPERATOR_FOR_PERCENT);
+			throw new CalculationException(CalculationException.INVALID_OPERATOR_FOR_PERCENT);
 		}
 	};
 
@@ -125,13 +125,13 @@ public class Calculator {
 			case E_SIGN:
 				return List.of(MathUtils.E);
 			default:
-				throw new CalculatingException(CalculatingException.UNKNOWN_CONSTANT, constantName);
+				throw new CalculationException(CalculationException.UNKNOWN_CONSTANT, constantName);
 		}
 	};
 
 	public static final FunctionsResolver defaultFunctionsResolver = (funcName, suffix, operand) -> {
 		if (suffix == null && operand == null) {
-			throw new CalculatingException(CalculatingException.FUNCTION_SUFFIX_AND_OPERAND_NULL);
+			throw new CalculationException(CalculationException.FUNCTION_SUFFIX_AND_OPERAND_NULL);
 		}
 		BigDecimal notNullNum = suffix == null ? operand : suffix;
 		switch (funcName) {
@@ -268,7 +268,7 @@ public class Calculator {
 			return MathUtils.floor(a);
 		else if (type == 4)
 			return MathUtils.ceil(a);
-		throw new CalculatingException(CalculatingException.UNKNOWN_BRACKET_TYPE);
+		throw new CalculationException(CalculationException.UNKNOWN_BRACKET_TYPE);
 	};
 
 	public static final SuffixOperatorResolver defaultSuffixResolver = (operator, count, operand) -> {
@@ -276,7 +276,7 @@ public class Calculator {
 			return MathUtils.fact(operand, count);
 		else if (operator == '%')
 			return operand.divide(MathUtils.pow(BigDecimal.valueOf(100), BigDecimal.valueOf(count)), roundScale, RoundingMode.HALF_EVEN);
-		throw new CalculatingException(CalculatingException.UNKNOWN_SUFFIX_OPERATOR);
+		throw new CalculationException(CalculationException.UNKNOWN_SUFFIX_OPERATOR);
 	};
 
 	public Calculator() {
@@ -410,7 +410,7 @@ public class Calculator {
 		try {
 			return new BigDecimal(source);
 		} catch (NumberFormatException e) {
-			throw new CalculatingException(CalculatingException.NUMBER_FORMAT_EXCEPTION, e);
+			throw new CalculationException(CalculationException.NUMBER_FORMAT_EXCEPTION, e);
 		}
 	}
 
@@ -430,7 +430,7 @@ public class Calculator {
 		} else if (node instanceof SuffixOperatorNode) {
 			SuffixOperatorNode suffixNode = (SuffixOperatorNode) node;
 			if (TreeBuilder.isNodeEmpty(node.getLeftSonIndex(), nodes))
-				throw new CalculatingException(CalculatingException.NO_OPERAND_FOR_SUFFIX_OPERATOR);
+				throw new CalculationException(CalculationException.NO_OPERAND_FOR_SUFFIX_OPERATOR);
 			return resolveList(calc(node.getLeftSonIndex(), nodes), a -> resolveSuffix(suffixNode, a));
 		} else if (node instanceof OperatorNode) {
 			return processOperatorNode(v, nodes);
@@ -449,21 +449,21 @@ public class Calculator {
 		} else if(node instanceof ConstantNode) {
 			return resolveConstant((ConstantNode) node);
 		} else {
-			throw new CalculatingException(CalculatingException.REQUESTED_EMPTY_NODE);
+			throw new CalculationException(CalculationException.REQUESTED_EMPTY_NODE);
 		}
 	}
 
 	protected List resolveConstant(ConstantNode node){
 		List resolved = constantsResolver.resolveConstant(node.getName());
 		if(resolved == null)
-			throw new CalculatingException(CalculatingException.UNKNOWN_CONSTANT);
+			throw new CalculationException(CalculationException.UNKNOWN_CONSTANT);
 		return resolved;
 	}
 
 	protected BigDecimal resolveSuffix(SuffixOperatorNode node, BigDecimal operand){
 		BigDecimal bigDecimal = suffixResolver.resolve(node.operator, node.count, operand);
 		if(bigDecimal == null)
-			throw new CalculatingException(CalculatingException.UNKNOWN_SUFFIX_OPERATOR);
+			throw new CalculationException(CalculationException.UNKNOWN_SUFFIX_OPERATOR);
 		return bigDecimal;
 	}
 
@@ -471,12 +471,12 @@ public class Calculator {
 		TreeNode node = nodes.get(v);
 		char symbol = ((OperatorNode) node).getOperator();
 		if (TreeBuilder.isNodeEmpty(node.getLeftSonIndex(), nodes) || TreeBuilder.isNodeEmpty(node.getRightSonIndex(), nodes))
-			throw new CalculatingException(CalculatingException.INVALID_BINARY_OPERATOR);
+			throw new CalculationException(CalculationException.INVALID_BINARY_OPERATOR);
 
 		List r1 = calc(node.getLeftSonIndex(), nodes);
 		List r2 = calc(node.getRightSonIndex(), nodes);
 		if (!r1.isSingleNumber() && !r2.isSingleNumber())
-			throw new CalculatingException(CalculatingException.BINARY_OPERATOR_CANNOT_BE_APPLIED_TO_LISTS);
+			throw new CalculationException(CalculationException.BINARY_OPERATOR_CANNOT_BE_APPLIED_TO_LISTS);
 
 		TreeNode rightNode = nodes.get(node.getRightSonIndex());
 		if (rightNode instanceof SuffixOperatorNode) {
@@ -514,14 +514,14 @@ public class Calculator {
 		}
 		List resolved = listFunctionsResolver.resolve(functionNode.funcName, functionNode.suffix, r);
 		if(resolved == null)
-			throw new CalculatingException(CalculatingException.UNKNOWN_FUNCTION);
+			throw new CalculationException(CalculationException.UNKNOWN_FUNCTION);
 		return resolved;
 	}
 
 	private BigDecimal resolveSingleArgumentList(FunctionNode functionNode, BigDecimal argument){
 		BigDecimal bigDecimal = functionsResolver.resolve(functionNode.funcName, functionNode.suffix, argument);
 		if(bigDecimal == null)
-			throw new CalculatingException(CalculatingException.UNKNOWN_FUNCTION);
+			throw new CalculationException(CalculationException.UNKNOWN_FUNCTION);
 		return bigDecimal;
 	}
 

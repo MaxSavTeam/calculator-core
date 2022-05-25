@@ -18,7 +18,7 @@
 package com.maxsavteam;
 
 import com.maxsavteam.calculator.Calculator;
-import com.maxsavteam.calculator.exceptions.CalculatingException;
+import com.maxsavteam.calculator.exceptions.CalculationException;
 
 import java.util.Scanner;
 
@@ -40,7 +40,7 @@ public class Main {
 			long start = System.currentTimeMillis();
 			try {
 				System.out.println(calculator.calculate(exp).format());
-			} catch (CalculatingException e) {
+			} catch (CalculationException e) {
 				e.printStackTrace();
 			}
 			System.err.println(System.currentTimeMillis() - start);

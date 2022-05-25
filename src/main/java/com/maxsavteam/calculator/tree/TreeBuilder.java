@@ -17,7 +17,7 @@
 
 package com.maxsavteam.calculator.tree;
 
-import com.maxsavteam.calculator.exceptions.CalculatingException;
+import com.maxsavteam.calculator.exceptions.CalculationException;
 import com.maxsavteam.calculator.exceptions.TreeBuildingException;
 import com.maxsavteam.calculator.tree.nodes.BracketsNode;
 import com.maxsavteam.calculator.tree.nodes.ConstantNode;
@@ -253,7 +253,7 @@ public class TreeBuilder {
 					NumberNode node = new NumberNode(expression);
 					treeNodes.set(v, node);
 				} catch (NumberFormatException e) {
-					throw new CalculatingException(CalculatingException.NUMBER_FORMAT_EXCEPTION, e);
+					throw new CalculationException(CalculationException.NUMBER_FORMAT_EXCEPTION, e);
 				}
 			}
 		}
@@ -364,7 +364,7 @@ public class TreeBuilder {
 				typesStack.push(getBracketType(c));
 			} else if (isCloseBracket(c)) {
 				if (typesStack.isEmpty() || typesStack.peek() != getBracketType(c))
-					throw new TreeBuildingException(CalculatingException.INVALID_BRACKETS_SEQUENCE);
+					throw new TreeBuildingException(CalculationException.INVALID_BRACKETS_SEQUENCE);
 				typesStack.pop();
 			} else {
 				minLevel = Math.min(minLevel, typesStack.size());

@@ -17,7 +17,7 @@
 
 package com.maxsavteam.calculator.exceptions;
 
-public class TreeBuildingException extends CalculatingException {
+public class TreeBuildingException extends CalculationException {
 	public TreeBuildingException(int error) {
 		super(error);
 	}

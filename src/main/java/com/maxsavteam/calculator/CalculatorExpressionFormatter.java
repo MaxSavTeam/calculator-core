@@ -17,7 +17,7 @@
 
 package com.maxsavteam.calculator;
 
-import com.maxsavteam.calculator.exceptions.CalculatingException;
+import com.maxsavteam.calculator.exceptions.CalculationException;
 import com.maxsavteam.calculator.tree.BracketsType;
 import com.maxsavteam.calculator.tree.SuffixOperator;
 import com.maxsavteam.calculator.tree.TreeBuilder;
@@ -65,9 +65,9 @@ public class CalculatorExpressionFormatter {
 				type = findCloseBracket(c);
 				if (type != -1) {
 					if (typesStack.isEmpty())
-						throw new CalculatingException(CalculatingException.INVALID_BRACKETS_SEQUENCE);
+						throw new CalculationException(CalculationException.INVALID_BRACKETS_SEQUENCE);
 					if (typesStack.peek() != type)
-						throw new CalculatingException(CalculatingException.INVALID_BRACKETS_SEQUENCE);
+						throw new CalculationException(CalculationException.INVALID_BRACKETS_SEQUENCE);
 					else
 						typesStack.pop();
 				}

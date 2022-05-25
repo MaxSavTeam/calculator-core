@@ -18,7 +18,7 @@
 package com.maxsavteam.calculator.utils;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
-import com.maxsavteam.calculator.exceptions.CalculatingException;
+import com.maxsavteam.calculator.exceptions.CalculationException;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -39,19 +39,19 @@ public class MathUtils {
 
 	public static BigDecimal ln(BigDecimal x) {
 		if (x.signum() < 0)
-			throw new CalculatingException(CalculatingException.NEGATIVE_PARAMETER_OF_LOG);
+			throw new CalculationException(CalculationException.NEGATIVE_PARAMETER_OF_LOG);
 		return BigDecimalMath.log(x, new MathContext(mHighRoundScale));
 	}
 
 	public static BigDecimal log(BigDecimal x) {
 		if (x.signum() <= 0)
-			throw new CalculatingException(CalculatingException.NEGATIVE_PARAMETER_OF_LOG);
+			throw new CalculationException(CalculationException.NEGATIVE_PARAMETER_OF_LOG);
 		return BigDecimalMath.log10(x, new MathContext(mHighRoundScale));
 	}
 
 	public static BigDecimal logWithBase(BigDecimal x, BigDecimal base) {
 		if (x.signum() <= 0)
-			throw new CalculatingException(CalculatingException.NEGATIVE_PARAMETER_OF_LOG);
+			throw new CalculationException(CalculationException.NEGATIVE_PARAMETER_OF_LOG);
 		if (base.compareTo(BigDecimal.TEN) == 0)
 			return BigDecimalMath.log10(x, new MathContext(mHighRoundScale));
 		if (base.compareTo(BigDecimal.valueOf(2)) == 0)
@@ -85,7 +85,7 @@ public class MathUtils {
 
 	public static BigDecimal gcd(BigDecimal... l) {
 		if (l.length < 2) {
-			throw new CalculatingException(CalculatingException.UNKNOWN_CONSTANT, "gcd: expected minimum 2, but found " + l.length);
+			throw new CalculationException(CalculationException.UNKNOWN_CONSTANT, "gcd: expected minimum 2, but found " + l.length);
 		}
 		BigDecimal r = gcd(l[0], l[1]);
 		for (int i = 2; i < l.length; i++)
@@ -101,7 +101,7 @@ public class MathUtils {
 
 	public static BigDecimal lcm(BigDecimal... l) {
 		if (l.length < 2) {
-			throw new CalculatingException(CalculatingException.UNKNOWN_CONSTANT, "lcm: expected minimum 2, but found " + l.length);
+			throw new CalculationException(CalculationException.UNKNOWN_CONSTANT, "lcm: expected minimum 2, but found " + l.length);
 		}
 		BigDecimal r = lcm(l[0], l[1]);
 		for (int i = 2; i < l.length; i++)
@@ -111,7 +111,7 @@ public class MathUtils {
 
 	public static BigDecimal tan(BigDecimal x) {
 		if (x.compareTo(BigDecimal.valueOf(90)) == 0)
-			throw new CalculatingException(CalculatingException.TAN_OF_90);
+			throw new CalculationException(CalculationException.TAN_OF_90);
 		return BigDecimalMath.tan(toRadians(x), new MathContext(mHighRoundScale));
 	}
 
@@ -133,7 +133,7 @@ public class MathUtils {
 
 	public static BigDecimal arcsin(BigDecimal x) {
 		if(x.compareTo(BigDecimal.valueOf(-1)) < 0 || x.compareTo(BigDecimal.ONE) > 0)
-			throw new CalculatingException(CalculatingException.INVALID_ASIN_ACOS_VALUE);
+			throw new CalculationException(CalculationException.INVALID_ASIN_ACOS_VALUE);
 		return toDegrees(BigDecimalMath.asin(x, new MathContext(mHighRoundScale)));
 	}
 
@@ -143,13 +143,13 @@ public class MathUtils {
 
 	public static BigDecimal arccos(BigDecimal x) {
 		if(x.compareTo(BigDecimal.valueOf(-1)) < 0 || x.compareTo(BigDecimal.ONE) > 0)
-			throw new CalculatingException(CalculatingException.INVALID_ASIN_ACOS_VALUE);
+			throw new CalculationException(CalculationException.INVALID_ASIN_ACOS_VALUE);
 		return toDegrees(BigDecimalMath.acos(x, new MathContext(mHighRoundScale)));
 	}
 
 	public static BigDecimal fact(BigDecimal a, int step) {
 		if (a.compareTo(factorialLimit) > 0)
-			throw new CalculatingException(CalculatingException.FACTORIAL_LIMIT_EXCEEDED);
+			throw new CalculationException(CalculationException.FACTORIAL_LIMIT_EXCEEDED);
 		if (a.signum() == 0)
 			return BigDecimal.ONE;
 		if (step == 1 && a.compareTo(BigDecimal.valueOf(Long.MAX_VALUE)) <= 0)
@@ -226,7 +226,7 @@ public class MathUtils {
 		if (a.signum() == 0)
 			return BigDecimal.ZERO;
 		if (n.remainder(BigDecimal.valueOf(2)).signum() == 0 && a.signum() < 0)
-			throw new CalculatingException(CalculatingException.ROOT_OF_EVEN_DEGREE_OF_NEGATIVE_NUMBER);
+			throw new CalculationException(CalculationException.ROOT_OF_EVEN_DEGREE_OF_NEGATIVE_NUMBER);
 		BigDecimal log = ln(a);
 		BigDecimal dLog = log.divide(n, mHighRoundScale, RoundingMode.HALF_EVEN);
 		return exp(dLog);
@@ -241,9 +241,9 @@ public class MathUtils {
 	public static BigDecimal pow(BigDecimal a, BigDecimal n) {
 		if (a.signum() == 0) {
 			if (n.signum() < 0)
-				throw new CalculatingException(CalculatingException.NAN);
+				throw new CalculationException(CalculationException.NAN);
 			else if (n.signum() == 0)
-				throw new CalculatingException(CalculatingException.UNDEFINED);
+				throw new CalculationException(CalculationException.UNDEFINED);
 			else
 				return BigDecimal.ZERO;
 		}

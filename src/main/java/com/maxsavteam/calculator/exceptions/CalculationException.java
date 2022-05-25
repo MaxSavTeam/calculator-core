@@ -17,7 +17,7 @@
 
 package com.maxsavteam.calculator.exceptions;
 
-public class CalculatingException extends RuntimeException {
+public class CalculationException extends RuntimeException {
 
 	public static final String[] messages = new String[]{
 			"Binary operator does not have left or right operand or both",
@@ -87,16 +87,16 @@ public class CalculatingException extends RuntimeException {
 		return "";
 	}
 
-	public CalculatingException(int error, String message) {
+	public CalculationException(int error, String message) {
 		errorCode = error;
 		additionalMessage = message;
 	}
 
-	public CalculatingException(int error) {
+	public CalculationException(int error) {
 		this(error, (String) null);
 	}
 
-	public CalculatingException(int error, Throwable cause) {
+	public CalculationException(int error, Throwable cause) {
 		super(cause);
 		errorCode = error;
 		additionalMessage = null;
