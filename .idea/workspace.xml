@@ -9,13 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="BREAKING CHANGE: refactor CalculatingException.java to CalculationException">
+    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="BREAKING CHANGE: rename List to NumberList">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/Calculator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/resolvers/ConstantsResolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/resolvers/ConstantsResolver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/resolvers/ListFunctionsResolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/resolvers/ListFunctionsResolver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/results/List.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/results/NumberList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/nodes/NegativeNumberNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/nodes/NegativeNumberNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -279,14 +275,7 @@
       <workItem from="1640528380250" duration="198000" />
       <workItem from="1645455527131" duration="2876000" />
       <workItem from="1645535708115" duration="11000" />
-      <workItem from="1653487660186" duration="2803000" />
-    </task>
-    <task id="LOCAL-00075" summary="v1.6.2">
-      <created>1618063304556</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1618063304556</updated>
+      <workItem from="1653487660186" duration="3475000" />
     </task>
     <task id="LOCAL-00076" summary="added highest round scale">
       <created>1618583618052</created>
@@ -624,7 +613,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653489852606</updated>
     </task>
-    <option name="localTasksCounter" value="124" />
+    <task id="LOCAL-00124" summary="BREAKING CHANGE: rename List to NumberList">
+      <created>1653490516348</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1653490516348</updated>
+    </task>
+    <option name="localTasksCounter" value="125" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -685,7 +681,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="build: change version to 2.0.0-beta2" />
     <MESSAGE value="feat: add rad function (to convert degrees to radians) and deg function (convert radians to degrees)&#10;&#10;BREAKING CHANGE: remove 'e' replacement" />
     <MESSAGE value="feat: add functions without suffix and operand (for example &quot;pi&quot;)" />
     <MESSAGE value="feat: add asin, acos, atan, atg, acot, actg" />
@@ -710,7 +705,8 @@
     <MESSAGE value="feat: remove NotNull requirement from SuffixOperatorResolver" />
     <MESSAGE value="feat: remove NotNull requirement from FunctionsResolver and ListFunctionsResolver" />
     <MESSAGE value="BREAKING CHANGE: refactor CalculatingException.java to CalculationException" />
-    <option name="LAST_COMMIT_MESSAGE" value="BREAKING CHANGE: refactor CalculatingException.java to CalculationException" />
+    <MESSAGE value="BREAKING CHANGE: rename List to NumberList" />
+    <option name="LAST_COMMIT_MESSAGE" value="BREAKING CHANGE: rename List to NumberList" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

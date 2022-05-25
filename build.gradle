@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.maxsavteam'
-version '2.2.0'
+version '3.0.0'
 
 repositories {
     mavenCentral()
@@ -13,6 +13,12 @@ repositories {
 java {
     sourceCompatibility JavaVersion.VERSION_11
     targetCompatibility JavaVersion.VERSION_11
+}
+
+task apiJar(type: Jar){
+    baseName "publishing-api"
+    from sourceSets.main.output
+    exclude '**/Main.java'
 }
 
 task sourcesJar(type: Jar) {
@@ -42,6 +48,7 @@ afterEvaluate {
 
                 artifact sourcesJar
                 artifact javadocJar
+                artifact apiJar
             }
         }
 
