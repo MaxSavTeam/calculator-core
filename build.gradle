@@ -16,7 +16,7 @@ java {
 }
 
 task apiJar(type: Jar){
-    baseName "publishing-api"
+    baseName "publishing-maven"
     from sourceSets.main.output
     exclude '**/Main.java'
 }
@@ -44,8 +44,6 @@ afterEvaluate {
     publishing {
         publications {
             maven(MavenPublication) {
-                from components.java
-
                 artifact sourcesJar
                 artifact javadocJar
                 artifact apiJar
