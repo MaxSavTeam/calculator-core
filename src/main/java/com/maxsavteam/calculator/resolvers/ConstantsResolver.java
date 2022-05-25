@@ -16,7 +16,7 @@
 
 package com.maxsavteam.calculator.resolvers;
 
-import com.maxsavteam.calculator.results.List;
+import com.maxsavteam.calculator.results.NumberList;
 
 /**
  * Resolver for constants
@@ -31,6 +31,6 @@ public interface ConstantsResolver {
 	 * @return Returns one or list of values associated with given constant name, or {@code null} if constant can't be resolved
 	 */
 
-	List resolveConstant(String constantName);
+	NumberList resolveConstant(String constantName);
 
 }

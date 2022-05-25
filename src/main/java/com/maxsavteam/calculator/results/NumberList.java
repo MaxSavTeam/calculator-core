@@ -19,16 +19,17 @@ package com.maxsavteam.calculator.results;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
-public class List extends BaseResult {
+public class NumberList extends BaseResult {
 
 	private final java.util.List<BaseResult> mResults;
 
-	public List(java.util.List<BaseResult> results) {
+	public NumberList(java.util.List<BaseResult> results) {
 		mResults = results;
 	}
 
-	public java.util.List<BaseResult> getResults() {
+	public List<BaseResult> getResults() {
 		return new ArrayList<>(mResults);
 	}
 
@@ -42,8 +43,8 @@ public class List extends BaseResult {
 		return ((Number) mResults.get(0)).get();
 	}
 
-	public static List of(BigDecimal a) {
-		return new List(
+	public static NumberList of(BigDecimal a) {
+		return new NumberList(
 				java.util.List.of(new Number(a))
 		);
 	}
@@ -57,8 +58,8 @@ public class List extends BaseResult {
 		StringBuilder sb = new StringBuilder("(");
 		for (int i = 0; i < mResults.size(); i++) {
 			var b = mResults.get(i);
-			if (b instanceof List) {
-				sb.append(((List) b).format(decimalFormat));
+			if (b instanceof NumberList) {
+				sb.append(((NumberList) b).format(decimalFormat));
 			} else if (b instanceof Number) {
 				BigDecimal bd = ((Number) b).get();
 				if (decimalFormat != null)

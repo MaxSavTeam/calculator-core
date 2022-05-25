@@ -18,7 +18,7 @@
 package com.maxsavteam.calculator.tree.nodes;
 
 import com.maxsavteam.calculator.results.BaseResult;
-import com.maxsavteam.calculator.results.List;
+import com.maxsavteam.calculator.results.NumberList;
 import com.maxsavteam.calculator.results.Number;
 
 import java.math.BigDecimal;
@@ -30,20 +30,20 @@ public class NegativeNumberNode extends TreeNode {
 		return new Number(r.get().multiply(BigDecimal.valueOf(-1)));
 	}
 
-	public static List apply(BaseResult r) {
+	public static NumberList apply(BaseResult r) {
 		ArrayList<BaseResult> results = new ArrayList<>();
 		if (r instanceof Number) {
 			results.add(applyOnNum((Number) r));
 		} else {
-			List l = (List) r;
+			NumberList l = (NumberList) r;
 			for (BaseResult b : l.getResults()) {
-				if (b instanceof List)
+				if (b instanceof NumberList)
 					results.add(apply(b));
 				else
 					results.add(applyOnNum((Number) b));
 			}
 		}
-		return new List(results);
+		return new NumberList(results);
 	}
 
 }

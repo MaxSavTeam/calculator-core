@@ -16,7 +16,7 @@
 
 package com.maxsavteam.calculator.resolvers;
 
-import com.maxsavteam.calculator.results.List;
+import com.maxsavteam.calculator.results.NumberList;
 import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
@@ -27,5 +27,5 @@ public interface ListFunctionsResolver {
 	 * @param suffix        Suffix of function (e.g. in expression "sin45" 45 is suffix
 	 * @param argumentsList List of results in brackets of function separated by semicolon  (e.g. "sin(45)" 45 is operand or "sin(45*2)" operand will be 90)
 	 */
-	List resolve(String funcName, @Nullable BigDecimal suffix, List argumentsList);
+	NumberList resolve(String funcName, @Nullable BigDecimal suffix, NumberList argumentsList);
 }
