@@ -431,7 +431,7 @@ public class Calculator {
 			SuffixOperatorNode suffixNode = (SuffixOperatorNode) node;
 			if (TreeBuilder.isNodeEmpty(node.getLeftSonIndex(), nodes))
 				throw new CalculatingException(CalculatingException.NO_OPERAND_FOR_SUFFIX_OPERATOR);
-			return resolveList(calc(node.getLeftSonIndex(), nodes), a -> suffixResolver.resolve(suffixNode.operator, suffixNode.count, a));
+			return resolveList(calc(node.getLeftSonIndex(), nodes), a -> resolveSuffix(suffixNode, a));
 		} else if (node instanceof OperatorNode) {
 			return processOperatorNode(v, nodes);
 		} else if (node instanceof ListNode) {
@@ -458,6 +458,13 @@ public class Calculator {
 		if(resolved == null)
 			throw new CalculatingException(CalculatingException.UNKNOWN_CONSTANT);
 		return resolved;
+	}
+
+	protected BigDecimal resolveSuffix(SuffixOperatorNode node, BigDecimal operand){
+		BigDecimal bigDecimal = suffixResolver.resolve(node.operator, node.count, operand);
+		if(bigDecimal == null)
+			throw new CalculatingException(CalculatingException.UNKNOWN_SUFFIX_OPERATOR);
+		return bigDecimal;
 	}
 
 	protected List processOperatorNode(int v, java.util.List<TreeNode> nodes) {
