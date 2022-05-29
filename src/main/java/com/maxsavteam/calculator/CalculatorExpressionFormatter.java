@@ -117,6 +117,9 @@ public class CalculatorExpressionFormatter {
 				boolean isDigitAfterCloseBracket = mParameters.isInsertMultiplySignBetweenNumberAndCloseBracket() &&
 						isNowCloseBracket && isNextDigit;
 
+				boolean isFunctionAfterCloseBracket = mParameters.isInsertMultiplySignBetweenCloseBracketAndFunctionOrConstant()
+						&& isNowCloseBracket && isNextLetter;
+
 				boolean isSuffixOperatorBeforeDigit = mParameters.isInsertMultiplySignBetweenSuffixOperatorAndDigit() &&
 						isNowSuffixOperator && isNextDigit;
 
@@ -151,6 +154,7 @@ public class CalculatorExpressionFormatter {
 						isDigitBeforeFunction ||
 								isFunctionSuffixBeforeOpenBracket ||
 								isCloseBracketBeforeOpen ||
+								isFunctionAfterCloseBracket ||
 								!isFunctionStarted && (
 										isDigitBeforeOpenBracket ||
 												isDigitAfterCloseBracket ||
@@ -193,6 +197,7 @@ public class CalculatorExpressionFormatter {
 		private final boolean insertMultiplySignBetweenNumberAndFunction;
 		private final boolean insertMultiplySignBetweenNumberAndOpenBracket;
 		private final boolean insertMultiplySignBetweenNumberAndCloseBracket;
+		private final boolean insertMultiplySignBetweenCloseBracketAndFunctionOrConstant;
 		private final boolean insertMultiplySignBetweenSuffixOperatorAndDigit;
 		private final boolean insertMultiplySignBetweenSuffixOperatorAndFunction;
 		private final boolean insertMultiplySignBetweenSuffixOperatorAndOpenBracket;
@@ -205,6 +210,7 @@ public class CalculatorExpressionFormatter {
 		private Parameters(boolean insertMultiplySignBetweenNumberAndFunction,
 		                   boolean insertMultiplySignBetweenNumberAndOpenBracket,
 		                   boolean insertMultiplySignBetweenNumberAndCloseBracket,
+						   boolean insertMultiplySignBetweenCloseBracketAndFunctionOrConstant,
 		                   boolean insertMultiplySignBetweenSuffixOperatorAndDigit,
 		                   boolean insertMultiplySignBetweenSuffixOperatorAndFunction,
 		                   boolean insertMultiplySignBetweenSuffixOperatorAndOpenBracket,
@@ -215,6 +221,7 @@ public class CalculatorExpressionFormatter {
 			this.insertMultiplySignBetweenNumberAndFunction = insertMultiplySignBetweenNumberAndFunction;
 			this.insertMultiplySignBetweenNumberAndOpenBracket = insertMultiplySignBetweenNumberAndOpenBracket;
 			this.insertMultiplySignBetweenNumberAndCloseBracket = insertMultiplySignBetweenNumberAndCloseBracket;
+			this.insertMultiplySignBetweenCloseBracketAndFunctionOrConstant = insertMultiplySignBetweenCloseBracketAndFunctionOrConstant;
 			this.insertMultiplySignBetweenSuffixOperatorAndDigit = insertMultiplySignBetweenSuffixOperatorAndDigit;
 			this.insertMultiplySignBetweenSuffixOperatorAndFunction = insertMultiplySignBetweenSuffixOperatorAndFunction;
 			this.insertMultiplySignBetweenSuffixOperatorAndOpenBracket = insertMultiplySignBetweenSuffixOperatorAndOpenBracket;
@@ -234,6 +241,10 @@ public class CalculatorExpressionFormatter {
 
 		public boolean isInsertMultiplySignBetweenNumberAndCloseBracket() {
 			return insertMultiplySignBetweenNumberAndCloseBracket;
+		}
+
+		public boolean isInsertMultiplySignBetweenCloseBracketAndFunctionOrConstant() {
+			return insertMultiplySignBetweenCloseBracketAndFunctionOrConstant;
 		}
 
 		public boolean isInsertMultiplySignBetweenSuffixOperatorAndDigit() {
@@ -268,6 +279,7 @@ public class CalculatorExpressionFormatter {
 			private boolean insertMultiplySignBetweenNumberAndFunction = true;
 			private boolean insertMultiplySignBetweenNumberAndOpenBracket = true;
 			private boolean insertMultiplySignBetweenNumberAndCloseBracket = true;
+			private boolean insertMultiplySignBetweenCloseBracketAndFunctionOrConstant = true;
 			private boolean insertMultiplySignBetweenSuffixOperatorAndDigit = true;
 			private boolean insertMultiplySignBetweenSuffixOperatorAndFunction = true;
 			private boolean insertMultiplySignBetweenSuffixOperatorAndOpenBracket = true;
@@ -288,6 +300,11 @@ public class CalculatorExpressionFormatter {
 
 			public Builder setInsertMultiplySignBetweenNumberAndCloseBracket(boolean insertMultiplySignBetweenNumberAndCloseBracket) {
 				this.insertMultiplySignBetweenNumberAndCloseBracket = insertMultiplySignBetweenNumberAndCloseBracket;
+				return this;
+			}
+
+			public Builder setInsertMultiplySignBetweenCloseBracketAndFunctionOrConstant(boolean insertMultiplySignBetweenCloseBracketAndFunctionOrConstant) {
+				this.insertMultiplySignBetweenCloseBracketAndFunctionOrConstant = insertMultiplySignBetweenCloseBracketAndFunctionOrConstant;
 				return this;
 			}
 
@@ -331,6 +348,7 @@ public class CalculatorExpressionFormatter {
 						insertMultiplySignBetweenNumberAndFunction,
 						insertMultiplySignBetweenNumberAndOpenBracket,
 						insertMultiplySignBetweenNumberAndCloseBracket,
+						insertMultiplySignBetweenCloseBracketAndFunctionOrConstant,
 						insertMultiplySignBetweenSuffixOperatorAndDigit,
 						insertMultiplySignBetweenSuffixOperatorAndFunction,
 						insertMultiplySignBetweenSuffixOperatorAndOpenBracket,
