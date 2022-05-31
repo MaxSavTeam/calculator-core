@@ -17,6 +17,7 @@
 
 package com.maxsavteam.calculator.tree;
 
+import com.maxsavteam.calculator.Calculator;
 import com.maxsavteam.calculator.exceptions.CalculationException;
 import com.maxsavteam.calculator.exceptions.TreeBuildingException;
 import com.maxsavteam.calculator.tree.nodes.BracketsNode;
@@ -70,23 +71,24 @@ import java.util.Stack;
  */
 public class TreeBuilder {
 
-	public static final List<BracketsType> defaultBrackets = new ArrayList<>() {{
-		add(new BracketsType('(', ')', 1));
-		add(new BracketsType('[', ']', 2)); // round
-		add(new BracketsType('\u23A3', '\u23A6', 3)); // round floor
-		add(new BracketsType('\u23A1', '\u23A4', 4)); // round ceil
-	}};
-	public static final List<BinaryOperator> defaultBinaryOperators = new ArrayList<>() {{
-		add(new BinaryOperator('+', 0));
-		add(new BinaryOperator('-', 0));
-		add(new BinaryOperator('*', 1));
-		add(new BinaryOperator('/', 1));
-		add(new BinaryOperator('^', 2));
-	}};
-	public static final List<SuffixOperator> defaultSuffixOperators = new ArrayList<>() {{
-		add(new SuffixOperator('!'));
-		add(new SuffixOperator('%'));
-	}};
+	public static final List<BracketsType> defaultBrackets = List.of(
+			new BracketsType('(', ')', 1),
+			new BracketsType('[', ']', 2), // round
+			new BracketsType('\u23A3', '\u23A6', 3), // round floor
+			new BracketsType('\u23A1', '\u23A4', 4) // round ceil
+	);
+	public static final List<BinaryOperator> defaultBinaryOperators = List.of(
+			new BinaryOperator('+', 0),
+			new BinaryOperator('-', 0),
+			new BinaryOperator('*', 1),
+			new BinaryOperator('/', 1),
+			new BinaryOperator('^', 2)
+	);
+	public static final List<SuffixOperator> defaultSuffixOperators = List.of(
+			new SuffixOperator('!'),
+			new SuffixOperator('%'),
+			new SuffixOperator(Calculator.DEGREE_SIGN)
+	);
 	public static final TreeNode emptyNode = new TreeNode();
 
 	private ArrayList<TreeNode> treeNodes;
@@ -114,6 +116,7 @@ public class TreeBuilder {
 	 * Sets custom binary operators
 	 */
 	public void setBinaryOperators(List<BinaryOperator> operators) {
+		CalculatorUtils.requireUniqueItems(operators);
 		this.operators = operators;
 	}
 
@@ -121,19 +124,20 @@ public class TreeBuilder {
 	 * Sets custom suffix operators
 	 */
 	public void setSuffixOperators(List<SuffixOperator> suffixOperators) {
+		CalculatorUtils.requireUniqueItems(suffixOperators);
 		this.suffixOperators = suffixOperators;
 	}
 
 	public List<BracketsType> getBrackets() {
-		return brackets;
+		return new ArrayList<>(brackets);
 	}
 
 	public List<BinaryOperator> getOperators() {
-		return operators;
+		return new ArrayList<>(operators);
 	}
 
 	public List<SuffixOperator> getSuffixOperators() {
-		return suffixOperators;
+		return new ArrayList<>(suffixOperators);
 	}
 
 	/**
@@ -246,28 +250,36 @@ public class TreeBuilder {
 		} else {
 			if (CalculatorUtils.isLetter(expression.charAt(0))) {
 				parseFunc(v, expression, exampleOffset, rootLevel);
-			} else if (isSuffixOperator(expression.charAt(expression.length() - 1))) {
-				parseSuffixOperator(v, expression, exampleOffset, rootLevel);
 			} else {
-				try {
-					NumberNode node = new NumberNode(expression);
-					treeNodes.set(v, node);
-				} catch (NumberFormatException e) {
-					throw new CalculationException(CalculationException.NUMBER_FORMAT_EXCEPTION, e);
+				String last = expression.substring(expression.length() - 1);
+				if (isSuffixOperator(last)) {
+					parseSuffixOperator(v, expression, exampleOffset, rootLevel);
+				} else {
+					try {
+						NumberNode node = new NumberNode(expression);
+						treeNodes.set(v, node);
+					} catch (NumberFormatException e) {
+						throw new CalculationException(CalculationException.NUMBER_FORMAT_EXCEPTION, e);
+					}
 				}
 			}
 		}
 	}
 
 	protected void parseSuffixOperator(int v, String ex, int offset, int rootLevel) {
-		char operator = ex.charAt(ex.length() - 1);
+		String operator = ex.substring(ex.length() - 1);
 		int i = ex.length() - 1;
 		int count = 1;
-		while (i >= 1 && ex.charAt(i - 1) == operator) {
+		while (i >= 1 && ex.substring(i - 1, i).equals(operator)) {
 			count++;
 			i--;
 		}
-		SuffixOperatorNode node = new SuffixOperatorNode(operator, count);
+		SuffixOperator suffixOperator = suffixOperators
+				.stream()
+				.filter(o -> o.getSymbol().equals(operator))
+				.findAny()
+				.orElseThrow();
+		SuffixOperatorNode node = new SuffixOperatorNode(suffixOperator, count);
 		node.setLeftSonIndex(nextIndex());
 		treeNodes.set(v, node);
 		build(node.getLeftSonIndex(), ex.substring(0, i), rootLevel, offset);
@@ -286,7 +298,7 @@ public class TreeBuilder {
 				treeNodes.set(v, node);
 				node.setLeftSonIndex(nextIndex());
 				build(node.getLeftSonIndex(), ex.substring(i), rootLevel, offset + i);
-			}else{
+			} else {
 				treeNodes.set(v, new ConstantNode(funcName.toString()));
 			}
 		} else {
@@ -389,9 +401,9 @@ public class TreeBuilder {
 		return false;
 	}
 
-	private boolean isSuffixOperator(char c) {
+	private boolean isSuffixOperator(String s) {
 		for (SuffixOperator operator : suffixOperators) {
-			if (operator.symbol == c)
+			if (operator.getSymbol().equals(s))
 				return true;
 		}
 		return false;

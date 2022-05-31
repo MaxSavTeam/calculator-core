@@ -31,15 +31,15 @@ public class CalculatorExpressionFormatter {
 	public static final Parameters defaultParameters = new Parameters.Builder().build();
 
 	private List<BracketsType> bracketsTypes = TreeBuilder.defaultBrackets;
-	private List<SuffixOperator> mSuffixOperators = TreeBuilder.defaultSuffixOperators;
-	private final Parameters mParameters;
+	private List<SuffixOperator> suffixOperators = TreeBuilder.defaultSuffixOperators;
+	private final Parameters parameters;
 
 	public CalculatorExpressionFormatter() {
 		this(defaultParameters);
 	}
 
 	public CalculatorExpressionFormatter(Parameters parameters) {
-		mParameters = parameters;
+		this.parameters = parameters;
 	}
 
 	public void setBracketsTypes(List<BracketsType> bracketsTypes) {
@@ -47,7 +47,7 @@ public class CalculatorExpressionFormatter {
 	}
 
 	public void setSuffixOperators(List<SuffixOperator> suffixOperators) {
-		mSuffixOperators = suffixOperators;
+		this.suffixOperators = suffixOperators;
 	}
 
 	public String removeSpaces(String expression){
@@ -95,7 +95,8 @@ public class CalculatorExpressionFormatter {
 		StringBuilder sb = new StringBuilder();
 		boolean isFunctionStarted = false;
 		for (int i = 0; i < expression.length(); i++) {
-			char c = expression.charAt(i);
+			String current = expression.substring(i, i + 1);
+			char c = current.charAt(0);
 			sb.append(c);
 			if (CalculatorUtils.isLetter(c))
 				isFunctionStarted = true;
@@ -108,41 +109,41 @@ public class CalculatorExpressionFormatter {
 				boolean isNextDigit = CalculatorUtils.isDigit(next);
 				boolean isNextOpenBracket = findOpenBracket(next) != -1;
 				boolean isNowCloseBracket = findCloseBracket(c) != -1;
-				boolean isNowSuffixOperator = isSuffixOperator(c);
+				boolean isNowSuffixOperator = isSuffixOperator(current);
 				boolean isNextLetter = CalculatorUtils.isLetter(next);
 
-				boolean isDigitBeforeOpenBracket = mParameters.isInsertMultiplySignBetweenNumberAndOpenBracket() &&
+				boolean isDigitBeforeOpenBracket = parameters.isInsertMultiplySignBetweenNumberAndOpenBracket() &&
 						isNowDigit && isNextOpenBracket;
 
-				boolean isDigitAfterCloseBracket = mParameters.isInsertMultiplySignBetweenNumberAndCloseBracket() &&
+				boolean isDigitAfterCloseBracket = parameters.isInsertMultiplySignBetweenNumberAndCloseBracket() &&
 						isNowCloseBracket && isNextDigit;
 
-				boolean isFunctionAfterCloseBracket = mParameters.isInsertMultiplySignBetweenCloseBracketAndFunctionOrConstant()
+				boolean isFunctionAfterCloseBracket = parameters.isInsertMultiplySignBetweenCloseBracketAndFunctionOrConstant()
 						&& isNowCloseBracket && isNextLetter;
 
-				boolean isSuffixOperatorBeforeDigit = mParameters.isInsertMultiplySignBetweenSuffixOperatorAndDigit() &&
+				boolean isSuffixOperatorBeforeDigit = parameters.isInsertMultiplySignBetweenSuffixOperatorAndDigit() &&
 						isNowSuffixOperator && isNextDigit;
 
-				boolean isSuffixOperatorBeforeOpenBracket = mParameters.isInsertMultiplySignBetweenSuffixOperatorAndOpenBracket() &&
+				boolean isSuffixOperatorBeforeOpenBracket = parameters.isInsertMultiplySignBetweenSuffixOperatorAndOpenBracket() &&
 						isNowSuffixOperator && isNextOpenBracket;
 
-				boolean isSuffixOperatorBeforeFunction = mParameters.isInsertMultiplySignBetweenSuffixOperatorAndFunction() &&
+				boolean isSuffixOperatorBeforeFunction = parameters.isInsertMultiplySignBetweenSuffixOperatorAndFunction() &&
 						isNowSuffixOperator && isNextLetter;
 
-				boolean isFunctionSuffixBeforeOpenBracket = mParameters.isInsertMultiplySignBetweenFunctionSuffixAndOpenBracket() &&
+				boolean isFunctionSuffixBeforeOpenBracket = parameters.isInsertMultiplySignBetweenFunctionSuffixAndOpenBracket() &&
 						isNowDigit && isNextOpenBracket &&
 						isFunctionStarted;
 
-				boolean isDigitBeforeFunction = mParameters.isInsertMultiplySignBetweenNumberAndFunction() &&
+				boolean isDigitBeforeFunction = parameters.isInsertMultiplySignBetweenNumberAndFunction() &&
 						isNowDigit && isNextLetter;
 
-				boolean isCloseBracketBeforeOpen = mParameters.isInsertMultiplySignBetweenCloseAndOpenBrackets() &&
+				boolean isCloseBracketBeforeOpen = parameters.isInsertMultiplySignBetweenCloseAndOpenBrackets() &&
 						isNowCloseBracket && isNextOpenBracket;
 
-				boolean isCloseBracketBeforeDot = mParameters.isInsertZeroBetweenCloseBracketAndDot() &&
+				boolean isCloseBracketBeforeDot = parameters.isInsertZeroBetweenCloseBracketAndDot() &&
 						isNowCloseBracket && next == '.';
 
-				boolean isNonDigitBeforeDot = mParameters.isInsertZeroBetweenNonDigitAndDot() &&
+				boolean isNonDigitBeforeDot = parameters.isInsertZeroBetweenNonDigitAndDot() &&
 						!isNowDigit && next == '.';
 
 				if (isCloseBracketBeforeDot)
@@ -186,9 +187,9 @@ public class CalculatorExpressionFormatter {
 		return -1;
 	}
 
-	private boolean isSuffixOperator(char c) {
-		for (SuffixOperator operator : mSuffixOperators)
-			if (operator.symbol == c)
+	private boolean isSuffixOperator(String s) {
+		for (SuffixOperator operator : suffixOperators)
+			if (operator.getSymbol().equals(s))
 				return true;
 		return false;
 	}

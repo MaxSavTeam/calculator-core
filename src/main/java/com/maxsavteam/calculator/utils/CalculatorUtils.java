@@ -18,8 +18,14 @@
 package com.maxsavteam.calculator.utils;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class CalculatorUtils {
+
+	public static <T> void requireUniqueItems(List<T> list){
+		if(list.stream().distinct().count() != list.size())
+			throw new IllegalArgumentException("List contains identical items");
+	}
 
 	public static String removeZeros(String s) {
 		String res = s;

@@ -26,4 +26,19 @@ public class BinaryOperator {
 		this.symbol = symbol;
 		this.priority = priority;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		BinaryOperator that = (BinaryOperator) o;
+
+		return symbol == that.symbol;
+	}
+
+	@Override
+	public int hashCode() {
+		return symbol;
+	}
 }

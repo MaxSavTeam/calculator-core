@@ -17,11 +17,38 @@
 
 package com.maxsavteam.calculator.tree;
 
+import java.util.Objects;
+
 public class SuffixOperator {
 
-	public final char symbol;
+	private final String symbol;
 
 	public SuffixOperator(char symbol) {
+		this(String.valueOf(symbol));
+	}
+
+	public SuffixOperator(String symbol){
+		if(symbol.length() != 1)
+			throw new IllegalArgumentException("Suffix operator must 1 character long");
 		this.symbol = symbol;
+	}
+
+	public String getSymbol() {
+		return symbol;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		SuffixOperator that = (SuffixOperator) o;
+
+		return Objects.equals(symbol, that.symbol);
+	}
+
+	@Override
+	public int hashCode() {
+		return symbol != null ? symbol.hashCode() : 0;
 	}
 }

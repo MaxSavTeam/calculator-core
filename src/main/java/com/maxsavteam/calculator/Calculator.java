@@ -58,6 +58,7 @@ public class Calculator {
 	public static final String PI_SIGN = "\u03C0";
 	public static final String FI_SIGN = "\u03C6";
 	public static final String E_SIGN = "\u0190";
+	public static final String DEGREE_SIGN = "\u00B0";
 
 	public static final String VERSION = "2.5.0";
 
@@ -278,10 +279,18 @@ public class Calculator {
 	};
 
 	public static final SuffixOperatorResolver defaultSuffixResolver = (operator, count, operand) -> {
-		if (operator == '!')
-			return MathUtils.fact(operand, count);
-		else if (operator == '%')
-			return operand.divide(MathUtils.pow(BigDecimal.valueOf(100), BigDecimal.valueOf(count)), roundScale, RoundingMode.HALF_EVEN);
+		String symbol = operator.getSymbol();
+		switch (symbol) {
+			case "!":
+				return MathUtils.fact(operand, count);
+			case "%":
+				return operand.divide(MathUtils.pow(BigDecimal.valueOf(100), BigDecimal.valueOf(count)), roundScale, RoundingMode.HALF_EVEN);
+			case DEGREE_SIGN:
+				BigDecimal degrees = operand;
+				for(int i = 0; i < count; i++)
+					degrees = MathUtils.toRadians(degrees);
+				return degrees;
+		}
 		throw new CalculationException(CalculationException.UNKNOWN_SUFFIX_OPERATOR);
 	};
 
@@ -468,7 +477,7 @@ public class Calculator {
 	}
 
 	protected BigDecimal resolveSuffix(SuffixOperatorNode node, BigDecimal operand){
-		BigDecimal bigDecimal = suffixResolver.resolve(node.operator, node.count, operand);
+		BigDecimal bigDecimal = suffixResolver.resolve(node.getOperator(), node.getCount(), operand);
 		if(bigDecimal == null)
 			throw new CalculationException(CalculationException.UNKNOWN_SUFFIX_OPERATOR);
 		return bigDecimal;
@@ -488,7 +497,7 @@ public class Calculator {
 		TreeNode rightNode = nodes.get(node.getRightSonIndex());
 		if (rightNode instanceof SuffixOperatorNode) {
 			SuffixOperatorNode suffix = (SuffixOperatorNode) rightNode;
-			if (suffix.operator == '%') {
+			if (suffix.getOperator().getSymbol().equals("%")) {
 				if (r1.isSingleNumber()) { // 10-(25;50;100)%
 					BigDecimal rb = r1.getSingleNumberIfTrue();
 					return resolveList(r2, a -> resolver.calculatePercent(symbol, rb, a));

@@ -17,14 +17,23 @@
 
 package com.maxsavteam.calculator.tree.nodes;
 
+import com.maxsavteam.calculator.tree.SuffixOperator;
+
 public class SuffixOperatorNode extends TreeNode {
 
-	public final char operator;
-	public final int count;
+	private final SuffixOperator operator;
+	private final int count;
 
-	public SuffixOperatorNode(char operator, int count) {
+	public SuffixOperatorNode(SuffixOperator operator, int count) {
 		this.operator = operator;
 		this.count = count;
 	}
 
+	public SuffixOperator getOperator() {
+		return operator;
+	}
+
+	public int getCount() {
+		return count;
+	}
 }

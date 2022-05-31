@@ -17,7 +17,7 @@
 
 package com.maxsavteam.calculator.resolvers;
 
-import org.jetbrains.annotations.NotNull;
+import com.maxsavteam.calculator.tree.SuffixOperator;
 
 import java.math.BigDecimal;
 
@@ -25,5 +25,5 @@ import java.math.BigDecimal;
  * Resolver for suffix operators (e.g. % (percent), ! (factorial))
  */
 public interface SuffixOperatorResolver {
-	BigDecimal resolve(char operator, int count, BigDecimal operand);
+	BigDecimal resolve(SuffixOperator operator, int count, BigDecimal operand);
 }
