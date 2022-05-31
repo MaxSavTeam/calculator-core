@@ -9,16 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="fix: update module-info.java">
+    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="feat: add degree suffix operator (°)">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/AngleUnit.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/Calculator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/CalculatorExpressionFormatter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/CalculatorExpressionFormatter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/resolvers/SuffixOperatorResolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/resolvers/SuffixOperatorResolver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/BinaryOperator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/BinaryOperator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/SuffixOperator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/SuffixOperator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/TreeBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/TreeBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/nodes/SuffixOperatorNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/nodes/SuffixOperatorNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/utils/CalculatorUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/utils/CalculatorUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,8 +51,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="module-info" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -296,14 +290,7 @@
       <workItem from="1653834235602" duration="1928000" />
       <workItem from="1653913405883" duration="1184000" />
       <workItem from="1653937807074" duration="754000" />
-      <workItem from="1653997497721" duration="3408000" />
-    </task>
-    <task id="LOCAL-00087" summary="feat: add arcsin, arccos, arctan, cotan, arccotan">
-      <created>1634310963316</created>
-      <option name="number" value="00087" />
-      <option name="presentableId" value="LOCAL-00087" />
-      <option name="project" value="LOCAL" />
-      <updated>1634310963316</updated>
+      <workItem from="1653997497721" duration="6907000" />
     </task>
     <task id="LOCAL-00088" summary="build: change version to 1.8.0">
       <created>1634313884590</created>
@@ -641,7 +628,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653940165947</updated>
     </task>
-    <option name="localTasksCounter" value="136" />
+    <task id="LOCAL-00136" summary="feat: add degree suffix operator (°)">
+      <created>1654002515799</created>
+      <option name="number" value="00136" />
+      <option name="presentableId" value="LOCAL-00136" />
+      <option name="project" value="LOCAL" />
+      <updated>1654002515800</updated>
+    </task>
+    <option name="localTasksCounter" value="137" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -702,7 +696,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="build: change version to 2.1.0" />
     <MESSAGE value="chore: fix publishing" />
     <MESSAGE value="fix: fix IllegalStateException when calculating asin and acos" />
     <MESSAGE value="refactor: rename ListResult to List&#10;&#10;BREAKING CHANGE" />
@@ -727,7 +720,8 @@
     <MESSAGE value="feat: add 'insertMultiplySignBetweenCloseBracketAndFunctionOrConstant' flag to CalculatorExpressionFormatter" />
     <MESSAGE value="build: change version to 2.5.0" />
     <MESSAGE value="fix: update module-info.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: update module-info.java" />
+    <MESSAGE value="feat: add degree suffix operator (°)" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add degree suffix operator (°)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -738,7 +732,7 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/Calculator.java</url>
-          <line>403</line>
+          <line>404</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
