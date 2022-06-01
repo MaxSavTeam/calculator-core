@@ -44,6 +44,7 @@ public class CalculationException extends RuntimeException {
 			"Too few arguments",
 			"Unknown constant",
 			"Invalid asin or acos value",
+			"Invalid value for tangent or cotangent"
 	};
 	public static final int INVALID_BINARY_OPERATOR = 0;
 	public static final int NEGATIVE_PARAMETER_OF_LOG = 1;
@@ -69,6 +70,7 @@ public class CalculationException extends RuntimeException {
 	public static final int TOO_FEW_ARGUMENTS = 21;
 	public static final int UNKNOWN_CONSTANT = 22;
 	public static final int INVALID_ASIN_ACOS_VALUE = 23;
+	public static final int INVALID_VALUE_FOR_TANGENT_OR_COTANGENT = 24;
 
 	private final int errorCode;
 
