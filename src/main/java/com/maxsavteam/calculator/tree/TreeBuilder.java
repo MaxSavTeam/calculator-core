@@ -87,7 +87,8 @@ public class TreeBuilder {
 	public static final List<SuffixOperator> defaultSuffixOperators = List.of(
 			new SuffixOperator('!'),
 			new SuffixOperator('%'),
-			new SuffixOperator(Calculator.DEGREE_SIGN)
+			new SuffixOperator(Calculator.DEGREE_SIGN),
+			new SuffixOperator(Calculator.GRAD_SIGN)
 	);
 	public static final TreeNode emptyNode = new TreeNode();
 

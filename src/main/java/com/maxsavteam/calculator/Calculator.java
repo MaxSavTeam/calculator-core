@@ -59,6 +59,7 @@ public class Calculator {
 	public static final String FI_SIGN = "\u03C6";
 	public static final String E_SIGN = "\u0190";
 	public static final String DEGREE_SIGN = "\u00B0";
+	public static final String GRAD_SIGN = "\u1DA2";
 
 	public static final String VERSION = "2.5.0";
 
@@ -284,12 +285,17 @@ public class Calculator {
 			case "!":
 				return MathUtils.fact(operand, count);
 			case "%":
-				return operand.divide(MathUtils.pow(BigDecimal.valueOf(100), BigDecimal.valueOf(count)), roundScale, RoundingMode.HALF_EVEN);
+				return operand.multiply(MathUtils.pow(BigDecimal.valueOf(0.01), BigDecimal.valueOf(count)));
 			case DEGREE_SIGN:
 				BigDecimal degrees = operand;
 				for(int i = 0; i < count; i++)
-					degrees = MathUtils.toRadians(degrees);
+					degrees = AngleUnit.degrees(degrees).toRadians();
 				return degrees;
+			case GRAD_SIGN:
+				BigDecimal grads = operand;
+				for(int i = 0; i < count; i++)
+					grads = AngleUnit.gradians(grads).toRadians();
+				return grads;
 		}
 		throw new CalculationException(CalculationException.UNKNOWN_SUFFIX_OPERATOR);
 	};
