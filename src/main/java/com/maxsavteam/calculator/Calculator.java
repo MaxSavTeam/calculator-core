@@ -61,8 +61,6 @@ public class Calculator {
 	public static final String DEGREE_SIGN = "\u00B0";
 	public static final String GRAD_SIGN = "\u1DA2";
 
-	public static final String VERSION = "3.0.0-beta2";
-
 	private final TreeBuilder builder;
 	private final CalculatorExpressionTokenizer expressionTokenizer;
 	private final CalculatorExpressionFormatter expressionFormatter;
