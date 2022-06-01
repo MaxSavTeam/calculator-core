@@ -110,8 +110,6 @@ public class MathUtils {
 	}
 
 	public static BigDecimal tan(BigDecimal x) {
-		if (x.compareTo(BigDecimal.valueOf(90)) == 0)
-			throw new CalculationException(CalculationException.TAN_OF_90);
 		return BigDecimalMath.tan(x, new MathContext(HIGH_ROUND_SCALE));
 	}
 
