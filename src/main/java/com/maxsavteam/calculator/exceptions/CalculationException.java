@@ -17,38 +17,14 @@
 
 package com.maxsavteam.calculator.exceptions;
 
+import java.util.Map;
+
+import static java.util.Map.entry;
+
 public class CalculationException extends RuntimeException {
 
-	public static final String[] messages = new String[]{
-			"Binary operator does not have left or right operand or both",
-			"Unable to find logarithm of negative number or of zero",
-			"Impossible to find tan of 90",
-			"Unable to find root of even degree of negative number",
-			"Not a number",
-			"Undefined",
-			"Division by zero",
-			"Invalid operator for percent",
-			"Function suffix and operand are both null",
-			"Unknown function",
-			"Unknown bracket type",
-			"Unknown suffix operator",
-			"No operand for suffix operator",
-			"Requested empty node",
-			"Invalid brackets sequence",
-			"Factorial limit exceeded",
-			"Average function has no arguments",
-			"Number format exception",
-			"Functions operands cannot be lists",
-			"Binary operators cannot be applied to lists",
-			"Operators or functions cannot be applied to list of lists",
-			"Too few arguments",
-			"Unknown constant",
-			"Invalid asin or acos value",
-			"Invalid value for tangent or cotangent"
-	};
 	public static final int INVALID_BINARY_OPERATOR = 0;
 	public static final int NEGATIVE_PARAMETER_OF_LOG = 1;
-	public static final int TAN_OF_90 = 2;
 	public static final int ROOT_OF_EVEN_DEGREE_OF_NEGATIVE_NUMBER = 3;
 	public static final int NAN = 4;
 	public static final int UNDEFINED = 5;
@@ -72,6 +48,33 @@ public class CalculationException extends RuntimeException {
 	public static final int INVALID_ASIN_ACOS_VALUE = 23;
 	public static final int INVALID_VALUE_FOR_TANGENT_OR_COTANGENT = 24;
 
+	private static final Map<Integer, String> messagesMap = Map.ofEntries(
+			entry(INVALID_BINARY_OPERATOR, "Binary operator does not have left or right operand or both"),
+			entry(NEGATIVE_PARAMETER_OF_LOG, "Unable to find logarithm of negative number or of zero"),
+			entry(ROOT_OF_EVEN_DEGREE_OF_NEGATIVE_NUMBER, "Unable to find root of even degree of negative number"),
+			entry(NAN, "Not a number"),
+			entry(UNDEFINED, "Undefined"),
+			entry(DIVISION_BY_ZERO, "Division by zero"),
+			entry(INVALID_OPERATOR_FOR_PERCENT, "Invalid operator for percent"),
+			entry(FUNCTION_SUFFIX_AND_OPERAND_NULL, "Function suffix and operand are both null"),
+			entry(UNKNOWN_FUNCTION, "Unknown function"),
+			entry(UNKNOWN_BRACKET_TYPE, "Unknown bracket type"),
+			entry(UNKNOWN_SUFFIX_OPERATOR, "Unknown suffix operator"),
+			entry(NO_OPERAND_FOR_SUFFIX_OPERATOR, "No operand for suffix operator"),
+			entry(REQUESTED_EMPTY_NODE, "Requested empty node"),
+			entry(INVALID_BRACKETS_SEQUENCE, "Invalid brackets sequence"),
+			entry(FACTORIAL_LIMIT_EXCEEDED, "Factorial limit exceeded"),
+			entry(AVERAGE_FUNCTION_HAS_NO_ARGUMENTS, "Average function has no arguments"),
+			entry(NUMBER_FORMAT_EXCEPTION, "Number format exception"),
+			entry(FUNCTIONS_OPERANDS_CANNOT_BE_LISTS, "Functions operands cannot be lists"),
+			entry(BINARY_OPERATOR_CANNOT_BE_APPLIED_TO_LISTS, "Binary operators cannot be applied to lists"),
+			entry(OPERATOR_OR_FUNCTION_CANNOT_BE_APPLIED_TO_LIST_OF_LISTS, "Operators or functions cannot be applied to list of lists"),
+			entry(TOO_FEW_ARGUMENTS, "Too few arguments"),
+			entry(UNKNOWN_CONSTANT, "Unknown constant"),
+			entry(INVALID_ASIN_ACOS_VALUE, "Invalid asin or acos value"),
+			entry(INVALID_VALUE_FOR_TANGENT_OR_COTANGENT, "Invalid value for tangent or cotangent")
+	);
+
 	private final int errorCode;
 
 	private final String additionalMessage;
@@ -84,9 +87,9 @@ public class CalculationException extends RuntimeException {
 	public String getMessage() {
 		if (errorCode == NUMBER_FORMAT_EXCEPTION)
 			return "NumberFormatException: " + getCause().getMessage();
-		if (errorCode >= 0 && errorCode < messages.length)
-			return messages[errorCode] + (additionalMessage == null ? "" : ": " + additionalMessage);
-		return "";
+		if (messagesMap.containsKey(errorCode))
+			return messagesMap.get(errorCode) + (additionalMessage == null ? "" : ": " + additionalMessage);
+		return additionalMessage;
 	}
 
 	public CalculationException(int error, String message) {
