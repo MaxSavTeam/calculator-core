@@ -31,7 +31,6 @@ import com.maxsavteam.calculator.tree.nodes.SuffixOperatorNode;
 import com.maxsavteam.calculator.tree.nodes.TreeNode;
 import com.maxsavteam.calculator.utils.CalculatorUtils;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -295,7 +294,7 @@ public class TreeBuilder {
 		}
 		if (i == ex.length() || !CalculatorUtils.isDigit(ex.charAt(i))) {
 			if (i != ex.length() && !CalculatorUtils.isDigit(ex.charAt(i))) {
-				FunctionNode node = new FunctionNode(funcName.toString(), null);
+				FunctionNode node = new FunctionNode(funcName.toString(), -1);
 				treeNodes.set(v, node);
 				node.setLeftSonIndex(nextIndex());
 				build(node.getLeftSonIndex(), ex.substring(i), rootLevel, offset + i);
@@ -303,13 +302,18 @@ public class TreeBuilder {
 				treeNodes.set(v, new ConstantNode(funcName.toString()));
 			}
 		} else {
-			StringBuilder suffix = new StringBuilder();
-			while (i < ex.length() && (CalculatorUtils.isDigit(ex.charAt(i)) || ex.charAt(i) == '.')) {
-				suffix.append(ex.charAt(i));
+			// sin2! should be recognized as sin(2!), sin30° => sin(30°), that is why suffixes should be evaluated
+			int suffixStartIndex = i;
+			while(i < ex.length()){
+				String character = ex.substring(i, i + 1);
+				if (!CalculatorUtils.isDigit(ex.charAt(i)) && ex.charAt(i) != '.' && !isSuffixOperator(character)) {
+					break;
+				}
 				i++;
 			}
-			BigDecimal a = new BigDecimal(suffix.toString());
-			FunctionNode node = new FunctionNode(funcName.toString(), a);
+			int suffixNodeIndex = nextIndex();
+			build(suffixNodeIndex, ex.substring(suffixStartIndex, i), rootLevel, offset + suffixStartIndex);
+			FunctionNode node = new FunctionNode(funcName.toString(), suffixNodeIndex);
 			treeNodes.set(v, node);
 			if (i < ex.length()) {
 				node.setLeftSonIndex(nextIndex());

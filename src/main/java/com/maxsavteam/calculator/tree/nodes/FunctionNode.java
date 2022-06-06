@@ -17,18 +17,22 @@
 
 package com.maxsavteam.calculator.tree.nodes;
 
-import org.jetbrains.annotations.Nullable;
-
-import java.math.BigDecimal;
-
 public class FunctionNode extends TreeNode {
 
-	public final String funcName;
-	@Nullable
-	public final BigDecimal suffix;
+	private final String functionName;
 
-	public FunctionNode(String funcName, @Nullable BigDecimal suffix) {
-		this.funcName = funcName;
-		this.suffix = suffix;
+	private final int suffixNodeIndex;
+
+	public FunctionNode(String functionName, int suffixNodeIndex) {
+		this.functionName = functionName;
+		this.suffixNodeIndex = suffixNodeIndex;
+	}
+
+	public String getFunctionName() {
+		return functionName;
+	}
+
+	public int getSuffixNodeIndex() {
+		return suffixNodeIndex;
 	}
 }

@@ -521,28 +521,42 @@ public class Calculator {
 		}
 	}
 
-	protected NumberList processFunction(int v, java.util.List<TreeNode> nodes) {
+	protected NumberList processFunction(int v, List<TreeNode> nodes) {
 		FunctionNode functionNode = (FunctionNode) nodes.get(v);
 		NumberList r = null;
 		if (!TreeBuilder.isNodeEmpty(functionNode.getLeftSonIndex(), nodes)) {
 			r = calc(functionNode.getLeftSonIndex(), nodes);
 		}
 		if (r == null) {
-			return NumberList.of(resolveSingleArgumentList(functionNode, null));
+			return NumberList.of(resolveSingleArgumentList(functionNode, null, nodes));
 		} else if (r.isSingleNumber()) {
-			return NumberList.of(resolveSingleArgumentList(functionNode, r.getSingleNumberIfTrue()));
+			return NumberList.of(resolveSingleArgumentList(functionNode, r.getSingleNumberIfTrue(), nodes));
 		}
-		NumberList resolved = listFunctionsResolver.resolve(functionNode.funcName, functionNode.suffix, r);
+		BigDecimal suffix = resolveFunctionSuffix(functionNode, nodes);
+		NumberList resolved = listFunctionsResolver.resolve(functionNode.getFunctionName(), suffix, r);
 		if(resolved == null)
 			throw new CalculationException(CalculationException.UNKNOWN_FUNCTION);
 		return resolved;
 	}
 
-	private BigDecimal resolveSingleArgumentList(FunctionNode functionNode, BigDecimal argument){
-		BigDecimal bigDecimal = functionsResolver.resolve(functionNode.funcName, functionNode.suffix, argument);
+	private BigDecimal resolveSingleArgumentList(FunctionNode functionNode, BigDecimal argument, List<TreeNode> nodes){
+		BigDecimal suffix = resolveFunctionSuffix(functionNode, nodes);
+		BigDecimal bigDecimal = functionsResolver.resolve(functionNode.getFunctionName(), suffix, argument);
 		if(bigDecimal == null)
 			throw new CalculationException(CalculationException.UNKNOWN_FUNCTION);
 		return bigDecimal;
+	}
+
+	private BigDecimal resolveFunctionSuffix(FunctionNode functionNode, List<TreeNode> nodes){
+		int suffixNodeIndex = functionNode.getSuffixNodeIndex();
+		BigDecimal suffix = null;
+		if(!TreeBuilder.isNodeEmpty(suffixNodeIndex, nodes)){
+			NumberList result = calc(suffixNodeIndex, nodes);
+			if(!result.isSingleNumber())
+				throw new CalculationException(CalculationException.SUFFIX_CANNOT_BE_LIST);
+			suffix = result.getSingleNumberIfTrue();
+		}
+		return suffix;
 	}
 
 }
