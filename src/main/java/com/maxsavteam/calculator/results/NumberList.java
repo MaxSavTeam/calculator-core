@@ -68,7 +68,7 @@ public class NumberList extends BaseResult {
 					sb.append(bd);
 			}
 			if (i != mResults.size() - 1)
-				sb.append(";");
+				sb.append("; ");
 		}
 		sb.append(")");
 		return sb.toString();
