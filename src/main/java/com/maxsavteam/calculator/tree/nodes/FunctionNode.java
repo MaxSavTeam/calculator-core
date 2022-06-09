@@ -21,18 +21,18 @@ public class FunctionNode extends TreeNode {
 
 	private final String functionName;
 
-	private final int suffixNodeIndex;
+	private final TreeNode suffixNode;
 
-	public FunctionNode(String functionName, int suffixNodeIndex) {
+	public FunctionNode(String functionName, TreeNode suffixNode) {
 		this.functionName = functionName;
-		this.suffixNodeIndex = suffixNodeIndex;
+		this.suffixNode = suffixNode;
 	}
 
 	public String getFunctionName() {
 		return functionName;
 	}
 
-	public int getSuffixNodeIndex() {
-		return suffixNodeIndex;
+	public TreeNode getSuffixNode() {
+		return suffixNode;
 	}
 }

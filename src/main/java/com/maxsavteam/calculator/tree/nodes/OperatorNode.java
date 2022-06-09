@@ -19,6 +19,8 @@ package com.maxsavteam.calculator.tree.nodes;
 
 public class OperatorNode extends TreeNode {
 
+	private TreeNode secondChild;
+
 	private final char symbol;
 
 	public OperatorNode(char symbol) {
@@ -27,5 +29,13 @@ public class OperatorNode extends TreeNode {
 
 	public char getOperator() {
 		return symbol;
+	}
+
+	public TreeNode getSecondChild() {
+		return secondChild;
+	}
+
+	public void setSecondChild(TreeNode secondChild) {
+		this.secondChild = secondChild;
 	}
 }

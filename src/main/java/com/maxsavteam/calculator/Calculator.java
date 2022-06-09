@@ -89,10 +89,10 @@ public class Calculator {
 				if (b.signum() == 0)
 					throw new CalculationException(CalculationException.DIVISION_BY_ZERO);
 				else
-					return CalculatorUtils.removeZeros(a.divide(b, roundScale, RoundingMode.HALF_EVEN));
+					return a.divide(b, roundScale, RoundingMode.HALF_EVEN);
 			}
 			if (operator == '^')
-				return CalculatorUtils.removeZeros(MathUtils.pow(a, b));
+				return MathUtils.pow(a, b);
 			throw new CalculationException(CalculationException.INVALID_BINARY_OPERATOR);
 		}
 
@@ -402,11 +402,11 @@ public class Calculator {
 	}
 
 	/**
-	 * Calculates answer of expression
+	 * Calculates answer of expression+
 	 */
 	public NumberList calculate(String expression) {
-		List<TreeNode> nodes = builder.buildTree(formatExpression(expression));
-		NumberList r = calc(0, nodes);
+		TreeNode head = builder.buildTree(formatExpression(expression));
+		NumberList r = calc(head);
 		return formatAnswer(r);
 	}
 
@@ -434,31 +434,29 @@ public class Calculator {
 		}
 	}
 
-	private NumberList calc(int v, List<TreeNode> nodes) {
-		TreeNode node = nodes.get(v);
-
+	private NumberList calc(TreeNode node) {
 		if (node instanceof BracketsNode) {
-			NumberList r = calc(node.getLeftSonIndex(), nodes);
+			NumberList r = calc(node.getFirstChild());
 			int type = ((BracketsNode) node).getType();
 			return resolveList(r, a -> bracketsResolver.resolve(type, a));
 		} else if (node instanceof NumberNode) {
 			return NumberList.of(parseDecimal(((NumberNode) node).getNumber()));
 		} else if (node instanceof NegativeNumberNode) {
-			return NegativeNumberNode.apply(calc(node.getLeftSonIndex(), nodes));
+			return NegativeNumberNode.apply(calc(node.getFirstChild()));
 		} else if (node instanceof FunctionNode) {
-			return processFunction(v, nodes);
+			return processFunction((FunctionNode) node);
 		} else if (node instanceof SuffixOperatorNode) {
 			SuffixOperatorNode suffixNode = (SuffixOperatorNode) node;
-			if (TreeBuilder.isNodeEmpty(node.getLeftSonIndex(), nodes))
+			if (suffixNode.getFirstChild() == null)
 				throw new CalculationException(CalculationException.NO_OPERAND_FOR_SUFFIX_OPERATOR);
-			return resolveList(calc(node.getLeftSonIndex(), nodes), a -> resolveSuffix(suffixNode, a));
+			return resolveList(calc(node.getFirstChild()), a -> resolveSuffix(suffixNode, a));
 		} else if (node instanceof OperatorNode) {
-			return processOperatorNode(v, nodes);
+			return processOperatorNode((OperatorNode) node);
 		} else if (node instanceof ListNode) {
 			ListNode listNode = (ListNode) node;
 			ArrayList<BaseResult> results = new ArrayList<>();
 			for (TreeNode treeNode : listNode.getNodes()) {
-				NumberList r = calc(treeNode.getLeftSonIndex(), nodes);
+				NumberList r = calc(treeNode);
 				if (r.isSingleNumber()) {
 					results.add(new Number(r.getSingleNumberIfTrue()));
 				} else {
@@ -487,18 +485,17 @@ public class Calculator {
 		return bigDecimal;
 	}
 
-	protected NumberList processOperatorNode(int v, java.util.List<TreeNode> nodes) {
-		TreeNode node = nodes.get(v);
-		char symbol = ((OperatorNode) node).getOperator();
-		if (TreeBuilder.isNodeEmpty(node.getLeftSonIndex(), nodes) || TreeBuilder.isNodeEmpty(node.getRightSonIndex(), nodes))
+	protected NumberList processOperatorNode(OperatorNode node) {
+		char symbol = node.getOperator();
+		if (node.getFirstChild() == null || node.getSecondChild() == null)
 			throw new CalculationException(CalculationException.INVALID_BINARY_OPERATOR);
 
-		NumberList r1 = calc(node.getLeftSonIndex(), nodes);
-		NumberList r2 = calc(node.getRightSonIndex(), nodes);
+		NumberList r1 = calc(node.getFirstChild());
+		NumberList r2 = calc(node.getSecondChild());
 		if (!r1.isSingleNumber() && !r2.isSingleNumber())
 			throw new CalculationException(CalculationException.BINARY_OPERATOR_CANNOT_BE_APPLIED_TO_LISTS);
 
-		TreeNode rightNode = nodes.get(node.getRightSonIndex());
+		TreeNode rightNode = node.getSecondChild();
 		if (rightNode instanceof SuffixOperatorNode) {
 			SuffixOperatorNode suffix = (SuffixOperatorNode) rightNode;
 			if (suffix.getOperator().getSymbol().equals("%")) {
@@ -521,37 +518,36 @@ public class Calculator {
 		}
 	}
 
-	protected NumberList processFunction(int v, List<TreeNode> nodes) {
-		FunctionNode functionNode = (FunctionNode) nodes.get(v);
+	protected NumberList processFunction(FunctionNode functionNode) {
 		NumberList r = null;
-		if (!TreeBuilder.isNodeEmpty(functionNode.getLeftSonIndex(), nodes)) {
-			r = calc(functionNode.getLeftSonIndex(), nodes);
+		if (functionNode.getFirstChild() != null) {
+			r = calc(functionNode.getFirstChild());
 		}
 		if (r == null) {
-			return NumberList.of(resolveSingleArgumentList(functionNode, null, nodes));
+			return NumberList.of(resolveSingleArgumentList(functionNode, null));
 		} else if (r.isSingleNumber()) {
-			return NumberList.of(resolveSingleArgumentList(functionNode, r.getSingleNumberIfTrue(), nodes));
+			return NumberList.of(resolveSingleArgumentList(functionNode, r.getSingleNumberIfTrue()));
 		}
-		BigDecimal suffix = resolveFunctionSuffix(functionNode, nodes);
+		BigDecimal suffix = resolveFunctionSuffix(functionNode);
 		NumberList resolved = listFunctionsResolver.resolve(functionNode.getFunctionName(), suffix, r);
 		if(resolved == null)
 			throw new CalculationException(CalculationException.UNKNOWN_FUNCTION);
 		return resolved;
 	}
 
-	private BigDecimal resolveSingleArgumentList(FunctionNode functionNode, BigDecimal argument, List<TreeNode> nodes){
-		BigDecimal suffix = resolveFunctionSuffix(functionNode, nodes);
+	private BigDecimal resolveSingleArgumentList(FunctionNode functionNode, BigDecimal argument){
+		BigDecimal suffix = resolveFunctionSuffix(functionNode);
 		BigDecimal bigDecimal = functionsResolver.resolve(functionNode.getFunctionName(), suffix, argument);
 		if(bigDecimal == null)
 			throw new CalculationException(CalculationException.UNKNOWN_FUNCTION);
 		return bigDecimal;
 	}
 
-	private BigDecimal resolveFunctionSuffix(FunctionNode functionNode, List<TreeNode> nodes){
-		int suffixNodeIndex = functionNode.getSuffixNodeIndex();
+	private BigDecimal resolveFunctionSuffix(FunctionNode functionNode){
+		TreeNode suffixNode = functionNode.getSuffixNode();
 		BigDecimal suffix = null;
-		if(!TreeBuilder.isNodeEmpty(suffixNodeIndex, nodes)){
-			NumberList result = calc(suffixNodeIndex, nodes);
+		if(suffixNode != null){
+			NumberList result = calc(suffixNode);
 			if(!result.isSingleNumber())
 				throw new CalculationException(CalculationException.SUFFIX_CANNOT_BE_LIST);
 			suffix = result.getSingleNumberIfTrue();

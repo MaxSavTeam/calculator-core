@@ -19,24 +19,14 @@ package com.maxsavteam.calculator.tree.nodes;
 
 public class TreeNode {
 
-	private int leftSonIndex = -1;
-	private int rightSonIndex = -1;
+	private TreeNode firstChild;
 
-	public void setLeftSonIndex(int leftSonIndex) {
-		if (this.leftSonIndex == -1)
-			this.leftSonIndex = leftSonIndex;
+	public TreeNode getFirstChild() {
+		return firstChild;
 	}
 
-	public void setRightSonIndex(int rightSonIndex) {
-		if (this.rightSonIndex == -1)
-			this.rightSonIndex = rightSonIndex;
+	public void setFirstChild(TreeNode firstChild) {
+		this.firstChild = firstChild;
 	}
 
-	public int getLeftSonIndex() {
-		return leftSonIndex;
-	}
-
-	public int getRightSonIndex() {
-		return rightSonIndex;
-	}
 }
