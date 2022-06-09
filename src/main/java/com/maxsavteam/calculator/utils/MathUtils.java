@@ -274,12 +274,4 @@ public class MathUtils {
 		}
 	}
 
-	public static BigDecimal toRadians(BigDecimal decimal) {
-		return decimal.multiply(PI).divide(BigDecimal.valueOf(180), HIGH_ROUND_SCALE, RoundingMode.HALF_EVEN);
-	}
-
-	public static BigDecimal toDegrees(BigDecimal x) {
-		return x.multiply(BigDecimal.valueOf(180)).divide(PI, HIGH_ROUND_SCALE, RoundingMode.HALF_EVEN);
-	}
-
 }

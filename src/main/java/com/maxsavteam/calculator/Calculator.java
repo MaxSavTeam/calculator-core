@@ -181,14 +181,6 @@ public class Calculator {
 				return MathUtils.rootWithBase(notNullNum, BigDecimal.valueOf(2));
 			case "abs":
 				return MathUtils.abs(notNullNum);
-			case "rad":
-			case "torad":
-			case "to_rad":
-				return MathUtils.toRadians(notNullNum);
-			case "deg":
-			case "todeg":
-			case "to_deg":
-				return MathUtils.toDegrees(notNullNum);
 			default:
 				return null;
 		}
