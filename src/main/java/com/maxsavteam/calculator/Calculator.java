@@ -173,7 +173,6 @@ public class Calculator {
 				return MathUtils.arccot(notNullNum);
 			case "ln":
 				return MathUtils.ln(notNullNum);
-			case "R":
 			case "sqrt":
 				if(suffix != null && operand != null){
 					return MathUtils.rootWithBase(operand, suffix);
