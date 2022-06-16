@@ -9,10 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="chore: insert space after semicolon in NumberList#format">
+    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="breaking change: remove &quot;R&quot; function (alias for &quot;sqrt&quot;)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/Calculator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/utils/MathUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/utils/MathUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/TreeBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/tree/TreeBuilder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -304,20 +303,7 @@
       <workItem from="1654611051679" duration="1875000" />
       <workItem from="1654805638915" duration="882000" />
       <workItem from="1654811991734" duration="2996000" />
-    </task>
-    <task id="LOCAL-00101" summary="feat: add functions without suffix and operand (for example &quot;pi&quot;)">
-      <created>1635794165106</created>
-      <option name="number" value="00101" />
-      <option name="presentableId" value="LOCAL-00101" />
-      <option name="project" value="LOCAL" />
-      <updated>1635794165106</updated>
-    </task>
-    <task id="LOCAL-00102" summary="feat: add asin, acos, atan, atg, acot, actg">
-      <created>1635797099999</created>
-      <option name="number" value="00102" />
-      <option name="presentableId" value="LOCAL-00102" />
-      <option name="project" value="LOCAL" />
-      <updated>1635797099999</updated>
+      <workItem from="1655408862324" duration="1519000" />
     </task>
     <task id="LOCAL-00103" summary="fix: fix result formatting with DecimalFormat">
       <created>1635800783499</created>
@@ -648,7 +634,21 @@
       <option name="project" value="LOCAL" />
       <updated>1654815824155</updated>
     </task>
-    <option name="localTasksCounter" value="150" />
+    <task id="LOCAL-00150" summary="breaking change: remove angle unit converter functions (&quot;rad&quot;, &quot;to_rad&quot;, &quot;torad&quot;, &quot;deg&quot;, &quot;to_deg&quot;, &quot;todeg&quot;)">
+      <created>1654816045877</created>
+      <option name="number" value="00150" />
+      <option name="presentableId" value="LOCAL-00150" />
+      <option name="project" value="LOCAL" />
+      <updated>1654816045877</updated>
+    </task>
+    <task id="LOCAL-00151" summary="breaking change: remove &quot;R&quot; function (alias for &quot;sqrt&quot;)">
+      <created>1654816131870</created>
+      <option name="number" value="00151" />
+      <option name="presentableId" value="LOCAL-00151" />
+      <option name="project" value="LOCAL" />
+      <updated>1654816131870</updated>
+    </task>
+    <option name="localTasksCounter" value="152" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -697,8 +697,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="BREAKING CHANGE: rename List to NumberList" />
-    <MESSAGE value="build: change version to 3.0.0" />
     <MESSAGE value="build: change version to 2.3.0" />
     <MESSAGE value="chore: update Calculator#VERSION" />
     <MESSAGE value="build: change version to 2.3.1" />
@@ -722,7 +720,9 @@
     <MESSAGE value="feat: add suffix operators evaluation in function suffixes (sin2! should be recognized as sin(2!), sin30° =&gt; sin(30°))" />
     <MESSAGE value="v2.8.0" />
     <MESSAGE value="chore: insert space after semicolon in NumberList#format" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: insert space after semicolon in NumberList#format" />
+    <MESSAGE value="breaking change: remove angle unit converter functions (&quot;rad&quot;, &quot;to_rad&quot;, &quot;torad&quot;, &quot;deg&quot;, &quot;to_deg&quot;, &quot;todeg&quot;)" />
+    <MESSAGE value="breaking change: remove &quot;R&quot; function (alias for &quot;sqrt&quot;)" />
+    <option name="LAST_COMMIT_MESSAGE" value="breaking change: remove &quot;R&quot; function (alias for &quot;sqrt&quot;)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -731,6 +731,11 @@
           <properties class="java.lang.NumberFormatException" package="java.lang" />
           <option name="timeStamp" value="1" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/maxsavteam/calculator/Calculator.java</url>
+          <line>398</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
