@@ -325,8 +325,6 @@ public class TreeBuilder {
 	protected OperatorPosition findNearestOperatorInExpression(String ex, int offset, int rootLevel) {
 		int end = offset + ex.length();
 		OperatorPosition foundPos = null;
-		OperatorPosition lastPos = null;
-		boolean arePrioritiesEqual = true;
 		for (OperatorPosition pos : mOperatorPositions) {
 			if (offset > pos.position)
 				continue;
@@ -336,19 +334,9 @@ public class TreeBuilder {
 			if (pos.level != rootLevel)
 				continue;
 
-			if (foundPos == null)
+			if (foundPos == null || pos.priority <= foundPos.priority)
 				foundPos = pos;
-			else {
-				if (pos.priority != foundPos.priority)
-					arePrioritiesEqual = false;
-				if (pos.level < foundPos.level || pos.priority < foundPos.priority) {
-					foundPos = pos;
-				}
-			}
-			lastPos = pos;
 		}
-		if (arePrioritiesEqual)
-			foundPos = lastPos;
 		return foundPos;
 	}
 
