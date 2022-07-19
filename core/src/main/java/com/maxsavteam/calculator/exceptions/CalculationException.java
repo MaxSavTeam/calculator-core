@@ -46,8 +46,9 @@ public class CalculationException extends RuntimeException {
 	public static final int TOO_FEW_ARGUMENTS = 21;
 	public static final int UNKNOWN_CONSTANT = 22;
 	public static final int INVALID_ASIN_ACOS_VALUE = 23;
-	public static final int INVALID_VALUE_FOR_TANGENT_OR_COTANGENT = 24;
 	public static final int SUFFIX_CANNOT_BE_LIST = 25;
+	public static final int INVALID_VALUE_FOR_TANGENT = 26;
+	public static final int INVALID_VALUE_FOR_COTANGENT = 27;
 
 	private static final Map<Integer, String> messagesMap = Map.ofEntries(
 			entry(INVALID_BINARY_OPERATOR, "Binary operator does not have left or right operand or both"),
@@ -73,8 +74,9 @@ public class CalculationException extends RuntimeException {
 			entry(TOO_FEW_ARGUMENTS, "Too few arguments"),
 			entry(UNKNOWN_CONSTANT, "Unknown constant"),
 			entry(INVALID_ASIN_ACOS_VALUE, "Invalid asin or acos value"),
-			entry(INVALID_VALUE_FOR_TANGENT_OR_COTANGENT, "Invalid value for tangent or cotangent"),
-			entry(SUFFIX_CANNOT_BE_LIST, "Suffix can't be list")
+			entry(SUFFIX_CANNOT_BE_LIST, "Suffix can't be list"),
+			entry(INVALID_VALUE_FOR_TANGENT, "Invalid value for tangent"),
+			entry(INVALID_VALUE_FOR_COTANGENT, "Invalid value for cotangent")
 	);
 
 	private final int errorCode;

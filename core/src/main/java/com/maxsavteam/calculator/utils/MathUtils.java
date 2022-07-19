@@ -111,7 +111,7 @@ public class MathUtils {
 
 	public static BigDecimal tan(BigDecimal x) {
 		if(cos(x).setScale(roundScale, RoundingMode.HALF_UP).signum() == 0)
-			throw new CalculationException(CalculationException.INVALID_VALUE_FOR_TANGENT_OR_COTANGENT);
+			throw new CalculationException(CalculationException.INVALID_VALUE_FOR_TANGENT);
 		return BigDecimalMath.tan(x, new MathContext(HIGH_ROUND_SCALE));
 	}
 
@@ -121,7 +121,7 @@ public class MathUtils {
 
 	public static BigDecimal cot(BigDecimal x) {
 		if(sin(x).setScale(roundScale, RoundingMode.HALF_UP).signum() == 0)
-			throw new CalculationException(CalculationException.INVALID_VALUE_FOR_TANGENT_OR_COTANGENT);
+			throw new CalculationException(CalculationException.INVALID_VALUE_FOR_COTANGENT);
 		return BigDecimalMath.cot(x, new MathContext(HIGH_ROUND_SCALE));
 	}
 

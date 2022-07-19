@@ -9,9 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="chore: add tests">
+    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="feat: replace CalculationException#INVALID_VALUE_FOR_TANGENT_OR_COTANGENT with INVALID_VALUE_FOR_TANGENT and INVALID_VALUE_FOR_COTANGENT">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/core/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/maxsavteam/calculator/exceptions/CalculationException.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/maxsavteam/calculator/exceptions/CalculationException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/maxsavteam/calculator/utils/MathUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/maxsavteam/calculator/utils/MathUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -330,14 +331,8 @@
       <workItem from="1654805638915" duration="882000" />
       <workItem from="1654811991734" duration="2996000" />
       <workItem from="1655408862324" duration="1519000" />
-      <workItem from="1655453839787" duration="375000" />
-    </task>
-    <task id="LOCAL-00105" summary="fix: fix binary operators">
-      <created>1635804021394</created>
-      <option name="number" value="00105" />
-      <option name="presentableId" value="LOCAL-00105" />
-      <option name="project" value="LOCAL" />
-      <updated>1635804021394</updated>
+      <workItem from="1655453839787" duration="975000" />
+      <workItem from="1658242947119" duration="417000" />
     </task>
     <task id="LOCAL-00106" summary="build: fix sources publishing">
       <created>1635863456865</created>
@@ -675,7 +670,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655413091173</updated>
     </task>
-    <option name="localTasksCounter" value="154" />
+    <task id="LOCAL-00154" summary="v3.0.0">
+      <created>1655454398924</created>
+      <option name="number" value="00154" />
+      <option name="presentableId" value="LOCAL-00154" />
+      <option name="project" value="LOCAL" />
+      <updated>1655454398926</updated>
+    </task>
+    <option name="localTasksCounter" value="155" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -724,7 +726,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="build: change version to 2.3.1" />
     <MESSAGE value="feat: add space removal to CalculatorExpressionFormatter" />
     <MESSAGE value="build: change version to 2.4.0" />
     <MESSAGE value="build: fix publishing" />
@@ -741,7 +742,6 @@
     <MESSAGE value="3.0.0-beta2" />
     <MESSAGE value="fix: fix tan and cot" />
     <MESSAGE value="BREAKING CHANGE: remove Calculator#VERSION field" />
-    <MESSAGE value="v3.0.0" />
     <MESSAGE value="feat: add suffix operators evaluation in function suffixes (sin2! should be recognized as sin(2!), sin30° =&gt; sin(30°))" />
     <MESSAGE value="v2.8.0" />
     <MESSAGE value="chore: insert space after semicolon in NumberList#format" />
@@ -749,7 +749,9 @@
     <MESSAGE value="breaking change: remove &quot;R&quot; function (alias for &quot;sqrt&quot;)" />
     <MESSAGE value="refactor: extract 'core' module" />
     <MESSAGE value="chore: add tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: add tests" />
+    <MESSAGE value="v3.0.0" />
+    <MESSAGE value="feat: replace CalculationException#INVALID_VALUE_FOR_TANGENT_OR_COTANGENT with INVALID_VALUE_FOR_TANGENT and INVALID_VALUE_FOR_COTANGENT" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: replace CalculationException#INVALID_VALUE_FOR_TANGENT_OR_COTANGENT with INVALID_VALUE_FOR_TANGENT and INVALID_VALUE_FOR_COTANGENT" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
