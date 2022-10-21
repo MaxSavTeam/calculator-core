@@ -9,8 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="feat: replace CalculationException#INVALID_VALUE_FOR_TANGENT_OR_COTANGENT with INVALID_VALUE_FOR_TANGENT and INVALID_VALUE_FOR_COTANGENT">
-      <change beforePath="$PROJECT_DIR$/core/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/core/build.gradle" afterDir="false" />
+    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="v3.1.0">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/maxsavteam/calculator/AngleUnit.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/maxsavteam/calculator/AngleUnit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/maxsavteam/calculator/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/maxsavteam/calculator/Calculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/maxsavteam/calculator/utils/MathUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/maxsavteam/calculator/utils/MathUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +129,7 @@
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -330,14 +334,9 @@
       <workItem from="1654811991734" duration="2996000" />
       <workItem from="1655408862324" duration="1519000" />
       <workItem from="1655453839787" duration="975000" />
-      <workItem from="1658242947119" duration="478000" />
-    </task>
-    <task id="LOCAL-00107" summary="feat: add ConstantsResolver">
-      <created>1635943368704</created>
-      <option name="number" value="00107" />
-      <option name="presentableId" value="LOCAL-00107" />
-      <option name="project" value="LOCAL" />
-      <updated>1635943368705</updated>
+      <workItem from="1658242947119" duration="720000" />
+      <workItem from="1663852904702" duration="1628000" />
+      <workItem from="1666356078366" duration="519000" />
     </task>
     <task id="LOCAL-00108" summary="style: reformat code (reformatted in Intellij Idea)">
       <created>1635943756035</created>
@@ -675,7 +674,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658243390014</updated>
     </task>
-    <option name="localTasksCounter" value="156" />
+    <task id="LOCAL-00156" summary="v3.1.0">
+      <created>1658243631767</created>
+      <option name="number" value="00156" />
+      <option name="presentableId" value="LOCAL-00156" />
+      <option name="project" value="LOCAL" />
+      <updated>1658243631767</updated>
+    </task>
+    <option name="localTasksCounter" value="157" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -724,7 +730,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: add space removal to CalculatorExpressionFormatter" />
     <MESSAGE value="build: change version to 2.4.0" />
     <MESSAGE value="build: fix publishing" />
     <MESSAGE value="feat: add 'insertMultiplySignBetweenCloseBracketAndFunctionOrConstant' flag to CalculatorExpressionFormatter" />
@@ -749,7 +754,8 @@
     <MESSAGE value="chore: add tests" />
     <MESSAGE value="v3.0.0" />
     <MESSAGE value="feat: replace CalculationException#INVALID_VALUE_FOR_TANGENT_OR_COTANGENT with INVALID_VALUE_FOR_TANGENT and INVALID_VALUE_FOR_COTANGENT" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: replace CalculationException#INVALID_VALUE_FOR_TANGENT_OR_COTANGENT with INVALID_VALUE_FOR_TANGENT and INVALID_VALUE_FOR_COTANGENT" />
+    <MESSAGE value="v3.1.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="v3.1.0" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -758,11 +764,6 @@
           <properties class="java.lang.NumberFormatException" package="java.lang" />
           <option name="timeStamp" value="1" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/core/src/main/java/com/maxsavteam/calculator/Calculator.java</url>
-          <line>398</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>

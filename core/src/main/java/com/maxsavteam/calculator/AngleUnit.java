@@ -23,7 +23,7 @@ import java.math.MathContext;
 
 public abstract class AngleUnit {
 
-	private static final MathContext MATH_CONTEXT = new MathContext(MathUtils.HIGH_ROUND_SCALE);
+	protected final MathContext MATH_CONTEXT = new MathContext(MathUtils.getHighRoundScale());
 
 	protected final BigDecimal angle;
 

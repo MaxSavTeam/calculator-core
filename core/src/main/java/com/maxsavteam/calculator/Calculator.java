@@ -63,7 +63,7 @@ public class Calculator {
 	private final TreeBuilder builder;
 	private final CalculatorExpressionTokenizer expressionTokenizer;
 	private final CalculatorExpressionFormatter expressionFormatter;
-	public static final int roundScale = 8;
+	private static int roundScale = 8;
 	private BinaryOperatorResolver resolver = defaultResolver;
 	private BracketsResolver bracketsResolver = defaultBracketsResolver;
 	private FunctionsResolver functionsResolver = defaultFunctionsResolver;
@@ -370,6 +370,11 @@ public class Calculator {
 
 	public void setGroupingSeparator(char groupingSeparator) {
 		this.groupingSeparator = groupingSeparator;
+	}
+
+	public static void setRoundScale(int roundScale) {
+		Calculator.roundScale = roundScale;
+		MathUtils.setHighRoundScale((int) (roundScale * 1.5));
 	}
 
 	/**

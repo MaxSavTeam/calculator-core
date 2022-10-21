@@ -30,8 +30,15 @@ public class MathUtils {
 	public static final BigDecimal FI = new BigDecimal("1.618");
 	private static final BigDecimal factorialLimit = new BigDecimal("100000");
 
-	public static final int roundScale = 8;
-	public static final int HIGH_ROUND_SCALE = 20;
+	private static int HIGH_ROUND_SCALE = 20;
+
+	public static void setHighRoundScale(int highRoundScale) {
+		HIGH_ROUND_SCALE = highRoundScale;
+	}
+
+	public static int getHighRoundScale() {
+		return HIGH_ROUND_SCALE;
+	}
 
 	public static BigDecimal exp(BigDecimal x) {
 		return BigDecimalMath.exp(x, new MathContext(HIGH_ROUND_SCALE));
@@ -110,7 +117,7 @@ public class MathUtils {
 	}
 
 	public static BigDecimal tan(BigDecimal x) {
-		if(cos(x).setScale(roundScale, RoundingMode.HALF_UP).signum() == 0)
+		if(cos(x).setScale(HIGH_ROUND_SCALE, RoundingMode.HALF_UP).signum() == 0)
 			throw new CalculationException(CalculationException.INVALID_VALUE_FOR_TANGENT);
 		return BigDecimalMath.tan(x, new MathContext(HIGH_ROUND_SCALE));
 	}
@@ -120,7 +127,7 @@ public class MathUtils {
 	}
 
 	public static BigDecimal cot(BigDecimal x) {
-		if(sin(x).setScale(roundScale, RoundingMode.HALF_UP).signum() == 0)
+		if(sin(x).setScale(HIGH_ROUND_SCALE, RoundingMode.HALF_UP).signum() == 0)
 			throw new CalculationException(CalculationException.INVALID_VALUE_FOR_COTANGENT);
 		return BigDecimalMath.cot(x, new MathContext(HIGH_ROUND_SCALE));
 	}
