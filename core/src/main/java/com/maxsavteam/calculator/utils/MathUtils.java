@@ -64,8 +64,8 @@ public class MathUtils {
 		if (base.compareTo(BigDecimal.valueOf(2)) == 0)
 			return BigDecimalMath.log2(x, new MathContext(HIGH_ROUND_SCALE));
 
-		BigDecimal logX = BigDecimalMath.log2(x, new MathContext(HIGH_ROUND_SCALE)),
-				logB = BigDecimalMath.log2(base, new MathContext(HIGH_ROUND_SCALE));
+		BigDecimal logX = BigDecimalMath.log(x, new MathContext(HIGH_ROUND_SCALE)),
+				logB = BigDecimalMath.log(base, new MathContext(HIGH_ROUND_SCALE));
 		return logX.divide(logB, HIGH_ROUND_SCALE, RoundingMode.HALF_EVEN);
 	}
 
