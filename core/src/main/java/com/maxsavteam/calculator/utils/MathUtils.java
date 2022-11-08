@@ -146,6 +146,13 @@ public class MathUtils {
 		return BigDecimalMath.asin(x, new MathContext(HIGH_ROUND_SCALE));
 	}
 
+	public static BigDecimal csc(BigDecimal x) {
+		BigDecimal sin = sin(x);
+		if(sin.setScale(HIGH_ROUND_SCALE, RoundingMode.HALF_UP).signum() == 0)
+			throw new CalculationException(CalculationException.INVALID_VALUE_FOR_COSECANT);
+		return BigDecimal.ONE.divide(sin, new MathContext(HIGH_ROUND_SCALE));
+	}
+
 	public static BigDecimal cos(BigDecimal x) {
 		return BigDecimalMath.cos(x, new MathContext(HIGH_ROUND_SCALE));
 	}
@@ -154,6 +161,13 @@ public class MathUtils {
 		if(x.compareTo(BigDecimal.valueOf(-1)) < 0 || x.compareTo(BigDecimal.ONE) > 0)
 			throw new CalculationException(CalculationException.INVALID_ASIN_ACOS_VALUE);
 		return BigDecimalMath.acos(x, new MathContext(HIGH_ROUND_SCALE));
+	}
+
+	public static BigDecimal sec(BigDecimal x) {
+		BigDecimal cos = cos(x);
+		if(cos.setScale(HIGH_ROUND_SCALE, RoundingMode.HALF_UP).signum() == 0)
+			throw new CalculationException(CalculationException.INVALID_VALUE_FOR_SECANT);
+		return BigDecimal.ONE.divide(cos, new MathContext(HIGH_ROUND_SCALE));
 	}
 
 	public static BigDecimal fact(BigDecimal a, int step) {

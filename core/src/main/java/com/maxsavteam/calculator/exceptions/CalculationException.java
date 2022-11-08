@@ -49,6 +49,8 @@ public class CalculationException extends RuntimeException {
 	public static final int SUFFIX_CANNOT_BE_LIST = 25;
 	public static final int INVALID_VALUE_FOR_TANGENT = 26;
 	public static final int INVALID_VALUE_FOR_COTANGENT = 27;
+	public static final int INVALID_VALUE_FOR_SECANT = 28;
+	public static final int INVALID_VALUE_FOR_COSECANT = 29;
 
 	private static final Map<Integer, String> messagesMap = Map.ofEntries(
 			entry(INVALID_BINARY_OPERATOR, "Binary operator does not have left or right operand or both"),
@@ -76,7 +78,9 @@ public class CalculationException extends RuntimeException {
 			entry(INVALID_ASIN_ACOS_VALUE, "Invalid asin or acos value"),
 			entry(SUFFIX_CANNOT_BE_LIST, "Suffix can't be list"),
 			entry(INVALID_VALUE_FOR_TANGENT, "Invalid value for tangent"),
-			entry(INVALID_VALUE_FOR_COTANGENT, "Invalid value for cotangent")
+			entry(INVALID_VALUE_FOR_COTANGENT, "Invalid value for cotangent"),
+			entry(INVALID_VALUE_FOR_SECANT, "Invalid value for secant"),
+			entry(INVALID_VALUE_FOR_COSECANT, "Invalid value for cosecant")
 	);
 
 	private final int errorCode;

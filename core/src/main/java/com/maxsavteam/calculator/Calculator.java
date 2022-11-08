@@ -44,6 +44,7 @@ import com.maxsavteam.calculator.utils.MathUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
@@ -88,7 +89,7 @@ public class Calculator {
 				if (b.signum() == 0)
 					throw new CalculationException(CalculationException.DIVISION_BY_ZERO);
 				else
-					return a.divide(b, roundScale, RoundingMode.HALF_EVEN);
+					return a.divide(b, new MathContext(roundScale));
 			}
 			if (operator == '^')
 				return MathUtils.pow(a, b);
@@ -108,7 +109,7 @@ public class Calculator {
 				if (percent.signum() == 0)
 					throw new CalculationException(CalculationException.DIVISION_BY_ZERO);
 				else
-					return a.divide(percent, roundScale, RoundingMode.HALF_EVEN);
+					return a.divide(percent, new MathContext(roundScale));
 			}
 			throw new CalculationException(CalculationException.INVALID_OPERATOR_FOR_PERCENT);
 		}
@@ -179,6 +180,10 @@ public class Calculator {
 				return MathUtils.rootWithBase(notNullNum, BigDecimal.valueOf(2));
 			case "abs":
 				return MathUtils.abs(notNullNum);
+			case "sec":
+				return MathUtils.sec(notNullNum);
+			case "csc":
+				return MathUtils.csc(notNullNum);
 			default:
 				return null;
 		}
