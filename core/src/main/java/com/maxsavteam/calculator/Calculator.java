@@ -184,6 +184,12 @@ public class Calculator {
 				return MathUtils.sec(notNullNum);
 			case "csc":
 				return MathUtils.csc(notNullNum);
+			case "arccsc":
+			case "acsc":
+				return MathUtils.arccsc(notNullNum);
+			case "arcsec":
+			case "asec":
+				return MathUtils.arcsec(notNullNum);
 			default:
 				return null;
 		}

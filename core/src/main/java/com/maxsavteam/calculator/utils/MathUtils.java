@@ -153,6 +153,12 @@ public class MathUtils {
 		return BigDecimal.ONE.divide(sin, new MathContext(HIGH_ROUND_SCALE));
 	}
 
+	public static BigDecimal arccsc(BigDecimal x){
+		if(x.compareTo(BigDecimal.valueOf(-1)) > 0 && x.compareTo(BigDecimal.ONE) < 0)
+			throw new CalculationException(CalculationException.INVALID_VALUE_FOR_ASEC_ACSC);
+		return arcsin(BigDecimal.ONE.divide(x, new MathContext(HIGH_ROUND_SCALE)));
+	}
+
 	public static BigDecimal cos(BigDecimal x) {
 		return BigDecimalMath.cos(x, new MathContext(HIGH_ROUND_SCALE));
 	}
@@ -168,6 +174,12 @@ public class MathUtils {
 		if(cos.setScale(HIGH_ROUND_SCALE, RoundingMode.HALF_UP).signum() == 0)
 			throw new CalculationException(CalculationException.INVALID_VALUE_FOR_SECANT);
 		return BigDecimal.ONE.divide(cos, new MathContext(HIGH_ROUND_SCALE));
+	}
+
+	public static BigDecimal arcsec(BigDecimal x) {
+		if(x.compareTo(BigDecimal.valueOf(-1)) > 0 && x.compareTo(BigDecimal.ONE) < 0)
+			throw new CalculationException(CalculationException.INVALID_VALUE_FOR_ASEC_ACSC);
+		return arccos(BigDecimal.ONE.divide(x, new MathContext(HIGH_ROUND_SCALE)));
 	}
 
 	public static BigDecimal fact(BigDecimal a, int step) {

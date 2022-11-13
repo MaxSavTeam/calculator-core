@@ -51,6 +51,7 @@ public class CalculationException extends RuntimeException {
 	public static final int INVALID_VALUE_FOR_COTANGENT = 27;
 	public static final int INVALID_VALUE_FOR_SECANT = 28;
 	public static final int INVALID_VALUE_FOR_COSECANT = 29;
+	public static final int INVALID_VALUE_FOR_ASEC_ACSC = 30;
 
 	private static final Map<Integer, String> messagesMap = Map.ofEntries(
 			entry(INVALID_BINARY_OPERATOR, "Binary operator does not have left or right operand or both"),
@@ -80,7 +81,8 @@ public class CalculationException extends RuntimeException {
 			entry(INVALID_VALUE_FOR_TANGENT, "Invalid value for tangent"),
 			entry(INVALID_VALUE_FOR_COTANGENT, "Invalid value for cotangent"),
 			entry(INVALID_VALUE_FOR_SECANT, "Invalid value for secant"),
-			entry(INVALID_VALUE_FOR_COSECANT, "Invalid value for cosecant")
+			entry(INVALID_VALUE_FOR_COSECANT, "Invalid value for cosecant"),
+			entry(INVALID_VALUE_FOR_ASEC_ACSC, "Invalid value for asec and acsc")
 	);
 
 	private final int errorCode;
