@@ -18,24 +18,22 @@
 package com.maxsavteam.calculator.utils;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.math.BigInteger;
 
 public class Fraction {
-	private BigDecimal numerator; // числитель
-	private BigDecimal denominator; // знаменатель
+	private BigInteger numerator; // числитель
+	private BigInteger denominator; // знаменатель
 
-	public BigDecimal getNumerator() {
+	public BigInteger getNumerator() {
 		return numerator;
 	}
 
-	public BigDecimal getDenominator() {
+	public BigInteger getDenominator() {
 		return denominator;
 	}
 
-	private BigDecimal gcd(BigDecimal f, BigDecimal s) {
-		BigDecimal a = new BigDecimal(f.toPlainString());
-		BigDecimal b = new BigDecimal(s.toPlainString());
-		while (!a.equals(BigDecimal.ZERO) && !b.equals(BigDecimal.ZERO)) {
+	private BigInteger gcd(BigInteger a, BigInteger b) {
+		while (!a.equals(BigInteger.ZERO) && !b.equals(BigInteger.ZERO)) {
 			if (a.compareTo(b) > 0) {
 				a = a.remainder(b);
 			} else {
@@ -51,21 +49,23 @@ public class Fraction {
 		if (isFraction(b)) {
 			int pos = s.indexOf(".");
 			int n = s.length() - pos - 1;
-			this.denominator = BigDecimal.valueOf(10).pow(n);
+			this.denominator = BigInteger.valueOf(10).pow(n);
 			StringBuilder sb = new StringBuilder(s);
 			sb.deleteCharAt(pos);
-			this.numerator = new BigDecimal(sb.toString());
+			this.numerator = new BigInteger(sb.toString());
 
-			BigDecimal g = gcd(denominator, numerator);
-			while (!g.equals(BigDecimal.ONE)) {
-				denominator = denominator.divide(g, RoundingMode.HALF_EVEN);
-				numerator = numerator.divide(g, RoundingMode.HALF_EVEN);
+			BigInteger g = gcd(denominator, numerator);
+			while (!g.equals(BigInteger.ONE)) {
+				denominator = denominator.divide(g);
+				numerator = numerator.divide(g);
 
 				g = gcd(denominator, numerator);
 			}
 		} else {
-			this.numerator = new BigDecimal(s);
-			this.denominator = BigDecimal.ONE;
+			if(s.contains("."))
+				s = s.substring(0, s.indexOf("."));
+			this.numerator = new BigInteger(s);
+			this.denominator = BigInteger.ONE;
 		}
 	}
 
