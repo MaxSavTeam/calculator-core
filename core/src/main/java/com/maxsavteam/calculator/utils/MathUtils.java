@@ -25,9 +25,9 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 
 public class MathUtils {
-	public static final BigDecimal E = new BigDecimal("2.7182818284590452354");
+	public static final BigDecimal E = new BigDecimal("2.71828182845904523536");
 	public static final BigDecimal PI = new BigDecimal("3.14159265358979323846");
-	public static final BigDecimal FI = new BigDecimal("1.618");
+	public static final BigDecimal FI = new BigDecimal("1.61803398874989484820");
 	private static final BigDecimal factorialLimit = new BigDecimal("100000");
 
 	private static int HIGH_ROUND_SCALE = 20;
