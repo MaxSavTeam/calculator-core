@@ -8,10 +8,8 @@ Supports Java and Android projects
 #### Gradle  
 Add it in your root build.gradle at the end of repositories:
 ```groovy
-allprojects {
-  repositories {
-    maven { url 'https://repo.maxsavteam.com' }
-  }
+repositories {
+        maven { url 'https://repo.maxsavteam.com/releases' }
 }
 ```
 #### Maven
@@ -19,7 +17,7 @@ Add the JitPack repository to your build file:
 ```xml
 <repositories>
   <repository>
-      <url>https://repo.maxsavteam.com</url>
+      <url>https://repo.maxsavteam.com/releases</url>
   </repository>
 </repositories>
 ```
@@ -27,7 +25,7 @@ Add the JitPack repository to your build file:
 #### Gradle
 ```groovy
 dependencies {
-        implementation 'com.maxsavteam:calculator-core:2.2.0'
+        implementation 'com.maxsavteam:calculator-core:3.2.0'
 }
 ```
 #### Maven
@@ -35,6 +33,6 @@ dependencies {
 <dependency>
     <groupId>com.maxsavteam</groupId>
     <artifactId>calculator-core</artifactId>
-    <version>2.2.0</version>
+    <version>3.2.0</version>
 </dependency>
 ```
