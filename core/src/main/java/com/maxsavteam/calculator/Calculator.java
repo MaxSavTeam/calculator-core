@@ -385,7 +385,7 @@ public class Calculator {
 
 	public static void setRoundScale(int roundScale) {
 		Calculator.roundScale = roundScale;
-		MathUtils.setHighRoundScale((int) (roundScale * 1.5));
+		MathUtils.setHighRoundScale(roundScale + 6);
 	}
 
 	/**
