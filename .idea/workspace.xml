@@ -9,11 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="feat: zero roundScale means unlimited scale">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/maxsavteam/calculator/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/maxsavteam/calculator/Calculator.java" afterDir="false" />
+    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="feat: add roundScale check in Calculator#setRoundScale">
       <change beforePath="$PROJECT_DIR$/core/src/main/java/com/maxsavteam/calculator/utils/MathUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/maxsavteam/calculator/utils/MathUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/maxsavteam/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/maxsavteam/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -341,13 +338,7 @@
       <workItem from="1668340194174" duration="2663000" />
       <workItem from="1668423218760" duration="329000" />
       <workItem from="1668426160811" duration="2053000" />
-    </task>
-    <task id="LOCAL-00118" summary="refactor: Pi, Fi and E constants moved from replacement map to constants resolver">
-      <created>1640287938913</created>
-      <option name="number" value="00118" />
-      <option name="presentableId" value="LOCAL-00118" />
-      <option name="project" value="LOCAL" />
-      <updated>1640287938913</updated>
+      <workItem from="1668501358936" duration="367000" />
     </task>
     <task id="LOCAL-00119" summary="refactor: refactor code according to some SonarLint issues">
       <created>1645456787580</created>
@@ -685,7 +676,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668342494505</updated>
     </task>
-    <option name="localTasksCounter" value="167" />
+    <task id="LOCAL-00167" summary="feat: add roundScale check in Calculator#setRoundScale">
+      <created>1668501609519</created>
+      <option name="number" value="00167" />
+      <option name="presentableId" value="LOCAL-00167" />
+      <option name="project" value="LOCAL" />
+      <updated>1668501609519</updated>
+    </task>
+    <option name="localTasksCounter" value="168" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -734,7 +732,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor: refactor CalculationException" />
     <MESSAGE value="3.0.0-beta2" />
     <MESSAGE value="fix: fix tan and cot" />
     <MESSAGE value="BREAKING CHANGE: remove Calculator#VERSION field" />
@@ -759,7 +756,8 @@
     <MESSAGE value="chore: bump version to 3.3.0" />
     <MESSAGE value="chore: change E and FI numbers scale to 20" />
     <MESSAGE value="feat: zero roundScale means unlimited scale" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: zero roundScale means unlimited scale" />
+    <MESSAGE value="feat: add roundScale check in Calculator#setRoundScale" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add roundScale check in Calculator#setRoundScale" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

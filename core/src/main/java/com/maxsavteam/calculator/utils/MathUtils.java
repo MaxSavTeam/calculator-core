@@ -32,9 +32,11 @@ public class MathUtils {
 	private static final BigDecimal factorialLimit = new BigDecimal("100000");
 
 	private static int HIGH_ROUND_SCALE = 20;
+	private static MathContext mathContext = new MathContext(HIGH_ROUND_SCALE);
 
 	public static void setHighRoundScale(int highRoundScale) {
 		HIGH_ROUND_SCALE = highRoundScale;
+		mathContext = new MathContext(highRoundScale);
 	}
 
 	public static int getHighRoundScale() {
@@ -42,32 +44,32 @@ public class MathUtils {
 	}
 
 	public static BigDecimal exp(BigDecimal x) {
-		return BigDecimalMath.exp(x, new MathContext(HIGH_ROUND_SCALE));
+		return BigDecimalMath.exp(x, mathContext);
 	}
 
 	public static BigDecimal ln(BigDecimal x) {
 		if (x.signum() < 0)
 			throw new CalculationException(CalculationException.NEGATIVE_PARAMETER_OF_LOG);
-		return BigDecimalMath.log(x, new MathContext(HIGH_ROUND_SCALE));
+		return BigDecimalMath.log(x, mathContext);
 	}
 
 	public static BigDecimal log(BigDecimal x) {
 		if (x.signum() <= 0)
 			throw new CalculationException(CalculationException.NEGATIVE_PARAMETER_OF_LOG);
-		return BigDecimalMath.log10(x, new MathContext(HIGH_ROUND_SCALE));
+		return BigDecimalMath.log10(x, mathContext);
 	}
 
 	public static BigDecimal logWithBase(BigDecimal x, BigDecimal base) {
 		if (x.signum() <= 0)
 			throw new CalculationException(CalculationException.NEGATIVE_PARAMETER_OF_LOG);
 		if (base.compareTo(BigDecimal.TEN) == 0)
-			return BigDecimalMath.log10(x, new MathContext(HIGH_ROUND_SCALE));
+			return BigDecimalMath.log10(x, mathContext);
 		if (base.compareTo(BigDecimal.valueOf(2)) == 0)
-			return BigDecimalMath.log2(x, new MathContext(HIGH_ROUND_SCALE));
+			return BigDecimalMath.log2(x, mathContext);
 
-		BigDecimal logX = BigDecimalMath.log(x, new MathContext(HIGH_ROUND_SCALE)),
-				logB = BigDecimalMath.log(base, new MathContext(HIGH_ROUND_SCALE));
-		return logX.divide(logB, new MathContext(HIGH_ROUND_SCALE));
+		BigDecimal logX = BigDecimalMath.log(x, mathContext),
+				logB = BigDecimalMath.log(base, mathContext);
+		return logX.divide(logB, mathContext);
 	}
 
 	public static BigDecimal abs(BigDecimal x) {
@@ -104,7 +106,7 @@ public class MathUtils {
 	public static BigDecimal lcm(BigDecimal a, BigDecimal b) {
 		a = a.abs();
 		b = b.abs();
-		return a.multiply(b).divide(gcd(a, b), new MathContext(HIGH_ROUND_SCALE));
+		return a.multiply(b).divide(gcd(a, b), mathContext);
 	}
 
 	public static BigDecimal lcm(BigDecimal... l) {
@@ -120,67 +122,67 @@ public class MathUtils {
 	public static BigDecimal tan(BigDecimal x) {
 		if(cos(x).setScale(HIGH_ROUND_SCALE, RoundingMode.HALF_UP).signum() == 0)
 			throw new CalculationException(CalculationException.INVALID_VALUE_FOR_TANGENT);
-		return BigDecimalMath.tan(x, new MathContext(HIGH_ROUND_SCALE));
+		return BigDecimalMath.tan(x, mathContext);
 	}
 
 	public static BigDecimal arctan(BigDecimal x) {
-		return BigDecimalMath.atan(x, new MathContext(HIGH_ROUND_SCALE));
+		return BigDecimalMath.atan(x, mathContext);
 	}
 
 	public static BigDecimal cot(BigDecimal x) {
 		if(sin(x).setScale(HIGH_ROUND_SCALE, RoundingMode.HALF_UP).signum() == 0)
 			throw new CalculationException(CalculationException.INVALID_VALUE_FOR_COTANGENT);
-		return BigDecimalMath.cot(x, new MathContext(HIGH_ROUND_SCALE));
+		return BigDecimalMath.cot(x, mathContext);
 	}
 
 	public static BigDecimal arccot(BigDecimal x) {
-		return BigDecimalMath.acot(x, new MathContext(HIGH_ROUND_SCALE));
+		return BigDecimalMath.acot(x, mathContext);
 	}
 
 	public static BigDecimal sin(BigDecimal x) {
-		return BigDecimalMath.sin(x, new MathContext(HIGH_ROUND_SCALE));
+		return BigDecimalMath.sin(x, mathContext);
 	}
 
 	public static BigDecimal arcsin(BigDecimal x) {
 		if(x.compareTo(BigDecimal.valueOf(-1)) < 0 || x.compareTo(BigDecimal.ONE) > 0)
 			throw new CalculationException(CalculationException.INVALID_ASIN_ACOS_VALUE);
-		return BigDecimalMath.asin(x, new MathContext(HIGH_ROUND_SCALE));
+		return BigDecimalMath.asin(x, mathContext);
 	}
 
 	public static BigDecimal csc(BigDecimal x) {
 		BigDecimal sin = sin(x);
 		if(sin.setScale(HIGH_ROUND_SCALE, RoundingMode.HALF_UP).signum() == 0)
 			throw new CalculationException(CalculationException.INVALID_VALUE_FOR_COSECANT);
-		return BigDecimal.ONE.divide(sin, new MathContext(HIGH_ROUND_SCALE));
+		return BigDecimal.ONE.divide(sin, mathContext);
 	}
 
 	public static BigDecimal arccsc(BigDecimal x){
 		if(x.compareTo(BigDecimal.valueOf(-1)) > 0 && x.compareTo(BigDecimal.ONE) < 0)
 			throw new CalculationException(CalculationException.INVALID_VALUE_FOR_ASEC_ACSC);
-		return arcsin(BigDecimal.ONE.divide(x, new MathContext(HIGH_ROUND_SCALE)));
+		return arcsin(BigDecimal.ONE.divide(x, mathContext));
 	}
 
 	public static BigDecimal cos(BigDecimal x) {
-		return BigDecimalMath.cos(x, new MathContext(HIGH_ROUND_SCALE));
+		return BigDecimalMath.cos(x, mathContext);
 	}
 
 	public static BigDecimal arccos(BigDecimal x) {
 		if(x.compareTo(BigDecimal.valueOf(-1)) < 0 || x.compareTo(BigDecimal.ONE) > 0)
 			throw new CalculationException(CalculationException.INVALID_ASIN_ACOS_VALUE);
-		return BigDecimalMath.acos(x, new MathContext(HIGH_ROUND_SCALE));
+		return BigDecimalMath.acos(x, mathContext);
 	}
 
 	public static BigDecimal sec(BigDecimal x) {
 		BigDecimal cos = cos(x);
 		if(cos.setScale(HIGH_ROUND_SCALE, RoundingMode.HALF_UP).signum() == 0)
 			throw new CalculationException(CalculationException.INVALID_VALUE_FOR_SECANT);
-		return BigDecimal.ONE.divide(cos, new MathContext(HIGH_ROUND_SCALE));
+		return BigDecimal.ONE.divide(cos, mathContext);
 	}
 
 	public static BigDecimal arcsec(BigDecimal x) {
 		if(x.compareTo(BigDecimal.valueOf(-1)) > 0 && x.compareTo(BigDecimal.ONE) < 0)
 			throw new CalculationException(CalculationException.INVALID_VALUE_FOR_ASEC_ACSC);
-		return arccos(BigDecimal.ONE.divide(x, new MathContext(HIGH_ROUND_SCALE)));
+		return arccos(BigDecimal.ONE.divide(x, mathContext));
 	}
 
 	public static BigDecimal fact(BigDecimal a, int step) {
@@ -264,7 +266,7 @@ public class MathUtils {
 		if (n.remainder(BigDecimal.valueOf(2)).signum() == 0 && a.signum() < 0)
 			throw new CalculationException(CalculationException.ROOT_OF_EVEN_DEGREE_OF_NEGATIVE_NUMBER);
 		BigDecimal log = ln(a);
-		BigDecimal dLog = log.divide(n, new MathContext(HIGH_ROUND_SCALE));
+		BigDecimal dLog = log.divide(n, mathContext);
 		return exp(dLog);
 	}
 
@@ -285,7 +287,7 @@ public class MathUtils {
 		}
 		if (n.signum() < 0) {
 			BigDecimal result = pow(a, n.multiply(BigDecimal.valueOf(-1)));
-			String strRes = BigDecimal.ONE.divide(result, new MathContext(HIGH_ROUND_SCALE)).toPlainString();
+			String strRes = BigDecimal.ONE.divide(result, mathContext).toPlainString();
 			return new BigDecimal(CalculatorUtils.removeZeros(strRes));
 		}
 		if (Fraction.isFraction(n)) {
