@@ -384,6 +384,8 @@ public class Calculator {
 	}
 
 	public static void setRoundScale(int roundScale) {
+		if(roundScale <= 0)
+			throw new IllegalArgumentException("Round scale must be greater than 0");
 		Calculator.roundScale = roundScale;
 		MathUtils.setHighRoundScale(roundScale + 6);
 	}

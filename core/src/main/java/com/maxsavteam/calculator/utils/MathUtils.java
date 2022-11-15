@@ -21,6 +21,7 @@ import ch.obermuhlner.math.big.BigDecimalMath;
 import com.maxsavteam.calculator.exceptions.CalculationException;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
@@ -66,7 +67,7 @@ public class MathUtils {
 
 		BigDecimal logX = BigDecimalMath.log(x, new MathContext(HIGH_ROUND_SCALE)),
 				logB = BigDecimalMath.log(base, new MathContext(HIGH_ROUND_SCALE));
-		return logX.divide(logB, HIGH_ROUND_SCALE, RoundingMode.HALF_EVEN);
+		return logX.divide(logB, new MathContext(HIGH_ROUND_SCALE));
 	}
 
 	public static BigDecimal abs(BigDecimal x) {
@@ -103,7 +104,7 @@ public class MathUtils {
 	public static BigDecimal lcm(BigDecimal a, BigDecimal b) {
 		a = a.abs();
 		b = b.abs();
-		return a.multiply(b).divide(gcd(a, b), HIGH_ROUND_SCALE, RoundingMode.HALF_EVEN);
+		return a.multiply(b).divide(gcd(a, b), new MathContext(HIGH_ROUND_SCALE));
 	}
 
 	public static BigDecimal lcm(BigDecimal... l) {
@@ -263,7 +264,7 @@ public class MathUtils {
 		if (n.remainder(BigDecimal.valueOf(2)).signum() == 0 && a.signum() < 0)
 			throw new CalculationException(CalculationException.ROOT_OF_EVEN_DEGREE_OF_NEGATIVE_NUMBER);
 		BigDecimal log = ln(a);
-		BigDecimal dLog = log.divide(n, HIGH_ROUND_SCALE, RoundingMode.HALF_EVEN);
+		BigDecimal dLog = log.divide(n, new MathContext(HIGH_ROUND_SCALE));
 		return exp(dLog);
 	}
 
@@ -284,25 +285,25 @@ public class MathUtils {
 		}
 		if (n.signum() < 0) {
 			BigDecimal result = pow(a, n.multiply(BigDecimal.valueOf(-1)));
-			String strRes = BigDecimal.ONE.divide(result, HIGH_ROUND_SCALE, RoundingMode.HALF_EVEN).toPlainString();
+			String strRes = BigDecimal.ONE.divide(result, new MathContext(HIGH_ROUND_SCALE)).toPlainString();
 			return new BigDecimal(CalculatorUtils.removeZeros(strRes));
 		}
 		if (Fraction.isFraction(n)) {
 			BigDecimal scaledN = n.setScale(3, RoundingMode.HALF_DOWN);
 			Fraction fraction = new Fraction(scaledN);
-			return MathUtils.rootWithBase(sysPow(a, new BigDecimal(fraction.getNumerator())), new BigDecimal(fraction.getDenominator()));
+			return MathUtils.rootWithBase(sysPow(a, fraction.getNumerator()), new BigDecimal(fraction.getDenominator()));
 		}
-		return sysPow(a, n);
+		return sysPow(a, n.toBigInteger());
 	}
 
-	private static BigDecimal sysPow(BigDecimal a, BigDecimal n) {
-		if (n.compareTo(BigDecimal.ZERO) == 0) {
+	private static BigDecimal sysPow(BigDecimal a, BigInteger n) {
+		if (n.compareTo(BigInteger.ZERO) == 0) {
 			return BigDecimal.ONE;
 		}
-		if (n.remainder(BigDecimal.valueOf(2)).compareTo(BigDecimal.ONE) == 0) {
-			return sysPow(a, n.subtract(BigDecimal.ONE)).multiply(a);
+		if (n.remainder(BigInteger.valueOf(2)).compareTo(BigInteger.ONE) == 0) {
+			return sysPow(a, n.subtract(BigInteger.ONE)).multiply(a);
 		} else {
-			BigDecimal b = sysPow(a, n.divide(BigDecimal.valueOf(2), 0, RoundingMode.HALF_EVEN));
+			BigDecimal b = sysPow(a, n.divide(BigInteger.valueOf(2)));
 			return b.multiply(b);
 		}
 	}

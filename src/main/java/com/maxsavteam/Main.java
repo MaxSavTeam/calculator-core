@@ -37,6 +37,10 @@ public class Main {
 				main(args);
 				break;
 			}
+			if(exp.startsWith("setPrecision")){
+				Calculator.setRoundScale(Integer.parseInt(exp.split(" ")[1]));
+				continue;
+			}
 			long start = System.currentTimeMillis();
 			try {
 				System.out.println(calculator.calculate(exp).format());
