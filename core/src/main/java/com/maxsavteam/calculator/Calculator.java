@@ -410,7 +410,7 @@ public class Calculator {
 	}
 
 	/**
-	 * Calculates answer of expression+
+	 * Calculates answer of expression
 	 */
 	public NumberList calculate(String expression) {
 		TreeNode head = builder.buildTree(formatExpression(expression));

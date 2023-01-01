@@ -33,6 +33,8 @@ public class CalculatorExpressionFormatter {
 	private List<BracketsType> bracketsTypes = TreeBuilder.defaultBrackets;
 	private List<SuffixOperator> suffixOperators = TreeBuilder.defaultSuffixOperators;
 	private final Parameters parameters;
+	private char decimalSeparator = '.';
+	private char groupingSeparator = ',';
 
 	public CalculatorExpressionFormatter() {
 		this(defaultParameters);
@@ -48,6 +50,14 @@ public class CalculatorExpressionFormatter {
 
 	public void setSuffixOperators(List<SuffixOperator> suffixOperators) {
 		this.suffixOperators = suffixOperators;
+	}
+
+	public void setDecimalSeparator(char decimalSeparator) {
+		this.decimalSeparator = decimalSeparator;
+	}
+
+	public void setGroupingSeparator(char groupingSeparator) {
+		this.groupingSeparator = groupingSeparator;
 	}
 
 	public String removeSpaces(String expression){
@@ -100,10 +110,18 @@ public class CalculatorExpressionFormatter {
 			sb.append(c);
 			if (CalculatorUtils.isLetter(c))
 				isFunctionStarted = true;
-			else if (!CalculatorUtils.isDigit(c) && c != '.')
+			else if (!CalculatorUtils.isDigit(c) && c != decimalSeparator && c != groupingSeparator)
 				isFunctionStarted = false;
+			if(c == groupingSeparator)
+				continue;
 			if (i != expression.length() - 1) {
 				char next = expression.charAt(i + 1);
+				if(next == groupingSeparator) {
+					if (i == expression.length() - 2)
+						break;
+					else
+						next = expression.charAt(i + 2);
+				}
 
 				boolean isNowDigit = CalculatorUtils.isDigit(c);
 				boolean isNextDigit = CalculatorUtils.isDigit(next);

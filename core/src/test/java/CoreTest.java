@@ -49,6 +49,8 @@ class CoreTest {
 
 		assertEquals("2", calc("sqrt4"));
 		assertEquals("2", calc("sqrt4(16)"));
+
+		assertEquals("-1", calc("log0.5(2)"));
 	}
 
 	@Test
