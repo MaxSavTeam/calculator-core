@@ -25,6 +25,7 @@ public class CalculationException extends RuntimeException {
 
 	public static final int INVALID_BINARY_OPERATOR = 0;
 	public static final int NEGATIVE_PARAMETER_OF_LOG = 1;
+	@Deprecated
 	public static final int ROOT_OF_EVEN_DEGREE_OF_NEGATIVE_NUMBER = 3;
 	public static final int NAN = 4;
 	public static final int UNDEFINED = 5;
@@ -52,6 +53,8 @@ public class CalculationException extends RuntimeException {
 	public static final int INVALID_VALUE_FOR_SECANT = 28;
 	public static final int INVALID_VALUE_FOR_COSECANT = 29;
 	public static final int INVALID_VALUE_FOR_ASEC_ACSC = 30;
+	public static final int ROOT_OF_NEGATIVE_NUMBER = 31;
+	public static final int ROOT_OF_NEGATIVE_OR_ZERO_DEGREE = 32;
 
 	private static final Map<Integer, String> messagesMap = Map.ofEntries(
 			entry(INVALID_BINARY_OPERATOR, "Binary operator does not have left or right operand or both"),
@@ -82,7 +85,9 @@ public class CalculationException extends RuntimeException {
 			entry(INVALID_VALUE_FOR_COTANGENT, "Invalid value for cotangent"),
 			entry(INVALID_VALUE_FOR_SECANT, "Invalid value for secant"),
 			entry(INVALID_VALUE_FOR_COSECANT, "Invalid value for cosecant"),
-			entry(INVALID_VALUE_FOR_ASEC_ACSC, "Invalid value for asec and acsc")
+			entry(INVALID_VALUE_FOR_ASEC_ACSC, "Invalid value for asec and acsc"),
+			entry(ROOT_OF_NEGATIVE_NUMBER, "Root of negative number"),
+			entry(ROOT_OF_NEGATIVE_OR_ZERO_DEGREE, "Root of negative or zero degree")
 	);
 
 	private final int errorCode;

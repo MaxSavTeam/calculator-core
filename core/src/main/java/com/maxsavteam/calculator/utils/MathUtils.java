@@ -263,11 +263,11 @@ public class MathUtils {
 	public static BigDecimal rootWithBase(BigDecimal a, BigDecimal n) {
 		if (a.signum() == 0)
 			return BigDecimal.ZERO;
-		if (n.remainder(BigDecimal.valueOf(2)).signum() == 0 && a.signum() < 0)
-			throw new CalculationException(CalculationException.ROOT_OF_EVEN_DEGREE_OF_NEGATIVE_NUMBER);
-		BigDecimal log = ln(a);
-		BigDecimal dLog = log.divide(n, mathContext);
-		return exp(dLog);
+		if (a.signum() < 0)
+			throw new CalculationException(CalculationException.ROOT_OF_NEGATIVE_NUMBER);
+		if(n.signum() <= 0)
+			throw new CalculationException(CalculationException.ROOT_OF_NEGATIVE_OR_ZERO_DEGREE);
+		return BigDecimalMath.root(a, n, mathContext);
 	}
 
 	public static BigDecimal powWithExp(BigDecimal a, BigDecimal n) {
