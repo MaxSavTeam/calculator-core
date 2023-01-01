@@ -9,7 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="feat: add customizable separator to CalculatorExpressionFormatter">
+    <list default="true" id="1c4091df-e8c8-4ff7-8fec-b74493230af7" name="Default Changelist" comment="build: bump version to 3.4.0">
       <change beforePath="$PROJECT_DIR$/core/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/core/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -372,14 +372,7 @@
       <workItem from="1668426160811" duration="2053000" />
       <workItem from="1668501358936" duration="586000" />
       <workItem from="1672260414524" duration="2920000" />
-      <workItem from="1672593359442" duration="1788000" />
-    </task>
-    <task id="LOCAL-00122" summary="feat: remove NotNull requirement from FunctionsResolver and ListFunctionsResolver">
-      <created>1653489460986</created>
-      <option name="number" value="00122" />
-      <option name="presentableId" value="LOCAL-00122" />
-      <option name="project" value="LOCAL" />
-      <updated>1653489460986</updated>
+      <workItem from="1672593359442" duration="2125000" />
     </task>
     <task id="LOCAL-00123" summary="BREAKING CHANGE: refactor CalculatingException.java to CalculationException">
       <created>1653489852606</created>
@@ -717,7 +710,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672595122923</updated>
     </task>
-    <option name="localTasksCounter" value="171" />
+    <task id="LOCAL-00171" summary="build: bump version to 3.4.0">
+      <created>1672595458915</created>
+      <option name="number" value="00171" />
+      <option name="presentableId" value="LOCAL-00171" />
+      <option name="project" value="LOCAL" />
+      <updated>1672595458915</updated>
+    </task>
+    <option name="localTasksCounter" value="172" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -766,7 +766,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: add suffix operators evaluation in function suffixes (sin2! should be recognized as sin(2!), sin30° =&gt; sin(30°))" />
     <MESSAGE value="v2.8.0" />
     <MESSAGE value="chore: insert space after semicolon in NumberList#format" />
     <MESSAGE value="breaking change: remove angle unit converter functions (&quot;rad&quot;, &quot;to_rad&quot;, &quot;torad&quot;, &quot;deg&quot;, &quot;to_deg&quot;, &quot;todeg&quot;)" />
@@ -791,7 +790,8 @@
     <MESSAGE value="refactor: replace use cached MathContext in MathUtils" />
     <MESSAGE value="chore: bump version to 3.3.1" />
     <MESSAGE value="feat: add customizable separator to CalculatorExpressionFormatter" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add customizable separator to CalculatorExpressionFormatter" />
+    <MESSAGE value="build: bump version to 3.4.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="build: bump version to 3.4.0" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
